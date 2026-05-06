@@ -1,4 +1,4 @@
-'use client';
+\'use client';
 
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
@@ -16,6 +16,7 @@ export default function Home() {
 
   const BACKEND_URL = "https://quantum-selfflow-nhtx.vercel.app";
 
+  // Check login status on load
   useEffect(() => {
     const saved = localStorage.getItem('selfflow_user');
     if (saved) {
@@ -43,7 +44,7 @@ export default function Home() {
       const data = await response.json();
       setResult(data);
     } catch (e) {
-      alert("Backend not responding. Make sure the backend is deployed and running.");
+      alert("Backend not responding.");
     }
     setLoading(false);
   };
@@ -68,9 +69,18 @@ export default function Home() {
 
           <div className="flex items-center gap-8 text-sm font-medium">
             <Link href="/" className="hover:text-cyan-400">Home</Link>
-            <Link href="/onboarding" className="hover:text-cyan-400">Get Started</Link>
-            {isLoggedIn && <Link href="/dashboard" className="hover:text-cyan-400">Dashboard</Link>}
-            {isLoggedIn && <button onClick={logout} className="text-red-400 hover:text-red-500">Logout</button>}
+            
+            {!isLoggedIn && (
+              <Link href="/onboarding" className="hover:text-cyan-400">Get Started</Link>
+            )}
+            
+            {isLoggedIn && (
+              <Link href="/dashboard" className="hover:text-cyan-400">Dashboard</Link>
+            )}
+            
+            {isLoggedIn && (
+              <button onClick={logout} className="text-red-400 hover:text-red-500">Logout</button>
+            )}
           </div>
         </div>
       </nav>
