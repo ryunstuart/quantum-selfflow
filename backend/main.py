@@ -4,10 +4,9 @@ from pydantic import BaseModel
 
 app = FastAPI(title="Quantum SelfFlow API")
 
-# Allow frontend to connect
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000"],
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -22,9 +21,8 @@ def home():
 
 @app.post("/api/zip-check")
 def zip_check(request: ZipCheckRequest):
-    # Simulate real Priority PPO check
     zips = request.zip_codes.split(',')
-    doctor_count = len(zips) * 45 + 30  # Fake realistic number
+    doctor_count = len(zips) * 45 + 30
     
     return {
         "status": "success",
