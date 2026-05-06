@@ -43,7 +43,7 @@ export default function Home() {
       const data = await response.json();
       setResult(data);
     } catch (e) {
-      alert("Backend not responding. Make sure the backend service is deployed on Vercel.");
+      alert("Backend not responding. Make sure the backend is deployed and running.");
     }
     setLoading(false);
   };
@@ -111,7 +111,10 @@ export default function Home() {
               <div className="text-green-400 text-3xl font-semibold">Excellent Coverage</div>
               <div className="text-7xl font-bold text-green-400 my-4">{result.doctors}</div>
               <div className="text-slate-300 mb-8">Priority PPO doctors found</div>
-              <button onClick={() => window.location.href = "/onboarding"} className="w-full bg-cyan-400 hover:bg-cyan-300 text-slate-950 font-semibold py-5 rounded-2xl text-lg">
+              <button 
+                onClick={() => window.location.href = "/onboarding"}
+                className="w-full bg-cyan-400 hover:bg-cyan-300 text-slate-950 font-semibold py-5 rounded-2xl text-lg"
+              >
                 Activate Quantum SelfFlow →
               </button>
             </div>
@@ -129,7 +132,10 @@ export default function Home() {
               onChange={(e) => setClaimsVolume(e.target.value)}
               className="w-full bg-slate-800 border border-white/20 rounded-2xl px-6 py-4 text-lg mb-6 text-center"
             />
-            <button onClick={calculateSavings} className="w-full bg-cyan-400 hover:bg-cyan-300 text-slate-950 font-semibold py-5 rounded-2xl text-lg">
+            <button 
+              onClick={calculateSavings} 
+              className="w-full bg-cyan-400 hover:bg-cyan-300 text-slate-950 font-semibold py-5 rounded-2xl text-lg"
+            >
               Calculate My Savings
             </button>
 
