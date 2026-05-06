@@ -78,7 +78,7 @@ export default function Home() {
             )}
             
             {isLoggedIn && (
-              <button onClick={logout} className="text-red-400 hover:text-red-500">Logout</button>
+              <button onClick={logout} className="text-red-400 hover:text-red-500 font-medium">Logout</button>
             )}
           </div>
         </div>
