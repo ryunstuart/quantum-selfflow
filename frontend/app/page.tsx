@@ -14,7 +14,8 @@ export default function Home() {
   const [claimsVolume, setClaimsVolume] = useState('');
   const [projectedSavings, setProjectedSavings] = useState<number | null>(null);
 
-  // Check login status
+  const BACKEND_URL = "https://quantum-selfflow-nhtx.vercel.app";
+
   useEffect(() => {
     const saved = localStorage.getItem('selfflow_user');
     if (saved) {
@@ -34,7 +35,7 @@ export default function Home() {
     if (!zipCodes) return;
     setLoading(true);
     try {
-      const response = await fetch('http://127.0.0.1:8000/api/zip-check', {
+      const response = await fetch(`${BACKEND_URL}/api/zip-check`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ zip_codes: zipCodes }),
@@ -42,7 +43,7 @@ export default function Home() {
       const data = await response.json();
       setResult(data);
     } catch (e) {
-      alert("Backend not running. Start it with: uvicorn main:app --reload");
+      alert("Backend not responding. Make sure the backend is deployed and running.");
     }
     setLoading(false);
   };
@@ -55,7 +56,6 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-blue-950 text-white">
-      {/* Navigation */}
       <nav className="border-b border-white/10 bg-black/80 backdrop-blur-md sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-6 py-5 flex justify-between items-center">
           <div className="flex items-center gap-3">
@@ -68,23 +68,9 @@ export default function Home() {
 
           <div className="flex items-center gap-8 text-sm font-medium">
             <Link href="/" className="hover:text-cyan-400">Home</Link>
-            
-            {!isLoggedIn && (
-              <Link href="/onboarding" className="hover:text-cyan-400">Get Started</Link>
-            )}
-            
-            {isLoggedIn && (
-              <Link href="/dashboard" className="hover:text-cyan-400">Dashboard</Link>
-            )}
-            
-            {isLoggedIn && (
-              <button 
-                onClick={logout} 
-                className="text-red-400 hover:text-red-500 font-medium"
-              >
-                Logout
-              </button>
-            )}
+            <Link href="/onboarding" className="hover:text-cyan-400">Get Started</Link>
+            {isLoggedIn && <Link href="/dashboard" className="hover:text-cyan-400">Dashboard</Link>}
+            {isLoggedIn && <button onClick={logout} className="text-red-400 hover:text-red-500">Logout</button>}
           </div>
         </div>
       </nav>
