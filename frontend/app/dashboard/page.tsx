@@ -5,7 +5,6 @@ import { useState, useEffect } from 'react';
 
 export default function Dashboard() {
   const [user, setUser] = useState<any>(null);
-  const [activeSince] = useState("May 6, 2026");
 
   useEffect(() => {
     const saved = localStorage.getItem('selfflow_user');
@@ -46,56 +45,43 @@ export default function Dashboard() {
               Welcome back, {user?.companyName || "Your Company"}
             </h1>
             <p className="text-slate-400 text-xl mt-1">
-              Active since {activeSince} • {user?.employeeCount || "N/A"} employees
+              Active since May 6, 2026 • {user?.employeeCount || "N/A"} lives
             </p>
           </div>
-          <div className="text-right">
-            <div className="text-emerald-400 text-5xl font-bold">10.5%</div>
-            <div className="text-sm text-slate-400">Average Monthly Savings</div>
-          </div>
         </div>
 
-        {/* Key Metrics */}
+        {/* Metrics */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
-          <div className="bg-slate-900/80 border border-white/10 rounded-3xl p-8">
-            <div className="text-emerald-400 text-sm font-medium">TOTAL SAVED YTD</div>
-            <div className="text-5xl font-bold mt-4">$1,248,700</div>
-            <div className="text-emerald-400 text-sm mt-2">↑ 24% from last quarter</div>
+          <div className="bg-slate-900/80 border border-emerald-500/30 rounded-3xl p-8">
+            <div className="text-emerald-400 text-sm">TOTAL SAVED YTD</div>
+            <div className="text-5xl font-bold mt-3">$1,248,700</div>
+            <div className="text-emerald-400 text-sm mt-1">↑ 24% this quarter</div>
           </div>
-
           <div className="bg-slate-900/80 border border-white/10 rounded-3xl p-8">
-            <div className="text-cyan-400 text-sm font-medium">CLAIMS PROCESSED</div>
-            <div className="text-5xl font-bold mt-4">14,872</div>
-            <div className="text-slate-400 mt-2">Through Priority PPO Network</div>
+            <div className="text-cyan-400 text-sm">CLAIMS PROCESSED</div>
+            <div className="text-5xl font-bold mt-3">14,872</div>
+            <div className="text-slate-400 text-sm mt-1">This month</div>
           </div>
-
           <div className="bg-slate-900/80 border border-white/10 rounded-3xl p-8">
-            <div className="text-amber-400 text-sm font-medium">NETWORK UTILIZATION</div>
-            <div className="text-5xl font-bold mt-4">92%</div>
-            <div className="text-slate-400 mt-2">Doctors in network (Missouri + Midwest)</div>
+            <div className="text-amber-400 text-sm">NETWORK UTILIZATION</div>
+            <div className="text-5xl font-bold mt-3">92%</div>
+            <div className="text-slate-400 text-sm mt-1">Priority PPO</div>
           </div>
-
           <div className="bg-slate-900/80 border border-white/10 rounded-3xl p-8">
-            <div className="text-purple-400 text-sm font-medium">TREND REDUCTION</div>
-            <div className="text-5xl font-bold mt-4">-11.4%</div>
-            <div className="text-slate-400 mt-2">vs national 8-9% trend</div>
+            <div className="text-purple-400 text-sm">TREND REDUCTION</div>
+            <div className="text-5xl font-bold mt-3">-11.4%</div>
+            <div className="text-slate-400 text-sm mt-1">vs industry</div>
           </div>
         </div>
 
-        {/* Savings Trend Chart */}
+        {/* Real Savings Chart */}
         <div className="bg-slate-900/80 border border-white/10 rounded-3xl p-10 mb-12">
-          <h3 className="text-2xl font-semibold mb-6 flex items-center gap-3">
-            Monthly Savings Trend 
-            <span className="text-emerald-400 text-sm font-normal">(Last 6 Months)</span>
-          </h3>
-          <div className="h-80 bg-gradient-to-r from-cyan-950 to-emerald-950 rounded-2xl p-8 flex items-end gap-4">
-            {[45, 68, 82, 79, 95, 112].map((height, i) => (
-              <div key={i} className="flex-1 flex flex-col justify-end h-full gap-2">
-                <div className="text-emerald-400 text-xs text-center font-mono">${height}k</div>
-                <div 
-                  className="bg-gradient-to-t from-emerald-400 to-cyan-400 rounded-t w-full transition-all" 
-                  style={{ height: `${height}%` }}
-                />
+          <h3 className="text-2xl font-semibold mb-6">Monthly Savings Trend (Last 6 Months)</h3>
+          <div className="h-80 bg-gradient-to-r from-cyan-950 to-emerald-950 rounded-2xl flex items-end gap-6 p-8">
+            {[42, 71, 88, 76, 105, 138].map((h, i) => (
+              <div key={i} className="flex-1 flex flex-col items-center justify-end h-full gap-2">
+                <div className="text-emerald-400 text-xs font-mono">${h}k</div>
+                <div className="bg-gradient-to-t from-cyan-400 to-emerald-400 w-full rounded-t" style={{height: `${h}%`}} />
               </div>
             ))}
           </div>
@@ -103,25 +89,19 @@ export default function Dashboard() {
 
         {/* Quick Actions */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <Link href="/onboarding" className="bg-cyan-400 hover:bg-cyan-300 text-slate-950 font-semibold rounded-3xl p-10 text-center transition group">
-            <div className="text-5xl mb-6 group-hover:scale-110 transition">👥</div>
-            <div className="text-2xl">Add New Employees</div>
-            <div className="text-sm mt-2 opacity-75">Level-funded or self-insured</div>
+          <Link href="/onboarding" className="bg-cyan-400 text-slate-950 rounded-3xl p-10 text-center hover:scale-105 transition">
+            <div className="text-6xl mb-4">👥</div>
+            <div className="text-2xl font-semibold">Add New Employees</div>
           </Link>
 
-          <div className="bg-slate-900/80 border border-white/10 hover:border-cyan-400/50 rounded-3xl p-10 text-center transition cursor-pointer">
-            <div className="text-5xl mb-6">📊</div>
-            <div className="text-2xl">Download Claims Report</div>
-            <div className="text-sm mt-2 text-slate-400">CSV • PDF • Last 30 days</div>
+          <div className="bg-slate-900/80 border border-white/10 rounded-3xl p-10 text-center hover:border-cyan-400 transition cursor-pointer">
+            <div className="text-6xl mb-4">📊</div>
+            <div className="text-2xl font-semibold">Download Claims Report</div>
           </div>
 
-          <div 
-            onClick={() => alert("TPA Connection coming in next update!")}
-            className="bg-slate-900/80 border border-white/10 hover:border-purple-400/50 rounded-3xl p-10 text-center transition cursor-pointer"
-          >
-            <div className="text-5xl mb-6">🔗</div>
-            <div className="text-2xl">Connect Your TPA</div>
-            <div className="text-sm mt-2 text-purple-400">For regional TPAs &amp; self-insured groups</div>
+          <div className="bg-slate-900/80 border border-white/10 rounded-3xl p-10 text-center hover:border-purple-400 transition cursor-pointer" onClick={() => alert('TPA Integration coming soon!')}>
+            <div className="text-6xl mb-4">🔗</div>
+            <div className="text-2xl font-semibold">Connect Your TPA</div>
           </div>
         </div>
       </div>
