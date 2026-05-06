@@ -74,7 +74,7 @@ export default function Home() {
             )}
             
             {isLoggedIn && (
-              <Link href="/dashboard" className="hover:text-cyan-400">Dashboard</Link>
+              <Link href="/dashboard" className="hover:text-cyan-400 font-medium">Dashboard</Link>
             )}
             
             {isLoggedIn && (
