@@ -70,7 +70,7 @@ export default function Home() {
             <Link href="/" className="hover:text-cyan-400">Home</Link>
             
             {!isLoggedIn && (
-              <Link href="/onboarding" className="hover:text-cyan-400">Get Started</Link>
+              <Link href="/onboarding" className="hover:text-cyan-400 font-medium">Get Started</Link>
             )}
             
             {isLoggedIn && (
