@@ -18,6 +18,13 @@ export default function Dashboard() {
     window.location.href = '/';
   };
 
+  const fakeClaims = [
+    { id: "CL-7842", date: "May 5", provider: "St. Louis Orthopedics", amount: "$2,847", savings: "$612" },
+    { id: "CL-7841", date: "May 4", provider: "Midwest Imaging", amount: "$1,394", savings: "$298" },
+    { id: "CL-7840", date: "May 3", provider: "SSM Health", amount: "$3,210", savings: "$874" },
+    { id: "CL-7839", date: "May 2", provider: "Barnes-Jewish", amount: "$892", savings: "$203" },
+  ];
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-blue-950 text-white">
       <nav className="border-b border-white/10 bg-black/80 backdrop-blur-md sticky top-0 z-50">
@@ -50,7 +57,7 @@ export default function Dashboard() {
           </div>
         </div>
 
-        {/* Key Metrics */}
+        {/* Metrics */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
           <div className="bg-slate-900/80 border border-emerald-500/30 rounded-3xl p-8">
             <div className="text-emerald-400 text-sm font-medium">TOTAL SAVED YTD</div>
@@ -74,7 +81,7 @@ export default function Dashboard() {
           </div>
         </div>
 
-        {/* Real Savings Chart */}
+        {/* Savings Trend Chart */}
         <div className="bg-slate-900/80 border border-white/10 rounded-3xl p-10 mb-12">
           <h3 className="text-2xl font-semibold mb-6">Monthly Savings Trend (Last 6 Months)</h3>
           <div className="h-80 bg-gradient-to-r from-cyan-950 to-emerald-950 rounded-2xl flex items-end gap-6 p-8">
@@ -84,6 +91,40 @@ export default function Dashboard() {
                 <div className="bg-gradient-to-t from-cyan-400 to-emerald-400 w-full rounded-t" style={{height: `${h}%`}} />
               </div>
             ))}
+          </div>
+        </div>
+
+        {/* Recent Claims Table */}
+        <div className="bg-slate-900/80 border border-white/10 rounded-3xl p-10 mb-12">
+          <div className="flex justify-between items-center mb-6">
+            <h3 className="text-2xl font-semibold">Recent Claims Activity</h3>
+            <button className="bg-white/10 hover:bg-white/20 px-6 py-2 rounded-xl text-sm transition">
+              Download Full Report ↓
+            </button>
+          </div>
+          <div className="overflow-x-auto">
+            <table className="w-full">
+              <thead>
+                <tr className="border-b border-white/10 text-left text-sm text-slate-400">
+                  <th className="pb-4">Claim ID</th>
+                  <th className="pb-4">Date</th>
+                  <th className="pb-4">Provider</th>
+                  <th className="pb-4 text-right">Billed</th>
+                  <th className="pb-4 text-right">Savings</th>
+                </tr>
+              </thead>
+              <tbody className="text-sm">
+                {fakeClaims.map((claim) => (
+                  <tr key={claim.id} className="border-b border-white/10 last:border-0">
+                    <td className="py-5 font-mono">{claim.id}</td>
+                    <td className="py-5 text-slate-400">{claim.date}</td>
+                    <td className="py-5">{claim.provider}</td>
+                    <td className="py-5 text-right">{claim.amount}</td>
+                    <td className="py-5 text-right text-emerald-400 font-medium">{claim.savings}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
         </div>
 
