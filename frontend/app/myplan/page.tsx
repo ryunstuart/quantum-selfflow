@@ -19,10 +19,7 @@ export default function MyPlan() {
         <div className="max-w-7xl mx-auto px-6 py-5 flex justify-between items-center">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 bg-cyan-400 rounded-2xl flex items-center justify-center text-slate-950 font-bold text-3xl shadow-lg">Q</div>
-            <div>
-              <div className="font-bold text-3xl tracking-tighter">Quantum SelfFlow</div>
-              <div className="text-cyan-400 text-sm -mt-1">Self-serve savings. Zero complexity.</div>
-            </div>
+            <div className="font-bold text-3xl tracking-tighter">Quantum SelfFlow</div>
           </div>
 
           <div className="flex items-center gap-8 text-sm font-medium">
@@ -36,45 +33,47 @@ export default function MyPlan() {
 
       <div className="max-w-4xl mx-auto px-6 py-12">
         <h1 className="text-5xl font-bold tracking-tighter mb-2">My Plan</h1>
-        <p className="text-slate-400 text-xl">Quantum SelfFlow • Active</p>
+        <p className="text-slate-400">Quantum SelfFlow • Active Plan</p>
 
         <div className="mt-12 grid grid-cols-1 lg:grid-cols-2 gap-8">
           <div className="bg-slate-900/80 border border-white/10 rounded-3xl p-10">
-            <h3 className="text-xl font-semibold mb-6 text-cyan-400">Plan Details</h3>
-            <div className="space-y-6">
+            <h3 className="text-xl font-semibold mb-8 text-cyan-400">Plan Summary</h3>
+            <div className="space-y-6 text-lg">
               <div>
                 <div className="text-sm text-slate-400">Company</div>
-                <div className="text-2xl font-medium">{user?.companyName || "Your Company"}</div>
+                <div className="font-semibold">{user?.companyName || "Your Company"}</div>
               </div>
               <div>
                 <div className="text-sm text-slate-400">Plan Type</div>
-                <div className="text-2xl font-medium">{user?.planType || "Self-Insured"}</div>
+                <div className="font-semibold">{user?.planType || "Self-Insured"}</div>
               </div>
               <div>
                 <div className="text-sm text-slate-400">Covered Lives</div>
-                <div className="text-2xl font-medium">{user?.employeeCount || "N/A"}</div>
+                <div className="font-semibold">{user?.employeeCount || "N/A"}</div>
               </div>
               <div>
                 <div className="text-sm text-slate-400">Status</div>
-                <div className="inline-block bg-emerald-400/20 text-emerald-400 px-4 py-1 rounded-full text-sm font-medium">Active since May 6, 2026</div>
+                <div className="inline-flex items-center gap-2 bg-emerald-400/20 text-emerald-400 px-4 py-1 rounded-full text-sm">
+                  <span className="text-lg">●</span> Active since May 6, 2026
+                </div>
               </div>
             </div>
           </div>
 
           <div className="bg-slate-900/80 border border-white/10 rounded-3xl p-10">
-            <h3 className="text-xl font-semibold mb-6">Current Performance</h3>
+            <h3 className="text-xl font-semibold mb-8">Performance Snapshot</h3>
             <div className="space-y-8">
-              <div className="flex justify-between">
-                <div>Savings This Month</div>
-                <div className="text-emerald-400 font-bold">$248,700</div>
+              <div className="flex justify-between items-center">
+                <span>Savings This Month</span>
+                <span className="text-3xl font-bold text-emerald-400">$248,700</span>
               </div>
-              <div className="flex justify-between">
-                <div>Claims Routed</div>
-                <div>2,847</div>
+              <div className="flex justify-between items-center">
+                <span>Claims Routed</span>
+                <span className="text-3xl font-bold">2,847</span>
               </div>
-              <div className="flex justify-between">
-                <div>Average Savings per Claim</div>
-                <div className="text-emerald-400 font-bold">21.4%</div>
+              <div className="flex justify-between items-center">
+                <span>Avg. Savings per Claim</span>
+                <span className="text-3xl font-bold text-emerald-400">21.4%</span>
               </div>
             </div>
           </div>
@@ -82,7 +81,7 @@ export default function MyPlan() {
 
         <div className="mt-12 text-center">
           <Link href="/dashboard" className="inline-block bg-cyan-400 hover:bg-cyan-300 text-slate-950 font-semibold px-12 py-5 rounded-2xl text-lg">
-            Back to Dashboard
+            ← Back to Dashboard
           </Link>
         </div>
       </div>
