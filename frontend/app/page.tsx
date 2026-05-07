@@ -120,7 +120,9 @@ export default function Home() {
                 {loading ? "Checking..." : "Check Coverage"}
               </button>
             </div>
-            {error && <p className="text-red-400 text-center mt-4">{error}</p>}
+
+            {error && <p className="text-red-400 text-center mt-4 font-medium">{error}</p>}
+
             {result && (
               <div className="mt-12 bg-gradient-to-br from-green-900/70 to-emerald-900/70 border border-green-400/50 rounded-3xl p-12 text-center">
                 <div className="text-6xl mb-4">✅</div>
@@ -130,6 +132,13 @@ export default function Home() {
                 <div className="mt-8 inline-block bg-green-400/20 text-green-400 px-6 py-2 rounded-full text-sm">
                   Coverage Strength: <span className="font-semibold">{result.coverageStrength}</span>
                 </div>
+
+                <button 
+                  onClick={() => window.location.href = "/onboarding"}
+                  className="w-full mt-12 bg-cyan-400 hover:bg-cyan-300 text-slate-950 font-semibold py-6 rounded-2xl text-xl transition"
+                >
+                  Activate Quantum SelfFlow →
+                </button>
               </div>
             )}
           </div>
