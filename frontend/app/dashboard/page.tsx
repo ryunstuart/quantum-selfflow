@@ -50,27 +50,27 @@ export default function Dashboard() {
           </div>
         </div>
 
-        {/* Metrics */}
+        {/* Key Metrics */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
           <div className="bg-slate-900/80 border border-emerald-500/30 rounded-3xl p-8">
-            <div className="text-emerald-400 text-sm">TOTAL SAVED YTD</div>
+            <div className="text-emerald-400 text-sm font-medium">TOTAL SAVED YTD</div>
             <div className="text-5xl font-bold mt-3">$1,248,700</div>
             <div className="text-emerald-400 text-sm mt-1">↑ 24% this quarter</div>
           </div>
           <div className="bg-slate-900/80 border border-white/10 rounded-3xl p-8">
-            <div className="text-cyan-400 text-sm">CLAIMS PROCESSED</div>
+            <div className="text-cyan-400 text-sm font-medium">CLAIMS PROCESSED</div>
             <div className="text-5xl font-bold mt-3">14,872</div>
             <div className="text-slate-400 text-sm mt-1">This month</div>
           </div>
           <div className="bg-slate-900/80 border border-white/10 rounded-3xl p-8">
-            <div className="text-amber-400 text-sm">NETWORK UTILIZATION</div>
+            <div className="text-amber-400 text-sm font-medium">NETWORK UTILIZATION</div>
             <div className="text-5xl font-bold mt-3">92%</div>
             <div className="text-slate-400 text-sm mt-1">Priority PPO</div>
           </div>
           <div className="bg-slate-900/80 border border-white/10 rounded-3xl p-8">
-            <div className="text-purple-400 text-sm">TREND REDUCTION</div>
+            <div className="text-purple-400 text-sm font-medium">TREND REDUCTION</div>
             <div className="text-5xl font-bold mt-3">-11.4%</div>
-            <div className="text-slate-400 text-sm mt-1">vs industry</div>
+            <div className="text-slate-400 text-sm mt-1">vs industry average</div>
           </div>
         </div>
 
@@ -99,7 +99,8 @@ export default function Dashboard() {
             <div className="text-2xl font-semibold">Download Claims Report</div>
           </div>
 
-          <div className="bg-slate-900/80 border border-white/10 rounded-3xl p-10 text-center hover:border-purple-400 transition cursor-pointer" onClick={() => alert('TPA Integration coming soon!')}>
+          <div className="bg-slate-900/80 border border-white/10 rounded-3xl p-10 text-center hover:border-purple-400 transition cursor-pointer" 
+               onClick={() => alert('TPA Integration coming soon!')}>
             <div className="text-6xl mb-4">🔗</div>
             <div className="text-2xl font-semibold">Connect Your TPA</div>
           </div>
