@@ -8,6 +8,7 @@ export default function Home() {
   const [zipCodes, setZipCodes] = useState('');
   const [result, setResult] = useState<any>(null);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
 
   const BACKEND_URL = "https://quantum-selfflow-nhtx.vercel.app";
 
@@ -16,43 +17,50 @@ export default function Home() {
     if (saved) setIsLoggedIn(true);
   }, []);
 
+  const validateZip = (zip: string): boolean => {
+    const cleanZip = zip.trim();
+    return /^\d{5}$/.test(cleanZip); // Exactly 5 digits
+  };
+
   const checkNetwork = async () => {
-    if (!zipCodes) return;
+    setError('');
+    const cleanZip = zipCodes.trim();
+
+    if (!cleanZip) {
+      setError("Please enter a ZIP code");
+      return;
+    }
+
+    if (!validateZip(cleanZip)) {
+      setError("Please enter a valid 5-digit ZIP code (e.g. 63101)");
+      return;
+    }
+
     setLoading(true);
 
     try {
-      // First call your backend for doctor count
       const backendRes = await fetch(`${BACKEND_URL}/api/zip-check`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ zip_codes: zipCodes }),
+        body: JSON.stringify({ zip_codes: cleanZip }),
       });
       const backendData = await backendRes.json();
 
-      // Real city lookup using Zippopotam
-      const zipRes = await fetch(`https://api.zippopotam.us/us/${zipCodes.trim()}`);
-      let cityData = { city: 'Your Area', state: '' };
-
+      // Real city lookup
+      const zipRes = await fetch(`https://api.zippopotam.us/us/${cleanZip}`);
+      let city = "Your Area";
       if (zipRes.ok) {
         const zipJson = await zipRes.json();
-        cityData = {
-          city: zipJson.places[0]['place name'],
-          state: zipJson.places[0].state
-        };
+        city = `${zipJson.places[0]['place name']}, ${zipJson.places[0].state}`;
       }
 
       setResult({
         ...backendData,
-        city: `${cityData.city}, ${cityData.state}`,
+        city: city,
         coverageStrength: backendData.doctors > 100 ? 'Excellent' : backendData.doctors > 50 ? 'Strong' : 'Good'
       });
     } catch (e) {
-      alert("Could not fetch location data. Using fallback.");
-      setResult({
-        doctors: 85,
-        city: "Your Area",
-        coverageStrength: "Good"
-      });
+      setError("Unable to check coverage. Please try again.");
     }
     setLoading(false);
   };
@@ -94,7 +102,11 @@ export default function Home() {
                 placeholder="Enter ZIP code (e.g. 63101)"
                 className="flex-1 bg-slate-800 border border-white/20 rounded-2xl px-6 py-5 text-lg focus:outline-none focus:border-cyan-400"
                 value={zipCodes}
-                onChange={(e) => setZipCodes(e.target.value)}
+                onChange={(e) => {
+                  setZipCodes(e.target.value);
+                  setError('');
+                }}
+                maxLength={5}
               />
               <button
                 onClick={checkNetwork}
@@ -104,6 +116,10 @@ export default function Home() {
                 {loading ? "Checking..." : "Check Coverage"}
               </button>
             </div>
+
+            {error && (
+              <p className="text-red-400 text-center mt-4">{error}</p>
+            )}
 
             {result && (
               <div className="mt-12 bg-gradient-to-br from-green-900/70 to-emerald-900/70 border border-green-400/50 rounded-3xl p-12 text-center">
@@ -115,17 +131,10 @@ export default function Home() {
                   Coverage Strength: <span className="font-semibold">{result.coverageStrength}</span>
                 </div>
 
-                {/* Map-like visual */}
                 <div className="mt-12 h-56 bg-slate-950 rounded-2xl relative overflow-hidden flex items-center justify-center border border-green-400/30">
                   <div className="text-center z-10">
                     <div className="text-5xl mb-4">📍</div>
                     <div className="text-green-400 text-xl font-medium">Strong Local Network</div>
-                  </div>
-                  <div className="absolute inset-0 opacity-40">
-                    {[...Array(15)].map((_, i) => (
-                      <div key={i} className="absolute w-2.5 h-2.5 bg-green-400 rounded-full animate-pulse"
-                           style={{ left: `${10 + Math.random()*80}%`, top: `${15 + Math.random()*70}%` }} />
-                    ))}
                   </div>
                 </div>
               </div>
