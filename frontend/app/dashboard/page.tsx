@@ -22,7 +22,6 @@ export default function Dashboard() {
     { id: "CL-7842", date: "May 5", provider: "St. Louis Orthopedics", amount: "$2,847", savings: "$612" },
     { id: "CL-7841", date: "May 4", provider: "Midwest Imaging", amount: "$1,394", savings: "$298" },
     { id: "CL-7840", date: "May 3", provider: "SSM Health", amount: "$3,210", savings: "$874" },
-    { id: "CL-7839", date: "May 2", provider: "Barnes-Jewish", amount: "$892", savings: "$203" },
   ];
 
   return (
@@ -62,26 +61,22 @@ export default function Dashboard() {
           <div className="bg-slate-900/80 border border-emerald-500/30 rounded-3xl p-8">
             <div className="text-emerald-400 text-sm">TOTAL SAVED YTD</div>
             <div className="text-5xl font-bold mt-3">$1,248,700</div>
-            <div className="text-emerald-400 text-sm mt-1">↑ 24% this quarter</div>
           </div>
           <div className="bg-slate-900/80 border border-white/10 rounded-3xl p-8">
             <div className="text-cyan-400 text-sm">CLAIMS PROCESSED</div>
             <div className="text-5xl font-bold mt-3">14,872</div>
-            <div className="text-slate-400 text-sm mt-1">This month</div>
           </div>
           <div className="bg-slate-900/80 border border-white/10 rounded-3xl p-8">
             <div className="text-amber-400 text-sm">NETWORK UTILIZATION</div>
             <div className="text-5xl font-bold mt-3">92%</div>
-            <div className="text-slate-400 text-sm mt-1">Priority PPO</div>
           </div>
           <div className="bg-slate-900/80 border border-white/10 rounded-3xl p-8">
             <div className="text-purple-400 text-sm">TREND REDUCTION</div>
             <div className="text-5xl font-bold mt-3">-11.4%</div>
-            <div className="text-slate-400 text-sm mt-1">vs industry average</div>
           </div>
         </div>
 
-        {/* Monthly Savings Trend */}
+        {/* Savings Trend */}
         <div className="bg-slate-900/80 border border-white/10 rounded-3xl p-10 mb-12">
           <h3 className="text-2xl font-semibold mb-6">Monthly Savings Trend (Last 6 Months)</h3>
           <div className="h-80 bg-gradient-to-r from-cyan-950 to-emerald-950 rounded-2xl flex items-end gap-6 p-8">
@@ -94,14 +89,12 @@ export default function Dashboard() {
           </div>
         </div>
 
-        {/* Recent Claims Table */}
-        <div className="bg-slate-900/80 border border-white/10 rounded-3xl p-10">
+        {/* Recent Claims */}
+        <div className="bg-slate-900/80 border border-white/10 rounded-3xl p-10 mb-12">
           <div className="flex justify-between items-center mb-6">
             <h3 className="text-2xl font-semibold">Recent Claims Activity</h3>
             <button 
-              onClick={() => {
-                alert("✅ Claims report downloaded! (Demo CSV)");
-              }}
+              onClick={() => alert("✅ Claims report downloaded! (Demo)")}
               className="bg-white/10 hover:bg-white/20 px-6 py-3 rounded-xl text-sm transition"
             >
               📥 Download Full Report
@@ -118,9 +111,9 @@ export default function Dashboard() {
                   <th className="pb-4 text-right">Savings</th>
                 </tr>
               </thead>
-              <tbody className="text-sm">
+              <tbody>
                 {fakeClaims.map((claim) => (
-                  <tr key={claim.id} className="border-b border-white/10 last:border-0 hover:bg-white/5">
+                  <tr key={claim.id} className="border-b border-white/10 last:border-0">
                     <td className="py-5 font-mono">{claim.id}</td>
                     <td className="py-5 text-slate-400">{claim.date}</td>
                     <td className="py-5">{claim.provider}</td>
@@ -130,6 +123,25 @@ export default function Dashboard() {
                 ))}
               </tbody>
             </table>
+          </div>
+        </div>
+
+        {/* Three Big Action Buttons */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <Link href="/onboarding" className="bg-cyan-400 hover:bg-cyan-300 text-slate-950 rounded-3xl p-10 text-center transition">
+            <div className="text-6xl mb-4">👥</div>
+            <div className="text-2xl font-semibold">Add New Employees</div>
+          </Link>
+
+          <div className="bg-slate-900/80 border border-white/10 rounded-3xl p-10 text-center hover:border-cyan-400 transition cursor-pointer">
+            <div className="text-6xl mb-4">📊</div>
+            <div className="text-2xl font-semibold">Download Claims Report</div>
+          </div>
+
+          <div className="bg-slate-900/80 border border-white/10 rounded-3xl p-10 text-center hover:border-purple-400 transition cursor-pointer"
+               onClick={() => alert('TPA Integration coming soon!')}>
+            <div className="text-6xl mb-4">🔗</div>
+            <div className="text-2xl font-semibold">Connect Your TPA</div>
           </div>
         </div>
       </div>
