@@ -23,6 +23,7 @@ export default function Home() {
 
   const checkNetwork = async () => {
     setError('');
+    setResult(null);   // Clear previous results
     const cleanZip = zipCodes.trim();
 
     if (!cleanZip) {
@@ -31,15 +32,13 @@ export default function Home() {
     }
 
     if (!validateZip(cleanZip)) {
-      setError("Please enter a valid 5-digit U.S. ZIP code (e.g., 63101)");
+      setError("Please enter a valid 5-digit U.S. ZIP code (example: 63101)");
       return;
     }
 
     setLoading(true);
-    setResult(null);
 
     try {
-      // Backend call for doctor count
       const backendRes = await fetch(`${BACKEND_URL}/api/zip-check`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -47,7 +46,6 @@ export default function Home() {
       });
       const backendData = await backendRes.json();
 
-      // Real city lookup
       const zipRes = await fetch(`https://api.zippopotam.us/us/${cleanZip}`);
       let city = "Your Area";
 
@@ -62,7 +60,7 @@ export default function Home() {
         coverageStrength: backendData.doctors > 100 ? 'Excellent' : backendData.doctors > 50 ? 'Strong' : 'Good'
       });
     } catch (e) {
-      setError("Unable to check coverage right now. Please try again.");
+      setError("Unable to check coverage. Please try again later.");
     }
     setLoading(false);
   };
@@ -120,7 +118,7 @@ export default function Home() {
             </div>
 
             {error && (
-              <p className="text-red-400 text-center mt-4 font-medium">{error}</p>
+              <p className="text-red-400 text-center mt-6 font-medium">{error}</p>
             )}
 
             {result && (
