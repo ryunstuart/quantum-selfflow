@@ -18,8 +18,7 @@ export default function Home() {
   }, []);
 
   const validateZip = (zip: string): boolean => {
-    const cleanZip = zip.trim();
-    return /^\d{5}$/.test(cleanZip); // Exactly 5 digits
+    return /^\d{5}$/.test(zip.trim());
   };
 
   const checkNetwork = async () => {
@@ -32,13 +31,15 @@ export default function Home() {
     }
 
     if (!validateZip(cleanZip)) {
-      setError("Please enter a valid 5-digit ZIP code (e.g. 63101)");
+      setError("Please enter a valid 5-digit U.S. ZIP code (e.g., 63101)");
       return;
     }
 
     setLoading(true);
+    setResult(null);
 
     try {
+      // Backend call for doctor count
       const backendRes = await fetch(`${BACKEND_URL}/api/zip-check`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -49,6 +50,7 @@ export default function Home() {
       // Real city lookup
       const zipRes = await fetch(`https://api.zippopotam.us/us/${cleanZip}`);
       let city = "Your Area";
+
       if (zipRes.ok) {
         const zipJson = await zipRes.json();
         city = `${zipJson.places[0]['place name']}, ${zipJson.places[0].state}`;
@@ -60,7 +62,7 @@ export default function Home() {
         coverageStrength: backendData.doctors > 100 ? 'Excellent' : backendData.doctors > 50 ? 'Strong' : 'Good'
       });
     } catch (e) {
-      setError("Unable to check coverage. Please try again.");
+      setError("Unable to check coverage right now. Please try again.");
     }
     setLoading(false);
   };
@@ -118,7 +120,7 @@ export default function Home() {
             </div>
 
             {error && (
-              <p className="text-red-400 text-center mt-4">{error}</p>
+              <p className="text-red-400 text-center mt-4 font-medium">{error}</p>
             )}
 
             {result && (
@@ -129,13 +131,6 @@ export default function Home() {
                 <div className="text-2xl text-slate-200">Priority PPO doctors found</div>
                 <div className="mt-8 inline-block bg-green-400/20 text-green-400 px-6 py-2 rounded-full text-sm">
                   Coverage Strength: <span className="font-semibold">{result.coverageStrength}</span>
-                </div>
-
-                <div className="mt-12 h-56 bg-slate-950 rounded-2xl relative overflow-hidden flex items-center justify-center border border-green-400/30">
-                  <div className="text-center z-10">
-                    <div className="text-5xl mb-4">📍</div>
-                    <div className="text-green-400 text-xl font-medium">Strong Local Network</div>
-                  </div>
                 </div>
               </div>
             )}
