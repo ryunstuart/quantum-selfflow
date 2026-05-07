@@ -96,10 +96,9 @@ export default function Home() {
           <p className="text-lg md:text-xl text-slate-300">Real-time Priority PPO network + instant savings</p>
         </div>
 
-        {/* ZIP Checker - Better Mobile Layout */}
+        {/* ZIP Checker */}
         <div className="bg-slate-900/90 border border-white/10 rounded-3xl p-8 md:p-12 mb-16">
           <h2 className="text-3xl md:text-4xl font-semibold text-center mb-10">Check Your Network Coverage</h2>
-          
           <div className="max-w-xl mx-auto">
             <div className="flex flex-col md:flex-row gap-3">
               <input
@@ -146,7 +145,6 @@ export default function Home() {
         <div className="bg-slate-900/90 border border-white/10 rounded-3xl p-8 md:p-12">
           <h2 className="text-3xl md:text-4xl font-semibold text-center mb-10">Estimate Your Potential Savings</h2>
           <div className="max-w-md mx-auto">
-            {/* Savings calculator code remains the same */}
             <div className="mb-8">
               <label className="block text-sm text-slate-400 mb-2">Annual Medical Claims Volume</label>
               <div className="relative">
