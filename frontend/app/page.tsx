@@ -19,6 +19,7 @@ export default function Home() {
   const checkNetwork = async () => {
     if (!zipCodes) return;
     setLoading(true);
+
     try {
       const response = await fetch(`${BACKEND_URL}/api/zip-check`, {
         method: 'POST',
@@ -26,7 +27,20 @@ export default function Home() {
         body: JSON.stringify({ zip_codes: zipCodes }),
       });
       const data = await response.json();
-      setResult(data);
+
+      // Simulate city name (we can connect real API later)
+      const cityNames: any = {
+        '63101': 'St. Louis, MO',
+        '63017': 'Chesterfield, MO',
+        '63301': 'St. Charles, MO',
+        '65201': 'Columbia, MO',
+      };
+
+      setResult({
+        ...data,
+        city: cityNames[zipCodes] || 'Your Area',
+        coverageStrength: data.doctors > 100 ? 'Excellent' : data.doctors > 50 ? 'Strong' : 'Good'
+      });
     } catch (e) {
       alert("Backend not responding.");
     }
@@ -35,7 +49,6 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-blue-950 text-white">
-      {/* Nav */}
       <nav className="border-b border-white/10 bg-black/80 backdrop-blur-md sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-6 py-5 flex justify-between items-center">
           <div className="flex items-center gap-3">
@@ -61,8 +74,8 @@ export default function Home() {
           <p className="text-xl text-slate-300">Real-time Priority PPO network + instant savings</p>
         </div>
 
-        {/* Improved ZIP Checker */}
-        <div className="bg-slate-900/90 border border-white/10 rounded-3xl p-12 mb-16">
+        {/* Enhanced ZIP Checker */}
+        <div className="bg-slate-900/90 border border-white/10 rounded-3xl p-12">
           <h2 className="text-4xl font-semibold text-center mb-10">Check Your Network Coverage</h2>
           
           <div className="max-w-xl mx-auto">
@@ -84,11 +97,33 @@ export default function Home() {
             </div>
 
             {result && (
-              <div className="mt-10 bg-gradient-to-br from-green-900/70 to-emerald-900/70 border border-green-400/50 rounded-3xl p-12 text-center">
-                <div className="text-6xl mb-6">✅ Excellent Coverage</div>
-                <div className="text-8xl font-bold text-green-400 my-4">{result.doctors}</div>
-                <div className="text-2xl text-slate-300">Priority PPO doctors found</div>
-                <p className="text-slate-400 mt-6">Strong network in your area. Employees can access high-quality care at lower cost.</p>
+              <div className="mt-12 bg-gradient-to-br from-green-900/70 to-emerald-900/70 border border-green-400/50 rounded-3xl p-12 text-center">
+                <div className="text-6xl mb-4">✅</div>
+                <div className="text-3xl font-semibold text-green-400">{result.city}</div>
+                <div className="text-7xl font-bold text-green-400 my-6">{result.doctors}</div>
+                <div className="text-2xl text-slate-200">Priority PPO doctors found</div>
+                <div className="mt-8 inline-block bg-green-400/20 text-green-400 px-6 py-2 rounded-full text-sm">
+                  Coverage Strength: <span className="font-semibold">{result.coverageStrength}</span>
+                </div>
+
+                {/* Simple Map-like Visual */}
+                <div className="mt-12 h-52 bg-slate-950 rounded-2xl relative overflow-hidden flex items-center justify-center">
+                  <div className="text-center">
+                    <div className="text-4xl mb-4">📍</div>
+                    <div className="text-green-400 text-xl font-medium">Strong Network Coverage</div>
+                    <div className="text-slate-400 text-sm mt-2">High density of Priority PPO providers in this area</div>
+                  </div>
+                  {/* Fake coverage dots */}
+                  <div className="absolute inset-0 opacity-30 pointer-events-none">
+                    {[...Array(12)].map((_, i) => (
+                      <div key={i} className="absolute w-3 h-3 bg-green-400 rounded-full" 
+                           style={{
+                             left: `${15 + Math.random() * 70}%`,
+                             top: `${20 + Math.random() * 60}%`,
+                           }} />
+                    ))}
+                  </div>
+                </div>
               </div>
             )}
           </div>
