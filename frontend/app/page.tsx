@@ -9,6 +9,7 @@ export default function Home() {
   const [result, setResult] = useState<any>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [toast, setToast] = useState<{ message: string; type: 'success' | 'error' } | null>(null);
 
   const [claimsVolume, setClaimsVolume] = useState('');
   const [projectedSavings, setProjectedSavings] = useState<number | null>(null);
@@ -21,6 +22,18 @@ export default function Home() {
     const saved = localStorage.getItem('selfflow_user');
     if (saved) setIsLoggedIn(true);
   }, []);
+
+  // Auto-hide toast
+  useEffect(() => {
+    if (toast) {
+      const timer = setTimeout(() => setToast(null), 4000);
+      return () => clearTimeout(timer);
+    }
+  }, [toast]);
+
+  const showToast = (message: string, type: 'success' | 'error' = 'success') => {
+    setToast({ message, type });
+  };
 
   const validateZip = (zip: string): boolean => /^\d{5}$/.test(zip.trim());
 
@@ -60,6 +73,7 @@ export default function Home() {
         city: city,
         coverageStrength: backendData.doctors > 100 ? 'Excellent' : backendData.doctors > 50 ? 'Strong' : 'Good'
       });
+      showToast("Network coverage checked successfully!", "success");
     } catch (e) {
       setError("Unable to check coverage. Please try again.");
     }
@@ -75,11 +89,22 @@ export default function Home() {
       const savings = Math.round(volume * (savingsRate / 100));
       setProjectedSavings(savings);
       setCalculating(false);
-    }, 600);
+      showToast(`Projected savings calculated: $${savings.toLocaleString()}`, "success");
+    }, 800);
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-blue-950 text-white">
+    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-blue-950 text-white relative">
+      {/* Toast Notification */}
+      {toast && (
+        <div className={`fixed top-6 left-1/2 -translate-x-1/2 z-50 px-6 py-4 rounded-2xl shadow-xl flex items-center gap-3 transition-all duration-300 ${
+          toast.type === 'success' ? 'bg-emerald-600' : 'bg-red-600'
+        }`}>
+          <span>{toast.type === 'success' ? '✅' : '❌'}</span>
+          <span>{toast.message}</span>
+        </div>
+      )}
+
       <nav className="border-b border-white/10 bg-black/80 backdrop-blur-md sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 md:px-6 py-4 flex justify-between items-center">
           <Link href="/" className="flex items-center gap-3 hover:opacity-90 transition">
@@ -134,7 +159,7 @@ export default function Home() {
             {error && <p className="text-red-400 text-center mt-4 font-medium">{error}</p>}
 
             {result && (
-              <div className="mt-12 bg-gradient-to-br from-green-900/70 to-emerald-900/70 border border-green-400/50 rounded-3xl p-10 md:p-12 text-center animate-fade-in">
+              <div className="mt-12 bg-gradient-to-br from-green-900/70 to-emerald-900/70 border border-green-400/50 rounded-3xl p-10 md:p-12 text-center">
                 <div className="text-6xl mb-4">✅</div>
                 <div className="text-3xl font-semibold text-green-400">{result.city}</div>
                 <div className="text-7xl font-bold text-green-400 my-6">{result.doctors}</div>
@@ -196,7 +221,7 @@ export default function Home() {
             </button>
 
             {projectedSavings && (
-              <div className="mt-12 p-10 bg-gradient-to-br from-emerald-900/50 to-green-900/50 border border-emerald-400/30 rounded-3xl text-center animate-fade-in">
+              <div className="mt-12 p-10 bg-gradient-to-br from-emerald-900/50 to-green-900/50 border border-emerald-400/30 rounded-3xl text-center">
                 <div className="text-emerald-400 text-6xl font-bold">${projectedSavings.toLocaleString()}</div>
                 <div className="text-2xl text-slate-300 mt-3">Estimated Annual Savings</div>
                 <div className="text-emerald-400">at {savingsRate}% average reduction</div>
