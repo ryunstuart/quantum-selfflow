@@ -13,8 +13,8 @@ export default function Onboarding() {
   const progress = ((step - 1) / 3) * 100;
 
   const nextStep = () => {
-    if (step === 1 && !companyName) return;
-    if (step === 2 && !employeeCount) return;
+    if (step === 1 && !companyName.trim()) return;
+    if (step === 2 && !employeeCount.trim()) return;
     if (step === 3 && !planType) return;
     
     if (step < 3) {
@@ -23,8 +23,8 @@ export default function Onboarding() {
       setLoading(true);
       setTimeout(() => {
         const userData = {
-          companyName,
-          employeeCount,
+          companyName: companyName.trim(),
+          employeeCount: employeeCount.trim(),
           planType,
           activatedAt: new Date().toISOString()
         };
@@ -36,8 +36,10 @@ export default function Onboarding() {
     }
   };
 
+  const currentYear = new Date().getFullYear();
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-blue-950 text-white">
+    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-blue-950 text-white flex flex-col">
       <nav className="border-b border-white/10 bg-black/80 backdrop-blur-md sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
           <Link href="/" className="flex items-center gap-3 hover:opacity-90 transition">
@@ -48,7 +50,7 @@ export default function Onboarding() {
         </div>
       </nav>
 
-      <div className="max-w-2xl mx-auto px-6 pt-16 pb-24">
+      <div className="max-w-2xl mx-auto px-6 pt-16 pb-24 flex-1">
         <div className="text-center mb-12">
           <div className="inline-block bg-cyan-400/10 text-cyan-400 text-sm px-4 py-2 rounded-full mb-4">Step {step} of 3</div>
           <h1 className="text-5xl font-bold tracking-tighter">Let’s Get You Set Up</h1>
@@ -126,8 +128,8 @@ export default function Onboarding() {
           <button
             onClick={nextStep}
             disabled={loading || 
-              (step === 1 && !companyName) || 
-              (step === 2 && !employeeCount) || 
+              (step === 1 && !companyName.trim()) || 
+              (step === 2 && !employeeCount.trim()) || 
               (step === 3 && !planType)}
             className="flex-1 py-6 bg-cyan-400 hover:bg-cyan-300 disabled:bg-slate-700 text-slate-950 font-semibold rounded-3xl text-xl transition-all active:scale-[0.98]"
           >
@@ -135,6 +137,14 @@ export default function Onboarding() {
           </button>
         </div>
       </div>
+
+      {/* Auto Year Footer */}
+      <footer className="border-t border-white/10 bg-black/60 py-12 mt-auto">
+        <div className="max-w-7xl mx-auto px-6 text-center text-slate-400 text-sm">
+          © {currentYear} Quantum SelfFlow • Powered by Quantum One Networks<br />
+          Self-serve cost containment platform for self-insured employers and regional TPAs
+        </div>
+      </footer>
     </div>
   );
 }
