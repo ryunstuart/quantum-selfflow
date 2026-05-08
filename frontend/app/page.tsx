@@ -46,12 +46,11 @@ export default function Home() {
       return;
     }
     if (!validateZip(cleanZip)) {
-      setError("Please enter a valid 5-digit ZIP code (e.g. 63101)");
+      setError("Please enter a valid 5-digit ZIP code");
       return;
     }
 
     setLoading(true);
-
     try {
       const backendRes = await fetch(`${BACKEND_URL}/api/zip-check`, {
         method: 'POST',
@@ -69,7 +68,7 @@ export default function Home() {
 
       setResult({
         ...backendData,
-        city: city,
+        city,
         coverageStrength: backendData.doctors > 100 ? 'Excellent' : backendData.doctors > 50 ? 'Strong' : 'Good'
       });
 
@@ -83,19 +82,18 @@ export default function Home() {
   const calculateSavings = () => {
     if (!claimsVolume) return;
     setCalculating(true);
-
     setTimeout(() => {
       const volume = parseFloat(claimsVolume);
       const savings = Math.round(volume * (savingsRate / 100));
       setProjectedSavings(savings);
       setCalculating(false);
-      showToast(`Projected savings calculated: $${savings.toLocaleString()}`);
+      showToast(`Projected savings: $${savings.toLocaleString()}`);
     }, 700);
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-blue-950 text-white relative">
-      {/* Toast Notification */}
+    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-blue-950 text-white relative flex flex-col">
+      {/* Toast */}
       {toast && (
         <div className={`fixed top-6 left-1/2 -translate-x-1/2 z-[100] px-8 py-4 rounded-2xl shadow-2xl flex items-center gap-3 text-white transition-all duration-300 ${
           toast.type === 'success' ? 'bg-emerald-600' : 'bg-red-600'
@@ -118,15 +116,16 @@ export default function Home() {
             <Link href="/" className="hover:text-cyan-400">Home</Link>
             {!isLoggedIn && <Link href="/onboarding" className="hover:text-cyan-400">Get Started</Link>}
             {isLoggedIn && <Link href="/dashboard" className="hover:text-cyan-400">Dashboard</Link>}
+            {isLoggedIn && <Link href="/myplan" className="hover:text-cyan-400">My Plan</Link>}
             {isLoggedIn && <button onClick={() => { localStorage.removeItem('selfflow_user'); window.location.reload(); }} className="text-red-400">Logout</button>}
           </div>
         </div>
       </nav>
 
-      <div className="max-w-5xl mx-auto px-4 md:px-6 pt-12 md:pt-20 pb-24">
+      <div className="max-w-5xl mx-auto px-4 md:px-6 pt-12 md:pt-20 pb-24 flex-1">
         <div className="text-center mb-12 md:mb-16">
           <h1 className="text-5xl md:text-7xl font-bold tracking-tighter mb-6">Plug in.<br />Start Saving.</h1>
-          <p className="text-lg md:text-xl text-slate-300">Real-time Priority PPO network + instant savings</p>
+          <p className="text-lg md:text-xl text-slate-300">Real-time Priority PPO network + instant savings for self-insured employers and TPAs</p>
         </div>
 
         {/* ZIP Checker */}
@@ -144,8 +143,8 @@ export default function Home() {
               />
               <button
                 onClick={checkNetwork}
-                disabled={loading || !zipCodes}
-                className="bg-cyan-400 hover:bg-cyan-300 disabled:bg-slate-600 text-slate-950 font-semibold px-8 md:px-12 py-5 rounded-2xl text-lg transition whitespace-nowrap flex items-center justify-center min-w-[140px]"
+                disabled={loading || !zipCodes.trim()}
+                className="bg-cyan-400 hover:bg-cyan-300 disabled:bg-slate-600 text-slate-950 font-semibold px-8 md:px-12 py-5 rounded-2xl text-lg transition whitespace-nowrap flex items-center justify-center min-w-[160px]"
               >
                 {loading ? (
                   <span className="flex items-center gap-2">
@@ -229,6 +228,14 @@ export default function Home() {
           </div>
         </div>
       </div>
+
+      {/* Footer */}
+      <footer className="border-t border-white/10 bg-black/60 py-12 mt-auto">
+        <div className="max-w-7xl mx-auto px-6 text-center text-slate-400 text-sm">
+          © 2026 Quantum SelfFlow • Powered by Quantum One Networks<br />
+          Self-serve cost containment platform for self-insured employers and regional TPAs
+        </div>
+      </footer>
     </div>
   );
 }
