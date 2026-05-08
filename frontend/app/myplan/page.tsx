@@ -29,63 +29,90 @@ export default function MyPlan() {
             <Link href="/" className="hover:text-cyan-400">Home</Link>
             <Link href="/dashboard" className="hover:text-cyan-400">Dashboard</Link>
             <Link href="/myplan" className="text-cyan-400 font-medium">My Plan</Link>
-            <button onClick={() => { localStorage.removeItem('selfflow_user'); window.location.href = '/'; }} className="text-red-400">Logout</button>
+            <button onClick={() => { localStorage.removeItem('selfflow_user'); window.location.href = '/'; }} className="text-red-400 hover:text-red-500">Logout</button>
           </div>
         </div>
       </nav>
 
-      <div className="max-w-4xl mx-auto px-4 md:px-6 py-12">
+      <div className="max-w-5xl mx-auto px-4 md:px-6 py-12">
         <h1 className="text-5xl font-bold tracking-tighter mb-2">My Plan</h1>
-        <p className="text-slate-400 text-xl">Quantum SelfFlow • Active</p>
+        <p className="text-slate-400 text-xl">Quantum SelfFlow • Priority PPO Network</p>
 
         <div className="mt-12 grid grid-cols-1 lg:grid-cols-2 gap-8">
+          {/* Plan Overview */}
           <div className="bg-slate-900/80 border border-white/10 rounded-3xl p-10">
-            <h3 className="text-xl font-semibold mb-8 text-cyan-400">Plan Details</h3>
-            <div className="space-y-6 text-lg">
+            <h3 className="text-2xl font-semibold mb-8">Plan Summary</h3>
+            
+            <div className="space-y-8">
               <div>
-                <div className="text-sm text-slate-400">Company</div>
-                <div className="font-semibold">{user?.companyName || "Your Company"}</div>
+                <div className="text-slate-400 text-sm">Company</div>
+                <div className="text-3xl font-semibold mt-1">{user?.companyName || "Your Company"}</div>
               </div>
-              <div>
-                <div className="text-sm text-slate-400">Plan Type</div>
-                <div className="font-semibold">{user?.planType || "Self-Insured"}</div>
-              </div>
-              <div>
-                <div className="text-sm text-slate-400">Covered Lives</div>
-                <div className="font-semibold">{user?.employeeCount || "N/A"}</div>
-              </div>
-              <div>
-                <div className="text-sm text-slate-400">Status</div>
-                <div className="inline-flex items-center gap-2 bg-emerald-400/20 text-emerald-400 px-4 py-1 rounded-full text-sm">
-                  <span className="text-lg">●</span> Active since May 6, 2026
+
+              <div className="grid grid-cols-2 gap-8">
+                <div>
+                  <div className="text-slate-400 text-sm">Lives Covered</div>
+                  <div className="text-4xl font-bold mt-1">{user?.employeeCount || "—"}</div>
                 </div>
+                <div>
+                  <div className="text-slate-400 text-sm">Plan Type</div>
+                  <div className="text-2xl font-semibold mt-1">{user?.planType || "Self-Funded"}</div>
+                </div>
+              </div>
+
+              <div>
+                <div className="text-slate-400 text-sm">Activated On</div>
+                <div className="text-xl">May 6, 2026</div>
               </div>
             </div>
           </div>
 
-          <div className="bg-slate-900/80 border border-white/10 rounded-3xl p-10">
-            <h3 className="text-xl font-semibold mb-8">Performance Snapshot</h3>
-            <div className="space-y-8">
-              <div className="flex justify-between items-center">
-                <span>Savings This Month</span>
-                <span className="text-3xl font-bold text-emerald-400">$248,700</span>
+          {/* Network Strength */}
+          <div className="bg-slate-900/80 border border-emerald-500/30 rounded-3xl p-10">
+            <h3 className="text-2xl font-semibold mb-6">Network Strength</h3>
+            <div className="text-7xl font-bold text-emerald-400">Excellent</div>
+            <div className="text-emerald-400 mt-2">• 87% of your ZIP codes have strong coverage</div>
+            
+            <div className="mt-10 pt-8 border-t border-white/10">
+              <div className="flex justify-between text-sm mb-4">
+                <span>Priority PPO Doctors</span>
+                <span className="font-semibold">2,847</span>
               </div>
-              <div className="flex justify-between items-center">
-                <span>Claims Routed</span>
-                <span className="text-3xl font-bold">2,847</span>
-              </div>
-              <div className="flex justify-between items-center">
-                <span>Avg. Savings per Claim</span>
-                <span className="text-3xl font-bold text-emerald-400">21.4%</span>
+              <div className="h-3 bg-white/10 rounded-full overflow-hidden">
+                <div className="h-full w-[87%] bg-emerald-400 rounded-full"></div>
               </div>
             </div>
           </div>
         </div>
 
-        <div className="mt-12 text-center">
-          <Link href="/dashboard" className="inline-block bg-cyan-400 hover:bg-cyan-300 text-slate-950 font-semibold px-12 py-5 rounded-2xl text-lg">
-            ← Back to Dashboard
-          </Link>
+        {/* Active Add-ons */}
+        <div className="mt-12">
+          <h3 className="text-2xl font-semibold mb-8">Active Add-ons</h3>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="bg-slate-900/80 border border-cyan-400/50 rounded-3xl p-8">
+              <div className="text-5xl mb-4">🛡️</div>
+              <div className="font-semibold">Sentinel AI</div>
+              <div className="text-emerald-400 text-sm mt-1">ACTIVE • Real-time steering enabled</div>
+            </div>
+
+            <div className="bg-slate-900/80 border border-white/10 rounded-3xl p-8 opacity-75">
+              <div className="text-5xl mb-4">🏥</div>
+              <div className="font-semibold">Hybrid Care</div>
+              <div className="text-slate-400 text-sm mt-1">Not Active</div>
+              <button className="mt-6 text-cyan-400 text-sm font-medium">Activate →</button>
+            </div>
+
+            <div className="bg-slate-900/80 border border-white/10 rounded-3xl p-8 opacity-75">
+              <div className="text-5xl mb-4">📈</div>
+              <div className="font-semibold">Outcomes Network</div>
+              <div className="text-slate-400 text-sm mt-1">Not Active</div>
+              <button className="mt-6 text-cyan-400 text-sm font-medium">Activate →</button>
+            </div>
+          </div>
+        </div>
+
+        <div className="mt-16 text-center text-slate-400 text-sm">
+          Questions? Contact your Quantum SelfFlow success manager or email support@quantumselfflow.com
         </div>
       </div>
     </div>
