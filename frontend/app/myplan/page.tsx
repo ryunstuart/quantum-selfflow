@@ -13,8 +13,10 @@ export default function MyPlan() {
     }
   }, []);
 
+  const currentYear = new Date().getFullYear();
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-blue-950 text-white">
+    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-blue-950 text-white flex flex-col">
       <nav className="border-b border-white/10 bg-black/80 backdrop-blur-md sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 md:px-6 py-4 flex justify-between items-center">
           <Link href="/" className="flex items-center gap-3 hover:opacity-90 transition">
@@ -29,12 +31,17 @@ export default function MyPlan() {
             <Link href="/" className="hover:text-cyan-400">Home</Link>
             <Link href="/dashboard" className="hover:text-cyan-400">Dashboard</Link>
             <Link href="/myplan" className="text-cyan-400 font-medium">My Plan</Link>
-            <button onClick={() => { localStorage.removeItem('selfflow_user'); window.location.href = '/'; }} className="text-red-400 hover:text-red-500">Logout</button>
+            <button 
+              onClick={() => { localStorage.removeItem('selfflow_user'); window.location.href = '/'; }} 
+              className="text-red-400 hover:text-red-500"
+            >
+              Logout
+            </button>
           </div>
         </div>
       </nav>
 
-      <div className="max-w-5xl mx-auto px-4 md:px-6 py-12">
+      <div className="max-w-5xl mx-auto px-4 md:px-6 py-12 flex-1">
         <h1 className="text-5xl font-bold tracking-tighter mb-2">My Plan</h1>
         <p className="text-slate-400 text-xl">Quantum SelfFlow • Priority PPO Network</p>
 
@@ -115,6 +122,14 @@ export default function MyPlan() {
           Questions? Contact your Quantum SelfFlow success manager or email support@quantumselfflow.com
         </div>
       </div>
+
+      {/* Auto Year Footer */}
+      <footer className="border-t border-white/10 bg-black/60 py-12 mt-auto">
+        <div className="max-w-7xl mx-auto px-6 text-center text-slate-400 text-sm">
+          © {currentYear} Quantum SelfFlow • Powered by Quantum One Networks<br />
+          Self-serve cost containment platform for self-insured employers and regional TPAs
+        </div>
+      </footer>
     </div>
   );
 }
