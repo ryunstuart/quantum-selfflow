@@ -23,10 +23,10 @@ export default function Home() {
     if (saved) setIsLoggedIn(true);
   }, []);
 
-  // Auto-hide toast
+  // Auto hide toast
   useEffect(() => {
     if (toast) {
-      const timer = setTimeout(() => setToast(null), 4000);
+      const timer = setTimeout(() => setToast(null), 3500);
       return () => clearTimeout(timer);
     }
   }, [toast]);
@@ -73,7 +73,8 @@ export default function Home() {
         city: city,
         coverageStrength: backendData.doctors > 100 ? 'Excellent' : backendData.doctors > 50 ? 'Strong' : 'Good'
       });
-      showToast("Network coverage checked successfully!", "success");
+
+      showToast("✅ Network coverage checked successfully!", "success");
     } catch (e) {
       setError("Unable to check coverage. Please try again.");
     }
@@ -83,25 +84,24 @@ export default function Home() {
   const calculateSavings = () => {
     if (!claimsVolume) return;
     setCalculating(true);
-    
+
     setTimeout(() => {
       const volume = parseFloat(claimsVolume);
       const savings = Math.round(volume * (savingsRate / 100));
       setProjectedSavings(savings);
       setCalculating(false);
-      showToast(`Projected savings calculated: $${savings.toLocaleString()}`, "success");
-    }, 800);
+      showToast(`✅ Projected savings calculated: $${savings.toLocaleString()}`, "success");
+    }, 700);
   };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-blue-950 text-white relative">
       {/* Toast Notification */}
       {toast && (
-        <div className={`fixed top-6 left-1/2 -translate-x-1/2 z-50 px-6 py-4 rounded-2xl shadow-xl flex items-center gap-3 transition-all duration-300 ${
+        <div className={`fixed top-6 left-1/2 -translate-x-1/2 z-[100] px-8 py-4 rounded-2xl shadow-2xl flex items-center gap-3 text-white transition-all duration-300 ${
           toast.type === 'success' ? 'bg-emerald-600' : 'bg-red-600'
         }`}>
-          <span>{toast.type === 'success' ? '✅' : '❌'}</span>
-          <span>{toast.message}</span>
+          {toast.type === 'success' ? '✅' : '❌'} {toast.message}
         </div>
       )}
 
