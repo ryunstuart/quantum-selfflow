@@ -10,9 +10,7 @@ export default function Dashboard() {
 
   useEffect(() => {
     const saved = localStorage.getItem('selfflow_user');
-    if (saved) {
-      setUser(JSON.parse(saved));
-    }
+    if (saved) setUser(JSON.parse(saved));
   }, []);
 
   const logout = () => {
@@ -35,7 +33,7 @@ export default function Dashboard() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-blue-950 text-white">
+    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-blue-950 text-white pb-20">
       <nav className="border-b border-white/10 bg-black/80 backdrop-blur-md sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 md:px-6 py-4 flex justify-between items-center">
           <Link href="/" className="flex items-center gap-3 hover:opacity-90 transition">
@@ -55,65 +53,67 @@ export default function Dashboard() {
       </nav>
 
       <div className="max-w-7xl mx-auto px-4 md:px-6 py-10">
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 gap-4">
+        {/* Header */}
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 gap-6">
           <div>
-            <h1 className="text-5xl font-bold tracking-tighter">
+            <h1 className="text-5xl md:text-6xl font-bold tracking-tighter">
               Welcome back, {user?.companyName || "Your Company"}
             </h1>
-            <p className="text-slate-400 text-xl mt-1">
+            <p className="text-slate-400 text-xl mt-2">
               Active since May 6, 2026 • {user?.employeeCount || "N/A"} lives
             </p>
           </div>
-          <div className="text-right">
-            <div className="text-emerald-400 text-5xl font-bold">10.5%</div>
+          <div className="text-right bg-slate-900/70 px-8 py-6 rounded-3xl border border-emerald-400/30">
+            <div className="text-emerald-400 text-6xl font-bold">10.5%</div>
             <div className="text-sm text-slate-400">Avg Monthly Savings</div>
           </div>
         </div>
 
         {/* Key Metrics */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-12">
-          <div className="bg-slate-900/80 border border-emerald-500/30 rounded-3xl p-8">
-            <div className="text-emerald-400 text-sm">TOTAL SAVED YTD</div>
-            <div className="text-5xl font-bold mt-3">$1,248,700</div>
-            <div className="text-emerald-400 text-sm mt-1">↑ 24% this quarter</div>
-          </div>
-          <div className="bg-slate-900/80 border border-white/10 rounded-3xl p-8">
-            <div className="text-cyan-400 text-sm">CLAIMS PROCESSED</div>
-            <div className="text-5xl font-bold mt-3">14,872</div>
-            <div className="text-slate-400 text-sm mt-1">This month</div>
-          </div>
-          <div className="bg-slate-900/80 border border-white/10 rounded-3xl p-8">
-            <div className="text-amber-400 text-sm">NETWORK UTILIZATION</div>
-            <div className="text-5xl font-bold mt-3">92%</div>
-            <div className="text-slate-400 text-sm mt-1">Priority PPO</div>
-          </div>
-          <div className="bg-slate-900/80 border border-white/10 rounded-3xl p-8">
-            <div className="text-purple-400 text-sm">TREND REDUCTION</div>
-            <div className="text-5xl font-bold mt-3">-11.4%</div>
-            <div className="text-slate-400 text-sm mt-1">vs industry average</div>
-          </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+          {[
+            { label: "TOTAL SAVED YTD", value: "$1,248,700", change: "↑ 24% this quarter", color: "emerald" },
+            { label: "CLAIMS PROCESSED", value: "14,872", change: "This month", color: "cyan" },
+            { label: "NETWORK UTILIZATION", value: "92%", change: "Priority PPO", color: "amber" },
+            { label: "TREND REDUCTION", value: "-11.4%", change: "vs industry", color: "purple" },
+          ].map((m, i) => (
+            <div key={i} className="bg-slate-900/80 border border-white/10 rounded-3xl p-8 hover:border-white/30 transition-all">
+              <div className={`text-${m.color}-400 text-sm font-medium`}>{m.label}</div>
+              <div className="text-5xl font-bold mt-4">{m.value}</div>
+              <div className="text-slate-400 text-sm mt-2">{m.change}</div>
+            </div>
+          ))}
         </div>
 
         {/* Savings Trend */}
-        <div className="bg-slate-900/80 border border-white/10 rounded-3xl p-10 mb-12">
-          <h3 className="text-2xl font-semibold mb-6">Monthly Savings Trend (Last 6 Months)</h3>
-          <div className="h-80 bg-gradient-to-r from-cyan-950 to-emerald-950 rounded-2xl flex items-end gap-6 p-8">
-            {[42, 71, 88, 76, 105, 138].map((h, i) => (
-              <div key={i} className="flex-1 flex flex-col items-center justify-end h-full gap-2">
-                <div className="text-emerald-400 text-xs font-mono">${h}k</div>
-                <div className="bg-gradient-to-t from-cyan-400 to-emerald-400 w-full rounded-t" style={{height: `${h}%`}} />
+        <div className="bg-slate-900/80 border border-white/10 rounded-3xl p-8 md:p-10 mb-12">
+          <h3 className="text-2xl font-semibold mb-8">Monthly Savings Trend (Last 6 Months)</h3>
+          <div className="h-80 flex items-end gap-4 md:gap-6 px-4">
+            {[42, 71, 88, 76, 105, 138].map((height, i) => (
+              <div key={i} className="flex-1 flex flex-col items-center justify-end h-full gap-3 group">
+                <div className="text-emerald-400 text-xs font-mono opacity-0 group-hover:opacity-100 transition"> ${height}k </div>
+                <div 
+                  className="bg-gradient-to-t from-cyan-400 to-emerald-400 w-full rounded-t-xl transition-all duration-700"
+                  style={{ height: `${height}%` }}
+                />
               </div>
             ))}
           </div>
         </div>
 
         {/* Recent Claims */}
-        <div className="bg-slate-900/80 border border-white/10 rounded-3xl p-10 mb-12">
-          <div className="flex justify-between items-center mb-6">
+        <div className="bg-slate-900/80 border border-white/10 rounded-3xl p-8 md:p-10 mb-12">
+          <div className="flex justify-between items-center mb-8">
             <h3 className="text-2xl font-semibold">Recent Claims Activity</h3>
+            <button 
+              onClick={() => alert("✅ Full claims report downloaded!")}
+              className="bg-white/10 hover:bg-white/20 px-6 py-3 rounded-2xl text-sm transition"
+            >
+              📥 Download Report
+            </button>
           </div>
           <div className="overflow-x-auto">
-            <table className="w-full">
+            <table className="w-full min-w-[700px]">
               <thead>
                 <tr className="border-b border-white/10 text-left text-sm text-slate-400">
                   <th className="pb-4">Claim ID</th>
@@ -123,14 +123,14 @@ export default function Dashboard() {
                   <th className="pb-4 text-right">Savings</th>
                 </tr>
               </thead>
-              <tbody className="text-sm">
+              <tbody>
                 {fakeClaims.map((claim) => (
-                  <tr key={claim.id} className="border-b border-white/10 last:border-0 hover:bg-white/5">
-                    <td className="py-5 font-mono">{claim.id}</td>
-                    <td className="py-5 text-slate-400">{claim.date}</td>
-                    <td className="py-5">{claim.provider}</td>
-                    <td className="py-5 text-right">{claim.amount}</td>
-                    <td className="py-5 text-right text-emerald-400 font-medium">{claim.savings}</td>
+                  <tr key={claim.id} className="border-b border-white/10 hover:bg-white/5 transition">
+                    <td className="py-6 font-mono">{claim.id}</td>
+                    <td className="py-6 text-slate-400">{claim.date}</td>
+                    <td className="py-6">{claim.provider}</td>
+                    <td className="py-6 text-right">{claim.amount}</td>
+                    <td className="py-6 text-right text-emerald-400 font-medium">{claim.savings}</td>
                   </tr>
                 ))}
               </tbody>
@@ -139,41 +139,33 @@ export default function Dashboard() {
         </div>
 
         {/* Quick Action Buttons */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-          <button 
-            onClick={() => setShowAddModal(true)}
-            className="bg-cyan-400 hover:bg-cyan-300 text-slate-950 rounded-3xl p-10 text-center transition-all active:scale-95"
-          >
-            <div className="text-6xl mb-4">👥</div>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
+          <button onClick={() => setShowAddModal(true)} className="bg-cyan-400 hover:bg-cyan-300 active:scale-[0.97] text-slate-950 rounded-3xl p-10 text-center transition-all duration-200">
+            <div className="text-6xl mb-6">👥</div>
             <div className="text-2xl font-semibold">Add New Employees</div>
-            <div className="text-sm text-slate-700 mt-1">Route them through Priority PPO</div>
+            <div className="text-sm opacity-75 mt-2">Instant Priority PPO routing</div>
           </button>
 
-          <button 
-            onClick={() => alert("✅ Full claims report downloaded as CSV!")}
-            className="bg-slate-900/80 border border-white/10 hover:border-cyan-400 rounded-3xl p-10 text-center transition-all active:scale-95"
-          >
-            <div className="text-6xl mb-4">📊</div>
+          <button onClick={() => alert("✅ Claims report downloaded!")} className="bg-slate-900/80 border border-white/10 hover:border-cyan-400 active:scale-[0.97] rounded-3xl p-10 text-center transition-all duration-200">
+            <div className="text-6xl mb-6">📊</div>
             <div className="text-2xl font-semibold">Download Claims Report</div>
-            <div className="text-sm text-slate-400 mt-1">Last 90 days</div>
+            <div className="text-sm text-slate-400 mt-2">Last 90 days • CSV</div>
           </button>
 
-          <button 
-            onClick={() => alert("🔗 TPA Integration module coming soon!\nWe'll notify you when ready.")}
-            className="bg-slate-900/80 border border-white/10 hover:border-purple-400 rounded-3xl p-10 text-center transition-all active:scale-95"
-          >
-            <div className="text-6xl mb-4">🔗</div>
+          <button onClick={() => alert("🔗 TPA Integration coming soon!")} className="bg-slate-900/80 border border-white/10 hover:border-purple-400 active:scale-[0.97] rounded-3xl p-10 text-center transition-all duration-200">
+            <div className="text-6xl mb-6">🔗</div>
             <div className="text-2xl font-semibold">Connect Your TPA</div>
-            <div className="text-sm text-slate-400 mt-1">White-label access</div>
+            <div className="text-sm text-slate-400 mt-2">White-label access</div>
           </button>
         </div>
 
-        {/* Available Add-ons */}
+        {/* Add-ons */}
         <div className="bg-slate-900/80 border border-white/10 rounded-3xl p-10">
           <h3 className="text-2xl font-semibold mb-2">Available Add-ons</h3>
-          <p className="text-slate-400 mb-8">One-click activation. Powered by Quantum One Networks.</p>
+          <p className="text-slate-400 mb-10">One-click activation. Powered by Quantum One Networks.</p>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {/* Sentinel AI - Active */}
             <div className="border border-cyan-400/50 bg-slate-900/50 rounded-3xl p-8">
               <div className="text-5xl mb-4">🛡️</div>
               <div className="font-semibold text-xl mb-1">Sentinel AI</div>
@@ -181,6 +173,7 @@ export default function Dashboard() {
               <div className="inline-block bg-emerald-400/20 text-emerald-400 text-xs px-4 py-1 rounded-full">ACTIVE</div>
             </div>
 
+            {/* Hybrid Care */}
             <div className="border border-white/10 hover:border-cyan-400 rounded-3xl p-8 transition cursor-pointer group">
               <div className="text-5xl mb-4 group-hover:scale-110 transition">🏥</div>
               <div className="font-semibold text-xl mb-1">Hybrid Care</div>
@@ -188,6 +181,7 @@ export default function Dashboard() {
               <button className="text-cyan-400 text-sm font-medium">Activate →</button>
             </div>
 
+            {/* Outcomes Network */}
             <div className="border border-white/10 hover:border-cyan-400 rounded-3xl p-8 transition cursor-pointer group">
               <div className="text-5xl mb-4 group-hover:scale-110 transition">📈</div>
               <div className="font-semibold text-xl mb-1">Outcomes Network</div>
@@ -198,34 +192,21 @@ export default function Dashboard() {
         </div>
       </div>
 
-      {/* Add New Employees Modal */}
+      {/* Add Employees Modal */}
       {showAddModal && (
         <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-[200] p-4">
           <div className="bg-slate-900 border border-white/10 rounded-3xl p-10 w-full max-w-md">
             <h3 className="text-3xl font-semibold mb-8">Add New Employees</h3>
-            
             <input
               type="number"
               placeholder="Number of new employees / lives"
-              className="w-full bg-slate-800 border border-white/20 rounded-2xl px-6 py-5 text-lg mb-8"
+              className="w-full bg-slate-800 border border-white/20 rounded-2xl px-6 py-5 text-lg mb-8 focus:outline-none focus:border-cyan-400"
               value={newEmployeeCount}
               onChange={(e) => setNewEmployeeCount(e.target.value)}
             />
-
             <div className="flex gap-4">
-              <button 
-                onClick={() => setShowAddModal(false)}
-                className="flex-1 py-4 border border-white/20 rounded-2xl font-medium"
-              >
-                Cancel
-              </button>
-              <button 
-                onClick={handleAddEmployees}
-                disabled={!newEmployeeCount}
-                className="flex-1 bg-cyan-400 hover:bg-cyan-300 disabled:bg-slate-700 text-slate-950 font-semibold py-4 rounded-2xl"
-              >
-                Add Employees
-              </button>
+              <button onClick={() => setShowAddModal(false)} className="flex-1 py-4 border border-white/20 rounded-2xl font-medium">Cancel</button>
+              <button onClick={handleAddEmployees} disabled={!newEmployeeCount} className="flex-1 bg-cyan-400 hover:bg-cyan-300 disabled:bg-slate-700 text-slate-950 font-semibold py-4 rounded-2xl">Add Employees</button>
             </div>
           </div>
         </div>
