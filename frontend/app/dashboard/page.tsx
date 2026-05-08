@@ -5,7 +5,6 @@ import { useState, useEffect } from 'react';
 
 export default function Dashboard() {
   const [user, setUser] = useState<any>(null);
-  const [activeAddons, setActiveAddons] = useState(['Sentinel AI']);
 
   useEffect(() => {
     const saved = localStorage.getItem('selfflow_user');
@@ -19,17 +18,10 @@ export default function Dashboard() {
     window.location.href = '/';
   };
 
-  const toggleAddon = (addon: string) => {
-    if (activeAddons.includes(addon)) {
-      setActiveAddons(activeAddons.filter(a => a !== addon));
-    } else {
-      setActiveAddons([...activeAddons, addon]);
-    }
-  };
-
   const fakeClaims = [
     { id: "CL-7842", date: "May 5", provider: "St. Louis Orthopedics", amount: "$2,847", savings: "$612" },
     { id: "CL-7841", date: "May 4", provider: "Midwest Imaging", amount: "$1,394", savings: "$298" },
+    { id: "CL-7840", date: "May 3", provider: "SSM Health", amount: "$3,210", savings: "$874" },
   ];
 
   return (
@@ -64,46 +56,105 @@ export default function Dashboard() {
           </div>
         </div>
 
-        {/* Metrics - unchanged for brevity */}
+        {/* Key Metrics */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-12">
-          {/* ... your existing 4 metric cards ... */}
+          <div className="bg-slate-900/80 border border-emerald-500/30 rounded-3xl p-8">
+            <div className="text-emerald-400 text-sm">TOTAL SAVED YTD</div>
+            <div className="text-5xl font-bold mt-3">$1,248,700</div>
+            <div className="text-emerald-400 text-sm mt-1">↑ 24% this quarter</div>
+          </div>
+          <div className="bg-slate-900/80 border border-white/10 rounded-3xl p-8">
+            <div className="text-cyan-400 text-sm">CLAIMS PROCESSED</div>
+            <div className="text-5xl font-bold mt-3">14,872</div>
+            <div className="text-slate-400 text-sm mt-1">This month</div>
+          </div>
+          <div className="bg-slate-900/80 border border-white/10 rounded-3xl p-8">
+            <div className="text-amber-400 text-sm">NETWORK UTILIZATION</div>
+            <div className="text-5xl font-bold mt-3">92%</div>
+            <div className="text-slate-400 text-sm mt-1">Priority PPO</div>
+          </div>
+          <div className="bg-slate-900/80 border border-white/10 rounded-3xl p-8">
+            <div className="text-purple-400 text-sm">TREND REDUCTION</div>
+            <div className="text-5xl font-bold mt-3">-11.4%</div>
+            <div className="text-slate-400 text-sm mt-1">vs industry average</div>
+          </div>
         </div>
 
-        {/* Savings Trend - unchanged */}
+        {/* Savings Trend Chart */}
         <div className="bg-slate-900/80 border border-white/10 rounded-3xl p-10 mb-12">
-          {/* ... your existing chart ... */}
+          <h3 className="text-2xl font-semibold mb-6">Monthly Savings Trend (Last 6 Months)</h3>
+          <div className="h-80 bg-gradient-to-r from-cyan-950 to-emerald-950 rounded-2xl flex items-end gap-6 p-8">
+            {[42, 71, 88, 76, 105, 138].map((h, i) => (
+              <div key={i} className="flex-1 flex flex-col items-center justify-end h-full gap-2">
+                <div className="text-emerald-400 text-xs font-mono">${h}k</div>
+                <div className="bg-gradient-to-t from-cyan-400 to-emerald-400 w-full rounded-t" style={{height: `${h}%`}} />
+              </div>
+            ))}
+          </div>
         </div>
 
-        {/* Recent Claims - unchanged */}
+        {/* Recent Claims */}
         <div className="bg-slate-900/80 border border-white/10 rounded-3xl p-10 mb-12">
-          {/* ... your existing table ... */}
+          <div className="flex justify-between items-center mb-6">
+            <h3 className="text-2xl font-semibold">Recent Claims Activity</h3>
+            <button 
+              onClick={() => alert("✅ Claims report downloaded! (Demo)")}
+              className="bg-white/10 hover:bg-white/20 px-6 py-3 rounded-xl text-sm transition"
+            >
+              📥 Download Full Report
+            </button>
+          </div>
+          <div className="overflow-x-auto">
+            <table className="w-full">
+              <thead>
+                <tr className="border-b border-white/10 text-left text-sm text-slate-400">
+                  <th className="pb-4">Claim ID</th>
+                  <th className="pb-4">Date</th>
+                  <th className="pb-4">Provider</th>
+                  <th className="pb-4 text-right">Billed</th>
+                  <th className="pb-4 text-right">Savings</th>
+                </tr>
+              </thead>
+              <tbody className="text-sm">
+                {fakeClaims.map((claim) => (
+                  <tr key={claim.id} className="border-b border-white/10 last:border-0 hover:bg-white/5">
+                    <td className="py-5 font-mono">{claim.id}</td>
+                    <td className="py-5 text-slate-400">{claim.date}</td>
+                    <td className="py-5">{claim.provider}</td>
+                    <td className="py-5 text-right">{claim.amount}</td>
+                    <td className="py-5 text-right text-emerald-400 font-medium">{claim.savings}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
 
-        {/* Add-ons Marketplace */}
+        {/* Available Add-ons */}
         <div className="bg-slate-900/80 border border-white/10 rounded-3xl p-10">
-          <h3 className="text-2xl font-semibold mb-8">Available Add-ons</h3>
+          <h3 className="text-2xl font-semibold mb-2">Available Add-ons</h3>
           <p className="text-slate-400 mb-8">One-click activation. Powered by Quantum One verticals.</p>
-
+          
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div onClick={() => toggleAddon('Sentinel AI')} className={`rounded-3xl p-8 cursor-pointer transition border ${activeAddons.includes('Sentinel AI') ? 'border-cyan-400 bg-cyan-900/30' : 'border-white/10 hover:border-white/30'}`}>
-              <div className="text-4xl mb-4">🛡️</div>
-              <div className="font-semibold text-xl">Sentinel AI</div>
-              <div className="text-sm text-slate-400 mt-2">Real-time fraud detection & steering</div>
-              <div className="mt-6 text-xs bg-cyan-400/20 text-cyan-400 px-3 py-1 inline-block rounded-full">ACTIVE</div>
+            <div className="border border-cyan-400/50 bg-slate-900/50 rounded-3xl p-8">
+              <div className="text-5xl mb-4">🛡️</div>
+              <div className="font-semibold text-xl mb-1">Sentinel AI</div>
+              <div className="text-sm text-slate-400 mb-6">Real-time fraud detection & steering</div>
+              <div className="inline-block bg-emerald-400/20 text-emerald-400 text-xs px-4 py-1 rounded-full">ACTIVE</div>
             </div>
 
-            <div onClick={() => toggleAddon('Hybrid Care')} className={`rounded-3xl p-8 cursor-pointer transition border ${activeAddons.includes('Hybrid Care') ? 'border-cyan-400 bg-cyan-900/30' : 'border-white/10 hover:border-white/30'}`}>
-              <div className="text-4xl mb-4">🏥</div>
-              <div className="font-semibold text-xl">Hybrid Care</div>
-              <div className="text-sm text-slate-400 mt-2">Virtual + in-person care coordination</div>
-              <div className="mt-6 text-xs bg-white/10 px-3 py-1 inline-block rounded-full">Activate</div>
+            <div className="border border-white/10 hover:border-cyan-400 rounded-3xl p-8 transition cursor-pointer">
+              <div className="text-5xl mb-4">🏥</div>
+              <div className="font-semibold text-xl mb-1">Hybrid Care</div>
+              <div className="text-sm text-slate-400 mb-6">Virtual + in-person care coordination</div>
+              <button className="text-cyan-400 text-sm font-medium">Activate →</button>
             </div>
 
-            <div onClick={() => toggleAddon('Outcomes')} className={`rounded-3xl p-8 cursor-pointer transition border ${activeAddons.includes('Outcomes') ? 'border-cyan-400 bg-cyan-900/30' : 'border-white/10 hover:border-white/30'}`}>
-              <div className="text-4xl mb-4">📈</div>
-              <div className="font-semibold text-xl">Outcomes Network</div>
-              <div className="text-sm text-slate-400 mt-2">Value-based tiered steering</div>
-              <div className="mt-6 text-xs bg-white/10 px-3 py-1 inline-block rounded-full">Activate</div>
+            <div className="border border-white/10 hover:border-cyan-400 rounded-3xl p-8 transition cursor-pointer">
+              <div className="text-5xl mb-4">📈</div>
+              <div className="font-semibold text-xl mb-1">Outcomes Network</div>
+              <div className="text-sm text-slate-400 mb-6">Value-based tiered steering</div>
+              <button className="text-cyan-400 text-sm font-medium">Activate →</button>
             </div>
           </div>
         </div>
