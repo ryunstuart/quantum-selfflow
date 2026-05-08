@@ -69,20 +69,31 @@ export default function Dashboard() {
           </div>
         </div>
 
-        {/* Key Metrics */}
+        {/* Key Metrics - Full Color Restored */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
-          {[
-            { label: "TOTAL SAVED YTD", value: "$1,248,700", change: "↑ 24% this quarter", color: "emerald" },
-            { label: "CLAIMS PROCESSED", value: "14,872", change: "This month", color: "cyan" },
-            { label: "NETWORK UTILIZATION", value: "92%", change: "Priority PPO", color: "amber" },
-            { label: "TREND REDUCTION", value: "-11.4%", change: "vs industry", color: "purple" },
-          ].map((m, i) => (
-            <div key={i} className="bg-slate-900/80 border border-white/10 rounded-3xl p-8 hover:border-white/30 transition-all">
-              <div className={`text-${m.color}-400 text-sm font-medium`}>{m.label}</div>
-              <div className="text-5xl font-bold mt-4">{m.value}</div>
-              <div className="text-slate-400 text-sm mt-2">{m.change}</div>
-            </div>
-          ))}
+          <div className="bg-slate-900/80 border border-emerald-500/30 rounded-3xl p-8 hover:border-emerald-400 transition-all">
+            <div className="text-emerald-400 text-sm font-medium">TOTAL SAVED YTD</div>
+            <div className="text-5xl font-bold mt-4">$1,248,700</div>
+            <div className="text-emerald-400 text-sm mt-2">↑ 24% this quarter</div>
+          </div>
+
+          <div className="bg-slate-900/80 border border-cyan-500/30 rounded-3xl p-8 hover:border-cyan-400 transition-all">
+            <div className="text-cyan-400 text-sm font-medium">CLAIMS PROCESSED</div>
+            <div className="text-5xl font-bold mt-4">14,872</div>
+            <div className="text-slate-400 text-sm mt-2">This month</div>
+          </div>
+
+          <div className="bg-slate-900/80 border border-amber-500/30 rounded-3xl p-8 hover:border-amber-400 transition-all">
+            <div className="text-amber-400 text-sm font-medium">NETWORK UTILIZATION</div>
+            <div className="text-5xl font-bold mt-4">92%</div>
+            <div className="text-slate-400 text-sm mt-2">Priority PPO</div>
+          </div>
+
+          <div className="bg-slate-900/80 border border-purple-500/30 rounded-3xl p-8 hover:border-purple-400 transition-all">
+            <div className="text-purple-400 text-sm font-medium">TREND REDUCTION</div>
+            <div className="text-5xl font-bold mt-4">-11.4%</div>
+            <div className="text-slate-400 text-sm mt-2">vs industry average</div>
+          </div>
         </div>
 
         {/* Savings Trend */}
@@ -140,19 +151,28 @@ export default function Dashboard() {
 
         {/* Quick Action Buttons */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
-          <button onClick={() => setShowAddModal(true)} className="bg-cyan-400 hover:bg-cyan-300 active:scale-[0.97] text-slate-950 rounded-3xl p-10 text-center transition-all duration-200">
+          <button 
+            onClick={() => setShowAddModal(true)}
+            className="bg-cyan-400 hover:bg-cyan-300 active:scale-[0.97] text-slate-950 rounded-3xl p-10 text-center transition-all duration-200 shadow-lg"
+          >
             <div className="text-6xl mb-6">👥</div>
             <div className="text-2xl font-semibold">Add New Employees</div>
             <div className="text-sm opacity-75 mt-2">Instant Priority PPO routing</div>
           </button>
 
-          <button onClick={() => alert("✅ Claims report downloaded!")} className="bg-slate-900/80 border border-white/10 hover:border-cyan-400 active:scale-[0.97] rounded-3xl p-10 text-center transition-all duration-200">
+          <button 
+            onClick={() => alert("✅ Claims report downloaded!")}
+            className="bg-slate-900/80 border border-white/10 hover:border-cyan-400 active:scale-[0.97] rounded-3xl p-10 text-center transition-all duration-200"
+          >
             <div className="text-6xl mb-6">📊</div>
             <div className="text-2xl font-semibold">Download Claims Report</div>
             <div className="text-sm text-slate-400 mt-2">Last 90 days • CSV</div>
           </button>
 
-          <button onClick={() => alert("🔗 TPA Integration coming soon!")} className="bg-slate-900/80 border border-white/10 hover:border-purple-400 active:scale-[0.97] rounded-3xl p-10 text-center transition-all duration-200">
+          <button 
+            onClick={() => alert("🔗 TPA Integration coming soon!")}
+            className="bg-slate-900/80 border border-white/10 hover:border-purple-400 active:scale-[0.97] rounded-3xl p-10 text-center transition-all duration-200"
+          >
             <div className="text-6xl mb-6">🔗</div>
             <div className="text-2xl font-semibold">Connect Your TPA</div>
             <div className="text-sm text-slate-400 mt-2">White-label access</div>
@@ -165,7 +185,6 @@ export default function Dashboard() {
           <p className="text-slate-400 mb-10">One-click activation. Powered by Quantum One Networks.</p>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {/* Sentinel AI - Active */}
             <div className="border border-cyan-400/50 bg-slate-900/50 rounded-3xl p-8">
               <div className="text-5xl mb-4">🛡️</div>
               <div className="font-semibold text-xl mb-1">Sentinel AI</div>
@@ -173,7 +192,6 @@ export default function Dashboard() {
               <div className="inline-block bg-emerald-400/20 text-emerald-400 text-xs px-4 py-1 rounded-full">ACTIVE</div>
             </div>
 
-            {/* Hybrid Care */}
             <div className="border border-white/10 hover:border-cyan-400 rounded-3xl p-8 transition cursor-pointer group">
               <div className="text-5xl mb-4 group-hover:scale-110 transition">🏥</div>
               <div className="font-semibold text-xl mb-1">Hybrid Care</div>
@@ -181,7 +199,6 @@ export default function Dashboard() {
               <button className="text-cyan-400 text-sm font-medium">Activate →</button>
             </div>
 
-            {/* Outcomes Network */}
             <div className="border border-white/10 hover:border-cyan-400 rounded-3xl p-8 transition cursor-pointer group">
               <div className="text-5xl mb-4 group-hover:scale-110 transition">📈</div>
               <div className="font-semibold text-xl mb-1">Outcomes Network</div>
