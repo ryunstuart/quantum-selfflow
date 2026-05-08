@@ -13,6 +13,7 @@ export default function Home() {
   const [claimsVolume, setClaimsVolume] = useState('');
   const [projectedSavings, setProjectedSavings] = useState<number | null>(null);
   const [savingsRate, setSavingsRate] = useState(10.5);
+  const [calculating, setCalculating] = useState(false);
 
   const BACKEND_URL = "https://quantum-selfflow-nhtx.vercel.app";
 
@@ -67,14 +68,18 @@ export default function Home() {
 
   const calculateSavings = () => {
     if (!claimsVolume) return;
-    const volume = parseFloat(claimsVolume);
-    const savings = Math.round(volume * (savingsRate / 100));
-    setProjectedSavings(savings);
+    setCalculating(true);
+    
+    setTimeout(() => {
+      const volume = parseFloat(claimsVolume);
+      const savings = Math.round(volume * (savingsRate / 100));
+      setProjectedSavings(savings);
+      setCalculating(false);
+    }, 600);
   };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-blue-950 text-white">
-      {/* Clickable Logo Navigation */}
       <nav className="border-b border-white/10 bg-black/80 backdrop-blur-md sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 md:px-6 py-4 flex justify-between items-center">
           <Link href="/" className="flex items-center gap-3 hover:opacity-90 transition">
@@ -116,16 +121,20 @@ export default function Home() {
               <button
                 onClick={checkNetwork}
                 disabled={loading || !zipCodes}
-                className="bg-cyan-400 hover:bg-cyan-300 disabled:bg-slate-600 text-slate-950 font-semibold px-8 md:px-12 py-5 rounded-2xl text-lg transition whitespace-nowrap"
+                className="bg-cyan-400 hover:bg-cyan-300 disabled:bg-slate-600 text-slate-950 font-semibold px-8 md:px-12 py-5 rounded-2xl text-lg transition whitespace-nowrap flex items-center justify-center min-w-[140px]"
               >
-                {loading ? "Checking..." : "Check Coverage"}
+                {loading ? (
+                  <span className="flex items-center gap-2">
+                    <span className="animate-spin">⟳</span> Checking...
+                  </span>
+                ) : "Check Coverage"}
               </button>
             </div>
 
             {error && <p className="text-red-400 text-center mt-4 font-medium">{error}</p>}
 
             {result && (
-              <div className="mt-12 bg-gradient-to-br from-green-900/70 to-emerald-900/70 border border-green-400/50 rounded-3xl p-10 md:p-12 text-center">
+              <div className="mt-12 bg-gradient-to-br from-green-900/70 to-emerald-900/70 border border-green-400/50 rounded-3xl p-10 md:p-12 text-center animate-fade-in">
                 <div className="text-6xl mb-4">✅</div>
                 <div className="text-3xl font-semibold text-green-400">{result.city}</div>
                 <div className="text-7xl font-bold text-green-400 my-6">{result.doctors}</div>
@@ -176,13 +185,18 @@ export default function Home() {
 
             <button 
               onClick={calculateSavings}
-              className="w-full bg-cyan-400 hover:bg-cyan-300 text-slate-950 font-semibold py-5 rounded-2xl text-lg transition"
+              disabled={calculating}
+              className="w-full bg-cyan-400 hover:bg-cyan-300 disabled:bg-slate-600 text-slate-950 font-semibold py-5 rounded-2xl text-lg transition flex items-center justify-center"
             >
-              Calculate My Savings
+              {calculating ? (
+                <span className="flex items-center gap-2">
+                  <span className="animate-spin">⟳</span> Calculating...
+                </span>
+              ) : "Calculate My Savings"}
             </button>
 
             {projectedSavings && (
-              <div className="mt-12 p-10 bg-gradient-to-br from-emerald-900/50 to-green-900/50 border border-emerald-400/30 rounded-3xl text-center">
+              <div className="mt-12 p-10 bg-gradient-to-br from-emerald-900/50 to-green-900/50 border border-emerald-400/30 rounded-3xl text-center animate-fade-in">
                 <div className="text-emerald-400 text-6xl font-bold">${projectedSavings.toLocaleString()}</div>
                 <div className="text-2xl text-slate-300 mt-3">Estimated Annual Savings</div>
                 <div className="text-emerald-400">at {savingsRate}% average reduction</div>
