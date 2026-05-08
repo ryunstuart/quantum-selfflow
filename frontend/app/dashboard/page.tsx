@@ -28,7 +28,7 @@ export default function Dashboard() {
 
   const handleAddEmployees = () => {
     if (newEmployeeCount) {
-      alert(`✅ ${newEmployeeCount} new employees added successfully!\nThey will be routed through Priority PPO.`);
+      alert(`✅ ${newEmployeeCount} new employees added successfully!`);
       setShowAddModal(false);
       setNewEmployeeCount('');
     }
@@ -63,6 +63,10 @@ export default function Dashboard() {
             <p className="text-slate-400 text-xl mt-1">
               Active since May 6, 2026 • {user?.employeeCount || "N/A"} lives
             </p>
+          </div>
+          <div className="text-right">
+            <div className="text-emerald-400 text-5xl font-bold">10.5%</div>
+            <div className="text-sm text-slate-400">Avg Monthly Savings</div>
           </div>
         </div>
 
