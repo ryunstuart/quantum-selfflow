@@ -231,7 +231,7 @@ export default function Home() {
         </div>
       </div>
 
-      {/* Auto-Updating Footer */}
+      {/* Auto Year Footer */}
       <footer className="border-t border-white/10 bg-black/60 py-12 mt-auto">
         <div className="max-w-7xl mx-auto px-6 text-center text-slate-400 text-sm">
           © {currentYear} Quantum SelfFlow • Powered by Quantum One Networks<br />
