@@ -72,6 +72,22 @@ export default function Dashboard() {
           </div>
         </div>
 
+        {/* Quick Stats Row */}
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-12">
+          <div className="bg-emerald-900/30 border border-emerald-400/30 rounded-3xl p-6 text-center">
+            <div className="text-4xl font-bold text-emerald-400">$248,700</div>
+            <div className="text-sm text-emerald-400 mt-1">Saved This Month</div>
+          </div>
+          <div className="bg-cyan-900/30 border border-cyan-400/30 rounded-3xl p-6 text-center">
+            <div className="text-4xl font-bold text-cyan-400">2,847</div>
+            <div className="text-sm text-cyan-400 mt-1">Claims Steered</div>
+          </div>
+          <div className="bg-purple-900/30 border border-purple-400/30 rounded-3xl p-6 text-center">
+            <div className="text-4xl font-bold text-purple-400">92%</div>
+            <div className="text-sm text-purple-400 mt-1">Network Utilization</div>
+          </div>
+        </div>
+
         {/* Key Metrics */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
           <div className="bg-slate-900/80 border border-emerald-500/30 rounded-3xl p-8 hover:border-emerald-400 transition-all">
