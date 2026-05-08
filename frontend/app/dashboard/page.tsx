@@ -32,6 +32,8 @@ export default function Dashboard() {
     }
   };
 
+  const currentYear = new Date().getFullYear();
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-blue-950 text-white flex flex-col">
       <nav className="border-b border-white/10 bg-black/80 backdrop-blur-md sticky top-0 z-50">
@@ -192,10 +194,10 @@ export default function Dashboard() {
         </div>
       </div>
 
-      {/* Footer */}
+      {/* Auto Year Footer */}
       <footer className="border-t border-white/10 bg-black/60 py-12 mt-auto">
         <div className="max-w-7xl mx-auto px-6 text-center text-slate-400 text-sm">
-          © 2026 Quantum SelfFlow • Powered by Quantum One Networks<br />
+          © {currentYear} Quantum SelfFlow • Powered by Quantum One Networks<br />
           Self-serve cost containment platform for self-insured employers and regional TPAs
         </div>
       </footer>
