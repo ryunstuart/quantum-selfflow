@@ -28,7 +28,7 @@ export default function Dashboard() {
 
   const handleAddEmployees = () => {
     if (newEmployeeCount) {
-      alert(`✅ ${newEmployeeCount} new employees added successfully!`);
+      alert(`✅ ${newEmployeeCount} new employees added successfully!\nThey will be routed through Priority PPO.`);
       setShowAddModal(false);
       setNewEmployeeCount('');
     }
@@ -111,12 +111,6 @@ export default function Dashboard() {
         <div className="bg-slate-900/80 border border-white/10 rounded-3xl p-10 mb-12">
           <div className="flex justify-between items-center mb-6">
             <h3 className="text-2xl font-semibold">Recent Claims Activity</h3>
-            <button 
-              onClick={() => alert("✅ Claims report downloaded!")}
-              className="bg-white/10 hover:bg-white/20 px-6 py-3 rounded-xl text-sm transition"
-            >
-              📥 Download Full Report
-            </button>
           </div>
           <div className="overflow-x-auto">
             <table className="w-full">
@@ -142,6 +136,36 @@ export default function Dashboard() {
               </tbody>
             </table>
           </div>
+        </div>
+
+        {/* Quick Action Buttons */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+          <button 
+            onClick={() => setShowAddModal(true)}
+            className="bg-cyan-400 hover:bg-cyan-300 text-slate-950 rounded-3xl p-10 text-center transition-all active:scale-95"
+          >
+            <div className="text-6xl mb-4">👥</div>
+            <div className="text-2xl font-semibold">Add New Employees</div>
+            <div className="text-sm text-slate-700 mt-1">Route them through Priority PPO</div>
+          </button>
+
+          <button 
+            onClick={() => alert("✅ Full claims report downloaded as CSV!")}
+            className="bg-slate-900/80 border border-white/10 hover:border-cyan-400 rounded-3xl p-10 text-center transition-all active:scale-95"
+          >
+            <div className="text-6xl mb-4">📊</div>
+            <div className="text-2xl font-semibold">Download Claims Report</div>
+            <div className="text-sm text-slate-400 mt-1">Last 90 days</div>
+          </button>
+
+          <button 
+            onClick={() => alert("🔗 TPA Integration module coming soon!\nWe'll notify you when ready.")}
+            className="bg-slate-900/80 border border-white/10 hover:border-purple-400 rounded-3xl p-10 text-center transition-all active:scale-95"
+          >
+            <div className="text-6xl mb-4">🔗</div>
+            <div className="text-2xl font-semibold">Connect Your TPA</div>
+            <div className="text-sm text-slate-400 mt-1">White-label access</div>
+          </button>
         </div>
 
         {/* Available Add-ons */}
