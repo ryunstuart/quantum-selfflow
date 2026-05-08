@@ -15,6 +15,7 @@ export default function Home() {
   const [projectedSavings, setProjectedSavings] = useState<number | null>(null);
   const [savingsRate, setSavingsRate] = useState(10.5);
   const [calculating, setCalculating] = useState(false);
+  const [showDemoModal, setShowDemoModal] = useState(false);
 
   const BACKEND_URL = "https://quantum-selfflow-nhtx.vercel.app";
 
@@ -130,7 +131,7 @@ export default function Home() {
           <p className="text-lg md:text-xl text-slate-300">Real-time Priority PPO network + instant savings for self-insured employers and TPAs</p>
         </div>
 
-        {/* ZIP Checker */}
+        {/* ZIP Checker - unchanged */}
         <div className="bg-slate-900/90 border border-white/10 rounded-3xl p-8 md:p-12 mb-16">
           <h2 className="text-3xl md:text-4xl font-semibold text-center mb-10">Check Your Network Coverage</h2>
           <div className="max-w-xl mx-auto">
@@ -179,7 +180,7 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Savings Calculator */}
+        {/* Savings Calculator - unchanged */}
         <div className="bg-slate-900/90 border border-white/10 rounded-3xl p-8 md:p-12">
           <h2 className="text-3xl md:text-4xl font-semibold text-center mb-10">Estimate Your Potential Savings</h2>
           <div className="max-w-md mx-auto">
@@ -230,6 +231,38 @@ export default function Home() {
           </div>
         </div>
       </div>
+
+      {/* Floating Demo Button */}
+      <button
+        onClick={() => setShowDemoModal(true)}
+        className="fixed bottom-8 right-8 bg-cyan-400 hover:bg-cyan-300 text-slate-950 font-semibold px-8 py-4 rounded-2xl shadow-2xl flex items-center gap-3 z-50 transition-all active:scale-95"
+      >
+        <span>📅</span> Book Demo with Mike
+      </button>
+
+      {/* Demo Modal */}
+      {showDemoModal && (
+        <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-[200] p-4">
+          <div className="bg-slate-900 border border-white/10 rounded-3xl p-10 max-w-md w-full text-center">
+            <h3 className="text-3xl font-semibold mb-4">Ready to See Quantum SelfFlow Live?</h3>
+            <p className="text-slate-400 mb-8">Schedule a quick 15-minute demo with Mike to review your savings potential.</p>
+            
+            <button 
+              onClick={() => alert("✅ Demo request sent! Mike will reach out shortly.")}
+              className="w-full bg-cyan-400 hover:bg-cyan-300 text-slate-950 font-semibold py-5 rounded-2xl mb-4"
+            >
+              Yes - Schedule Demo
+            </button>
+            
+            <button 
+              onClick={() => setShowDemoModal(false)}
+              className="w-full py-5 border border-white/20 rounded-2xl"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      )}
 
       {/* Auto Year Footer */}
       <footer className="border-t border-white/10 bg-black/60 py-12 mt-auto">
