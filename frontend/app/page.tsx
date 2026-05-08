@@ -26,7 +26,7 @@ export default function Home() {
 
   useEffect(() => {
     if (toast) {
-      const timer = setTimeout(() => setToast(null), 3500);
+      const timer = setTimeout(() => setToast(null), 4000);
       return () => clearTimeout(timer);
     }
   }, [toast]);
@@ -89,7 +89,7 @@ export default function Home() {
       setProjectedSavings(savings);
       setCalculating(false);
       showToast(`Projected savings: $${savings.toLocaleString()}`);
-    }, 700);
+    }, 800);
   };
 
   const currentYear = new Date().getFullYear();
@@ -128,7 +128,7 @@ export default function Home() {
       <div className="max-w-5xl mx-auto px-4 md:px-6 pt-12 md:pt-20 pb-24 flex-1">
         <div className="text-center mb-12 md:mb-16">
           <h1 className="text-5xl md:text-7xl font-bold tracking-tighter mb-6">Plug in.<br />Start Saving.</h1>
-          <p className="text-lg md:text-xl text-slate-300">Real-time Priority PPO network + instant savings for self-insured employers and TPAs</p>
+          <p className="text-lg md:text-xl text-slate-300 max-w-2xl mx-auto">Real-time Priority PPO network + instant savings for self-insured employers and TPAs</p>
         </div>
 
         {/* ZIP Checker */}
@@ -231,57 +231,45 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Trust Signals / Testimonials */}
+        {/* Testimonials */}
         <div className="bg-slate-900/80 border border-white/10 rounded-3xl p-8 md:p-12">
           <h2 className="text-3xl font-semibold text-center mb-12">Trusted by Self-Insured Employers</h2>
           <div className="grid md:grid-cols-3 gap-8">
-            <div className="bg-slate-950/50 p-8 rounded-3xl">
-              <div className="text-amber-400 text-4xl mb-4">★★★★★</div>
-              <p className="italic text-slate-300">"Reduced our medical trend by 14% in the first 90 days. The ZIP checker is a game changer for our remote workforce."</p>
-              <div className="mt-6 text-sm">
-                <div className="font-semibold">Sarah Mitchell</div>
-                <div className="text-slate-400">HR Director, Midwest Manufacturing</div>
+            {[
+              { quote: "Reduced our medical trend by 14% in the first 90 days. The ZIP checker is a game changer.", name: "Sarah Mitchell", title: "HR Director, Midwest Manufacturing" },
+              { quote: "As a regional TPA, SelfFlow lets us offer white-label savings with zero extra work.", name: "David Chen", title: "CEO, Heartland TPA" },
+              { quote: "The real-time network adequacy and one-click activation saved us months of manual work.", name: "Rachel Thompson", title: "Benefits Manager, St. Louis Logistics" }
+            ].map((t, i) => (
+              <div key={i} className="bg-slate-950/50 p-8 rounded-3xl">
+                <div className="text-amber-400 text-4xl mb-4">★★★★★</div>
+                <p className="italic text-slate-300">"{t.quote}"</p>
+                <div className="mt-6 text-sm">
+                  <div className="font-semibold">{t.name}</div>
+                  <div className="text-slate-400">{t.title}</div>
+                </div>
               </div>
-            </div>
-
-            <div className="bg-slate-950/50 p-8 rounded-3xl">
-              <div className="text-amber-400 text-4xl mb-4">★★★★★</div>
-              <p className="italic text-slate-300">"As a regional TPA, SelfFlow lets us offer white-label savings to our clients with zero extra work. Best tool we've added in years."</p>
-              <div className="mt-6 text-sm">
-                <div className="font-semibold">David Chen</div>
-                <div className="text-slate-400">CEO, Heartland TPA</div>
-              </div>
-            </div>
-
-            <div className="bg-slate-950/50 p-8 rounded-3xl">
-              <div className="text-amber-400 text-4xl mb-4">★★★★★</div>
-              <p className="italic text-slate-300">"The real-time network adequacy and one-click activation saved us months of manual work. Our employees love the new options."</p>
-              <div className="mt-6 text-sm">
-                <div className="font-semibold">Rachel Thompson</div>
-                <div className="text-slate-400">Benefits Manager, St. Louis Logistics</div>
-              </div>
-            </div>
+            ))}
           </div>
         </div>
       </div>
 
-      {/* Floating Demo Button */}
+      {/* Floating Generic Demo Button */}
       <button
         onClick={() => setShowDemoModal(true)}
         className="fixed bottom-8 right-8 bg-cyan-400 hover:bg-cyan-300 text-slate-950 font-semibold px-8 py-4 rounded-2xl shadow-2xl flex items-center gap-3 z-50 transition-all active:scale-95"
       >
-        <span>📅</span> Book Demo with Mike
+        📅 Schedule a Demo
       </button>
 
-      {/* Demo Modal */}
+      {/* Generic Demo Modal */}
       {showDemoModal && (
         <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-[200] p-4">
           <div className="bg-slate-900 border border-white/10 rounded-3xl p-10 max-w-md w-full text-center">
             <h3 className="text-3xl font-semibold mb-4">Ready to See Quantum SelfFlow Live?</h3>
-            <p className="text-slate-400 mb-8">Schedule a quick 15-minute demo with Mike to review your savings potential.</p>
+            <p className="text-slate-400 mb-8">Schedule a quick 15-minute demo with our team to review your potential savings and get started.</p>
             
             <button 
-              onClick={() => { alert("✅ Demo request sent! Mike will reach out shortly."); setShowDemoModal(false); }}
+              onClick={() => { alert("✅ Demo request sent! Our team will reach out shortly."); setShowDemoModal(false); }}
               className="w-full bg-cyan-400 hover:bg-cyan-300 text-slate-950 font-semibold py-5 rounded-2xl mb-4"
             >
               Yes - Schedule Demo
