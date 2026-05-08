@@ -133,7 +133,7 @@ export default function Dashboard() {
         {/* Available Add-ons */}
         <div className="bg-slate-900/80 border border-white/10 rounded-3xl p-10">
           <h3 className="text-2xl font-semibold mb-2">Available Add-ons</h3>
-          <p className="text-slate-400 mb-8">One-click activation. Powered by Quantum One verticals.</p>
+          <p className="text-slate-400 mb-8">One-click activation. Powered by Quantum One Networks.</p>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div className="border border-cyan-400/50 bg-slate-900/50 rounded-3xl p-8">
