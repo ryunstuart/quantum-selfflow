@@ -131,7 +131,7 @@ export default function Home() {
           <p className="text-lg md:text-xl text-slate-300">Real-time Priority PPO network + instant savings for self-insured employers and TPAs</p>
         </div>
 
-        {/* ZIP Checker - unchanged */}
+        {/* ZIP Checker */}
         <div className="bg-slate-900/90 border border-white/10 rounded-3xl p-8 md:p-12 mb-16">
           <h2 className="text-3xl md:text-4xl font-semibold text-center mb-10">Check Your Network Coverage</h2>
           <div className="max-w-xl mx-auto">
@@ -180,8 +180,8 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Savings Calculator - unchanged */}
-        <div className="bg-slate-900/90 border border-white/10 rounded-3xl p-8 md:p-12">
+        {/* Savings Calculator */}
+        <div className="bg-slate-900/90 border border-white/10 rounded-3xl p-8 md:p-12 mb-16">
           <h2 className="text-3xl md:text-4xl font-semibold text-center mb-10">Estimate Your Potential Savings</h2>
           <div className="max-w-md mx-auto">
             <div className="mb-8">
@@ -230,6 +230,39 @@ export default function Home() {
             )}
           </div>
         </div>
+
+        {/* Trust Signals / Testimonials */}
+        <div className="bg-slate-900/80 border border-white/10 rounded-3xl p-8 md:p-12">
+          <h2 className="text-3xl font-semibold text-center mb-12">Trusted by Self-Insured Employers</h2>
+          <div className="grid md:grid-cols-3 gap-8">
+            <div className="bg-slate-950/50 p-8 rounded-3xl">
+              <div className="text-amber-400 text-4xl mb-4">★★★★★</div>
+              <p className="italic text-slate-300">"Reduced our medical trend by 14% in the first 90 days. The ZIP checker is a game changer for our remote workforce."</p>
+              <div className="mt-6 text-sm">
+                <div className="font-semibold">Sarah Mitchell</div>
+                <div className="text-slate-400">HR Director, Midwest Manufacturing</div>
+              </div>
+            </div>
+
+            <div className="bg-slate-950/50 p-8 rounded-3xl">
+              <div className="text-amber-400 text-4xl mb-4">★★★★★</div>
+              <p className="italic text-slate-300">"As a regional TPA, SelfFlow lets us offer white-label savings to our clients with zero extra work. Best tool we've added in years."</p>
+              <div className="mt-6 text-sm">
+                <div className="font-semibold">David Chen</div>
+                <div className="text-slate-400">CEO, Heartland TPA</div>
+              </div>
+            </div>
+
+            <div className="bg-slate-950/50 p-8 rounded-3xl">
+              <div className="text-amber-400 text-4xl mb-4">★★★★★</div>
+              <p className="italic text-slate-300">"The real-time network adequacy and one-click activation saved us months of manual work. Our employees love the new options."</p>
+              <div className="mt-6 text-sm">
+                <div className="font-semibold">Rachel Thompson</div>
+                <div className="text-slate-400">Benefits Manager, St. Louis Logistics</div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
 
       {/* Floating Demo Button */}
@@ -248,7 +281,7 @@ export default function Home() {
             <p className="text-slate-400 mb-8">Schedule a quick 15-minute demo with Mike to review your savings potential.</p>
             
             <button 
-              onClick={() => alert("✅ Demo request sent! Mike will reach out shortly.")}
+              onClick={() => { alert("✅ Demo request sent! Mike will reach out shortly."); setShowDemoModal(false); }}
               className="w-full bg-cyan-400 hover:bg-cyan-300 text-slate-950 font-semibold py-5 rounded-2xl mb-4"
             >
               Yes - Schedule Demo
