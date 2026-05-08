@@ -231,6 +231,28 @@ export default function Home() {
           </div>
         </div>
 
+        {/* How It Works */}
+        <div className="bg-slate-900/80 border border-white/10 rounded-3xl p-8 md:p-12 mb-16">
+          <h2 className="text-3xl font-semibold text-center mb-12">How Quantum SelfFlow Works</h2>
+          <div className="grid md:grid-cols-3 gap-8">
+            <div className="text-center">
+              <div className="text-6xl mb-6">1️⃣</div>
+              <div className="font-semibold text-xl mb-3">Enter Your ZIPs</div>
+              <p className="text-slate-400">Instantly see real-time Priority PPO network strength in every location.</p>
+            </div>
+            <div className="text-center">
+              <div className="text-6xl mb-6">2️⃣</div>
+              <div className="font-semibold text-xl mb-3">Activate in One Click</div>
+              <p className="text-slate-400">Connect your plan and start steering claims automatically.</p>
+            </div>
+            <div className="text-center">
+              <div className="text-6xl mb-6">3️⃣</div>
+              <div className="font-semibold text-xl mb-3">Watch Savings Grow</div>
+              <p className="text-slate-400">Real-time dashboard + add-ons (AI steering, Hybrid Care, Outcomes).</p>
+            </div>
+          </div>
+        </div>
+
         {/* Testimonials */}
         <div className="bg-slate-900/80 border border-white/10 rounded-3xl p-8 md:p-12">
           <h2 className="text-3xl font-semibold text-center mb-12">Trusted by Self-Insured Employers</h2>
@@ -253,7 +275,7 @@ export default function Home() {
         </div>
       </div>
 
-      {/* Floating Generic Demo Button */}
+      {/* Floating Demo Button */}
       <button
         onClick={() => setShowDemoModal(true)}
         className="fixed bottom-8 right-8 bg-cyan-400 hover:bg-cyan-300 text-slate-950 font-semibold px-8 py-4 rounded-2xl shadow-2xl flex items-center gap-3 z-50 transition-all active:scale-95"
@@ -261,7 +283,7 @@ export default function Home() {
         📅 Schedule a Demo
       </button>
 
-      {/* Generic Demo Modal */}
+      {/* Demo Modal */}
       {showDemoModal && (
         <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-[200] p-4">
           <div className="bg-slate-900 border border-white/10 rounded-3xl p-10 max-w-md w-full text-center">
