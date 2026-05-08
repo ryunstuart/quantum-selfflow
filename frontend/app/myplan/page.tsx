@@ -68,6 +68,11 @@ export default function MyPlan() {
               </div>
 
               <div>
+                <div className="text-slate-400 text-sm">Status</div>
+                <div className="inline-block bg-emerald-400/20 text-emerald-400 px-5 py-2 rounded-full text-sm font-medium mt-2">ACTIVE</div>
+              </div>
+
+              <div>
                 <div className="text-slate-400 text-sm">Activated On</div>
                 <div className="text-xl">May 6, 2026</div>
               </div>
@@ -78,11 +83,11 @@ export default function MyPlan() {
           <div className="bg-slate-900/80 border border-emerald-500/30 rounded-3xl p-10">
             <h3 className="text-2xl font-semibold mb-6">Network Strength</h3>
             <div className="text-7xl font-bold text-emerald-400">Excellent</div>
-            <div className="text-emerald-400 mt-2">• 87% of your ZIP codes have strong coverage</div>
+            <div className="text-emerald-400 mt-2">• Strong coverage across all active ZIP codes</div>
             
             <div className="mt-10 pt-8 border-t border-white/10">
               <div className="flex justify-between text-sm mb-4">
-                <span>Priority PPO Doctors</span>
+                <span>Priority PPO Doctors Available</span>
                 <span className="font-semibold">2,847</span>
               </div>
               <div className="h-3 bg-white/10 rounded-full overflow-hidden">
@@ -119,7 +124,7 @@ export default function MyPlan() {
         </div>
 
         <div className="mt-16 text-center text-slate-400 text-sm">
-          Questions? Contact your Quantum SelfFlow success manager or email support@quantumselfflow.com
+          Need to make changes? Contact your Quantum SelfFlow success manager
         </div>
       </div>
 
