@@ -45,7 +45,7 @@ export default function Dashboard() {
       </nav>
 
       <div className="max-w-7xl mx-auto px-4 md:px-6 py-10">
-        <div className="flex justify-between items-end mb-10">
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 gap-4">
           <div>
             <h1 className="text-5xl font-bold tracking-tighter">
               Welcome back, {user?.companyName || "Your Company"}
@@ -54,58 +54,65 @@ export default function Dashboard() {
               Active since May 6, 2026 • {user?.employeeCount || "N/A"} lives
             </p>
           </div>
+          <div className="text-right">
+            <div className="text-emerald-400 text-5xl font-bold">10.5%</div>
+            <div className="text-sm text-slate-400">Avg Monthly Savings</div>
+          </div>
         </div>
 
-        {/* Key Metrics */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-12">
-          <div className="bg-slate-900/80 border border-emerald-500/30 rounded-3xl p-8">
-            <div className="text-emerald-400 text-sm">TOTAL SAVED YTD</div>
-            <div className="text-5xl font-bold mt-3">$1,248,700</div>
-            <div className="text-emerald-400 text-sm mt-1">↑ 24% this quarter</div>
+        {/* Metrics Cards */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+          <div className="bg-slate-900/80 border border-emerald-500/30 rounded-3xl p-8 hover:border-emerald-400 transition-all">
+            <div className="text-emerald-400 text-sm font-medium">TOTAL SAVED YTD</div>
+            <div className="text-5xl font-bold mt-4">$1,248,700</div>
+            <div className="text-emerald-400 text-sm mt-2">↑ 24% this quarter</div>
           </div>
-          <div className="bg-slate-900/80 border border-white/10 rounded-3xl p-8">
-            <div className="text-cyan-400 text-sm">CLAIMS PROCESSED</div>
-            <div className="text-5xl font-bold mt-3">14,872</div>
-            <div className="text-slate-400 text-sm mt-1">This month</div>
+
+          <div className="bg-slate-900/80 border border-white/10 rounded-3xl p-8 hover:border-cyan-400 transition-all">
+            <div className="text-cyan-400 text-sm font-medium">CLAIMS PROCESSED</div>
+            <div className="text-5xl font-bold mt-4">14,872</div>
+            <div className="text-slate-400 text-sm mt-2">This month</div>
           </div>
-          <div className="bg-slate-900/80 border border-white/10 rounded-3xl p-8">
-            <div className="text-amber-400 text-sm">NETWORK UTILIZATION</div>
-            <div className="text-5xl font-bold mt-3">92%</div>
-            <div className="text-slate-400 text-sm mt-1">Priority PPO</div>
+
+          <div className="bg-slate-900/80 border border-white/10 rounded-3xl p-8 hover:border-amber-400 transition-all">
+            <div className="text-amber-400 text-sm font-medium">NETWORK UTILIZATION</div>
+            <div className="text-5xl font-bold mt-4">92%</div>
+            <div className="text-slate-400 text-sm mt-2">Priority PPO</div>
           </div>
-          <div className="bg-slate-900/80 border border-white/10 rounded-3xl p-8">
-            <div className="text-purple-400 text-sm">TREND REDUCTION</div>
-            <div className="text-5xl font-bold mt-3">-11.4%</div>
-            <div className="text-slate-400 text-sm mt-1">vs industry average</div>
+
+          <div className="bg-slate-900/80 border border-white/10 rounded-3xl p-8 hover:border-purple-400 transition-all">
+            <div className="text-purple-400 text-sm font-medium">TREND REDUCTION</div>
+            <div className="text-5xl font-bold mt-4">-11.4%</div>
+            <div className="text-slate-400 text-sm mt-2">vs industry average</div>
           </div>
         </div>
 
         {/* Savings Trend Chart */}
-        <div className="bg-slate-900/80 border border-white/10 rounded-3xl p-10 mb-12">
+        <div className="bg-slate-900/80 border border-white/10 rounded-3xl p-8 md:p-10 mb-12">
           <h3 className="text-2xl font-semibold mb-6">Monthly Savings Trend (Last 6 Months)</h3>
           <div className="h-80 bg-gradient-to-r from-cyan-950 to-emerald-950 rounded-2xl flex items-end gap-6 p-8">
             {[42, 71, 88, 76, 105, 138].map((h, i) => (
               <div key={i} className="flex-1 flex flex-col items-center justify-end h-full gap-2">
                 <div className="text-emerald-400 text-xs font-mono">${h}k</div>
-                <div className="bg-gradient-to-t from-cyan-400 to-emerald-400 w-full rounded-t" style={{height: `${h}%`}} />
+                <div className="bg-gradient-to-t from-cyan-400 to-emerald-400 w-full rounded-t transition-all" style={{height: `${h}%`}} />
               </div>
             ))}
           </div>
         </div>
 
         {/* Recent Claims */}
-        <div className="bg-slate-900/80 border border-white/10 rounded-3xl p-10 mb-12">
-          <div className="flex justify-between items-center mb-6">
+        <div className="bg-slate-900/80 border border-white/10 rounded-3xl p-8 md:p-10 mb-12">
+          <div className="flex justify-between items-center mb-8">
             <h3 className="text-2xl font-semibold">Recent Claims Activity</h3>
             <button 
-              onClick={() => alert("✅ Claims report downloaded! (Demo)")}
-              className="bg-white/10 hover:bg-white/20 px-6 py-3 rounded-xl text-sm transition"
+              onClick={() => alert("✅ Claims report downloaded! (Demo CSV)")}
+              className="bg-white/10 hover:bg-white/20 px-6 py-3 rounded-2xl text-sm transition flex items-center gap-2"
             >
               📥 Download Full Report
             </button>
           </div>
           <div className="overflow-x-auto">
-            <table className="w-full">
+            <table className="w-full min-w-[600px]">
               <thead>
                 <tr className="border-b border-white/10 text-left text-sm text-slate-400">
                   <th className="pb-4">Claim ID</th>
@@ -115,9 +122,9 @@ export default function Dashboard() {
                   <th className="pb-4 text-right">Savings</th>
                 </tr>
               </thead>
-              <tbody className="text-sm">
+              <tbody className="text-sm divide-y divide-white/10">
                 {fakeClaims.map((claim) => (
-                  <tr key={claim.id} className="border-b border-white/10 last:border-0 hover:bg-white/5">
+                  <tr key={claim.id} className="hover:bg-white/5">
                     <td className="py-5 font-mono">{claim.id}</td>
                     <td className="py-5 text-slate-400">{claim.date}</td>
                     <td className="py-5">{claim.provider}</td>
@@ -131,9 +138,9 @@ export default function Dashboard() {
         </div>
 
         {/* Available Add-ons */}
-        <div className="bg-slate-900/80 border border-white/10 rounded-3xl p-10">
+        <div className="bg-slate-900/80 border border-white/10 rounded-3xl p-8 md:p-10">
           <h3 className="text-2xl font-semibold mb-2">Available Add-ons</h3>
-          <p className="text-slate-400 mb-8">One-click activation. Powered by Quantum One Networks.</p>
+          <p className="text-slate-400 mb-8">One-click activation. Powered by Quantum One verticals.</p>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div className="border border-cyan-400/50 bg-slate-900/50 rounded-3xl p-8">
@@ -143,15 +150,15 @@ export default function Dashboard() {
               <div className="inline-block bg-emerald-400/20 text-emerald-400 text-xs px-4 py-1 rounded-full">ACTIVE</div>
             </div>
 
-            <div className="border border-white/10 hover:border-cyan-400 rounded-3xl p-8 transition cursor-pointer">
-              <div className="text-5xl mb-4">🏥</div>
+            <div className="border border-white/10 hover:border-cyan-400 rounded-3xl p-8 transition cursor-pointer group">
+              <div className="text-5xl mb-4 group-hover:scale-110 transition">🏥</div>
               <div className="font-semibold text-xl mb-1">Hybrid Care</div>
               <div className="text-sm text-slate-400 mb-6">Virtual + in-person care coordination</div>
               <button className="text-cyan-400 text-sm font-medium">Activate →</button>
             </div>
 
-            <div className="border border-white/10 hover:border-cyan-400 rounded-3xl p-8 transition cursor-pointer">
-              <div className="text-5xl mb-4">📈</div>
+            <div className="border border-white/10 hover:border-cyan-400 rounded-3xl p-8 transition cursor-pointer group">
+              <div className="text-5xl mb-4 group-hover:scale-110 transition">📈</div>
               <div className="font-semibold text-xl mb-1">Outcomes Network</div>
               <div className="text-sm text-slate-400 mb-6">Value-based tiered steering</div>
               <button className="text-cyan-400 text-sm font-medium">Activate →</button>
