@@ -4,74 +4,67 @@ import Link from 'next/link';
 import { useState, useEffect } from 'react';
 
 export default function Settings() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [user, setUser] = useState<any>(null);
-  const [editing, setEditing] = useState(false);
-  const [companyName, setCompanyName] = useState('');
-  const [employeeCount, setEmployeeCount] = useState('');
-  const [saving, setSaving] = useState(false);
-  const [showLogoutModal, setShowLogoutModal] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [editMode, setEditMode] = useState(false);
+  const [formData, setFormData] = useState({
+    companyName: '',
+    employeeCount: '',
+    email: '',
+    phone: ''
+  });
+  const currentYear = new Date().getFullYear();
 
   useEffect(() => {
     const saved = localStorage.getItem('selfflow_user');
     if (saved) {
       const data = JSON.parse(saved);
+      setIsLoggedIn(true);
       setUser(data);
-      setCompanyName(data.companyName || '');
-      setEmployeeCount(data.employeeCount || '');
+      setFormData({
+        companyName: data.companyName || '',
+        employeeCount: data.employeeCount || '',
+        email: data.email || '',
+        phone: data.phone || ''
+      });
+    } else {
+      window.location.href = '/';
     }
   }, []);
-
-  const saveChanges = () => {
-    if (!companyName.trim() || !employeeCount.trim()) {
-      alert("Please fill in all fields");
-      return;
-    }
-
-    setSaving(true);
-    setTimeout(() => {
-      const updated = { 
-        ...user, 
-        companyName: companyName.trim(), 
-        employeeCount: employeeCount.trim() 
-      };
-      localStorage.setItem('selfflow_user', JSON.stringify(updated));
-      setUser(updated);
-      setEditing(false);
-      setSaving(false);
-      alert("✅ Settings updated successfully!");
-    }, 800);
-  };
 
   const handleLogout = () => {
     localStorage.removeItem('selfflow_user');
     window.location.href = '/';
   };
 
-  const currentYear = new Date().getFullYear();
+  const handleSave = () => {
+    const updatedUser = { ...user, ...formData };
+    localStorage.setItem('selfflow_user', JSON.stringify(updatedUser));
+    setUser(updatedUser);
+    setEditMode(false);
+    alert("✅ Profile updated successfully!");
+  };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-blue-950 text-white flex flex-col">
+    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-blue-950 text-white flex flex-col overflow-x-hidden">
       <nav className="border-b border-white/10 bg-black/80 backdrop-blur-md sticky top-0 z-50">
-        <div className="max-w-7xl mx-auto px-4 md:px-6 py-4 flex justify-between items-center">
+        <div className="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
           <Link href="/" className="flex items-center gap-3 hover:opacity-90 transition">
-            <div className="w-9 h-9 md:w-10 md:h-10 bg-cyan-400 rounded-2xl flex items-center justify-center text-slate-950 font-bold text-2xl md:text-3xl shadow-lg">Q</div>
+            <div className="w-9 h-9 bg-cyan-400 rounded-2xl flex items-center justify-center text-slate-950 font-bold text-2xl shadow-lg">Q</div>
             <div>
-              <div className="font-bold text-2xl md:text-3xl tracking-tighter">Quantum SelfFlow</div>
-              <div className="text-cyan-400 text-xs md:text-sm -mt-1">Self-serve savings. Zero complexity.</div>
+              <div className="font-bold text-2xl tracking-tighter">Quantum SelfFlow</div>
+              <div className="text-cyan-400 text-xs -mt-1">Self-serve savings. Zero complexity.</div>
             </div>
           </Link>
 
-          {/* Desktop Nav */}
           <div className="hidden md:flex items-center gap-6 text-sm font-medium">
-            <Link href="/" className="hover:text-cyan-400">Home</Link>
             <Link href="/dashboard" className="hover:text-cyan-400">Dashboard</Link>
             <Link href="/myplan" className="hover:text-cyan-400">My Plan</Link>
             <Link href="/settings" className="text-cyan-400 font-medium">Settings</Link>
-            <button onClick={() => setShowLogoutModal(true)} className="text-red-400 hover:text-red-500">Logout</button>
+            <button onClick={handleLogout} className="text-red-400 hover:text-red-500 transition">Logout</button>
           </div>
 
-          {/* Mobile Hamburger */}
           <button 
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             className="md:hidden text-3xl focus:outline-none"
@@ -80,108 +73,116 @@ export default function Settings() {
           </button>
         </div>
 
-        {/* Mobile Menu */}
         {mobileMenuOpen && (
           <div className="md:hidden border-t border-white/10 bg-black/95 py-8">
             <div className="flex flex-col gap-6 text-center text-lg font-medium">
-              <Link href="/" className="hover:text-cyan-400 py-2" onClick={() => setMobileMenuOpen(false)}>Home</Link>
-              <Link href="/dashboard" className="hover:text-cyan-400 py-2" onClick={() => setMobileMenuOpen(false)}>Dashboard</Link>
-              <Link href="/myplan" className="hover:text-cyan-400 py-2" onClick={() => setMobileMenuOpen(false)}>My Plan</Link>
-              <Link href="/settings" className="hover:text-cyan-400 py-2" onClick={() => setMobileMenuOpen(false)}>Settings</Link>
-              <button onClick={() => { setShowLogoutModal(true); setMobileMenuOpen(false); }} className="text-red-400 py-2">Logout</button>
+              <Link href="/dashboard" className="py-2" onClick={() => setMobileMenuOpen(false)}>Dashboard</Link>
+              <Link href="/myplan" className="py-2" onClick={() => setMobileMenuOpen(false)}>My Plan</Link>
+              <Link href="/settings" className="py-2" onClick={() => setMobileMenuOpen(false)}>Settings</Link>
+              <button onClick={handleLogout} className="text-red-400 py-2">Logout</button>
             </div>
           </div>
         )}
       </nav>
 
-      <div className="max-w-3xl mx-auto px-4 md:px-6 py-12 flex-1">
-        <div className="mb-12">
-          <h1 className="text-5xl font-bold tracking-tighter">Account Settings</h1>
-          <p className="text-slate-400 mt-2">Manage your Quantum SelfFlow profile and preferences</p>
-        </div>
+      <div className="max-w-4xl mx-auto px-4 py-10 flex-1">
+        <h1 className="text-4xl md:text-5xl font-bold tracking-tighter mb-2">Account Settings</h1>
+        <p className="text-slate-400">Manage your Quantum SelfFlow profile and preferences</p>
 
-        <div className="bg-slate-900/80 border border-white/10 rounded-3xl p-10">
-          <div className="flex justify-between items-center mb-10">
-            <h2 className="text-2xl font-semibold">Company Information</h2>
+        {/* Profile Section */}
+        <div className="mt-10 bg-slate-900/80 border border-white/10 rounded-3xl p-8 md:p-12">
+          <div className="flex justify-between items-center mb-8">
+            <h3 className="text-2xl font-semibold">Company Profile</h3>
             <button 
-              onClick={() => setEditing(!editing)}
-              className="px-6 py-2 border border-white/20 rounded-2xl hover:bg-white/5 transition"
+              onClick={() => setEditMode(!editMode)}
+              className="text-cyan-400 hover:underline text-sm font-medium"
             >
-              {editing ? "Cancel" : "Edit Profile"}
+              {editMode ? 'Cancel' : 'Edit Profile'}
             </button>
           </div>
 
           <div className="space-y-8">
             <div>
-              <label className="block text-sm text-slate-400 mb-3">Company Name</label>
-              <input
-                type="text"
-                value={companyName}
-                onChange={(e) => setCompanyName(e.target.value)}
-                disabled={!editing}
-                className="w-full bg-slate-800 border border-white/20 rounded-2xl px-6 py-5 text-lg disabled:opacity-75"
-                placeholder="Company Name"
+              <label className="block text-sm text-slate-400 mb-2">Company Name</label>
+              <input 
+                type="text" 
+                value={formData.companyName}
+                onChange={(e) => setFormData({...formData, companyName: e.target.value})}
+                disabled={!editMode}
+                className="w-full bg-black/50 border border-white/20 rounded-2xl px-6 py-4 disabled:opacity-75"
               />
             </div>
 
-            <div>
-              <label className="block text-sm text-slate-400 mb-3">Number of Lives Covered</label>
-              <input
-                type="number"
-                value={employeeCount}
-                onChange={(e) => setEmployeeCount(e.target.value)}
-                disabled={!editing}
-                className="w-full bg-slate-800 border border-white/20 rounded-2xl px-6 py-5 text-lg disabled:opacity-75"
-                placeholder="250"
-              />
-            </div>
-
-            <div>
-              <label className="block text-sm text-slate-400 mb-3">Current Plan Type</label>
-              <div className="bg-slate-800 border border-white/20 rounded-2xl px-6 py-5 text-lg text-slate-300">
-                {user?.planType || "Not Selected"}
+            <div className="grid md:grid-cols-2 gap-6">
+              <div>
+                <label className="block text-sm text-slate-400 mb-2">Number of Lives</label>
+                <input 
+                  type="number" 
+                  value={formData.employeeCount}
+                  onChange={(e) => setFormData({...formData, employeeCount: e.target.value})}
+                  disabled={!editMode}
+                  className="w-full bg-black/50 border border-white/20 rounded-2xl px-6 py-4 disabled:opacity-75"
+                />
+              </div>
+              <div>
+                <label className="block text-sm text-slate-400 mb-2">Email Address</label>
+                <input 
+                  type="email" 
+                  value={formData.email}
+                  onChange={(e) => setFormData({...formData, email: e.target.value})}
+                  disabled={!editMode}
+                  className="w-full bg-black/50 border border-white/20 rounded-2xl px-6 py-4 disabled:opacity-75"
+                />
               </div>
             </div>
-          </div>
 
-          {editing && (
-            <button 
-              onClick={saveChanges}
-              disabled={saving}
-              className="mt-12 w-full bg-cyan-400 hover:bg-cyan-300 disabled:bg-slate-700 text-slate-950 font-semibold py-6 rounded-2xl text-xl transition"
-            >
-              {saving ? "Saving Changes..." : "Save Changes"}
-            </button>
-          )}
+            {editMode && (
+              <button 
+                onClick={() => { handleSave(); }}
+                className="w-full bg-cyan-400 hover:bg-cyan-300 text-slate-950 font-semibold py-5 rounded-3xl text-lg"
+              >
+                Save Changes
+              </button>
+            )}
+          </div>
+        </div>
+
+        {/* Preferences */}
+        <div className="mt-10 bg-slate-900/80 border border-white/10 rounded-3xl p-8 md:p-12">
+          <h3 className="text-2xl font-semibold mb-8">Preferences</h3>
+          <div className="space-y-6">
+            <div className="flex justify-between items-center py-4 border-b border-white/10">
+              <div>
+                <div className="font-medium">Email Notifications</div>
+                <div className="text-sm text-slate-400">Monthly savings reports and alerts</div>
+              </div>
+              <div className="w-12 h-6 bg-emerald-500 rounded-full relative cursor-pointer">
+                <div className="absolute right-0.5 top-0.5 w-5 h-5 bg-white rounded-full"></div>
+              </div>
+            </div>
+
+            <div className="flex justify-between items-center py-4 border-b border-white/10">
+              <div>
+                <div className="font-medium">Weekly Claims Digest</div>
+                <div className="text-sm text-slate-400">Summary of steered claims</div>
+              </div>
+              <div className="w-12 h-6 bg-emerald-500 rounded-full relative cursor-pointer">
+                <div className="absolute right-0.5 top-0.5 w-5 h-5 bg-white rounded-full"></div>
+              </div>
+            </div>
+
+            <div className="flex justify-between items-center py-4">
+              <div>
+                <div className="font-medium">Dark Mode</div>
+                <div className="text-sm text-slate-400">Interface theme</div>
+              </div>
+              <div className="text-emerald-400 font-medium">Enabled</div>
+            </div>
+          </div>
         </div>
       </div>
 
-      {/* Logout Confirmation Modal */}
-      {showLogoutModal && (
-        <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-[200] p-4">
-          <div className="bg-slate-900 border border-white/10 rounded-3xl p-10 max-w-sm w-full text-center">
-            <h3 className="text-2xl font-semibold mb-4">Log out of Quantum SelfFlow?</h3>
-            <p className="text-slate-400 mb-8">You will need to log back in to access your dashboard.</p>
-            
-            <div className="flex gap-4">
-              <button 
-                onClick={() => setShowLogoutModal(false)}
-                className="flex-1 py-4 border border-white/20 rounded-2xl font-medium"
-              >
-                Cancel
-              </button>
-              <button 
-                onClick={handleLogout}
-                className="flex-1 bg-red-500 hover:bg-red-600 text-white font-semibold py-4 rounded-2xl"
-              >
-                Yes, Log Out
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* Auto Year Footer */}
+      {/* Footer */}
       <footer className="border-t border-white/10 bg-black/60 py-12 mt-auto">
         <div className="max-w-7xl mx-auto px-6 text-center text-slate-400 text-sm">
           © {currentYear} Quantum SelfFlow • Powered by Quantum One Networks<br />
