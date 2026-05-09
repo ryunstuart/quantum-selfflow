@@ -12,11 +12,8 @@ export default function Dashboard() {
 
   useEffect(() => {
     const saved = localStorage.getItem('selfflow_user');
-    if (saved) {
-      setUser(JSON.parse(saved));
-    } else {
-      window.location.href = '/';
-    }
+    if (saved) setUser(JSON.parse(saved));
+    else window.location.href = '/';
   }, []);
 
   const handleLogout = () => {
@@ -47,7 +44,6 @@ export default function Dashboard() {
             </div>
           </Link>
 
-          {/* Desktop Nav - Settings now visible */}
           <div className="hidden md:flex items-center gap-6 text-sm font-medium">
             <Link href="/dashboard" className="text-cyan-400 font-medium">Dashboard</Link>
             <Link href="/myplan" className="hover:text-cyan-400">My Plan</Link>
@@ -56,15 +52,11 @@ export default function Dashboard() {
             <button onClick={handleLogout} className="text-red-400 hover:text-red-500 transition">Logout</button>
           </div>
 
-          <button 
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="md:hidden text-3xl focus:outline-none"
-          >
+          <button onClick={() => setMobileMenuOpen(!mobileMenuOpen)} className="md:hidden text-3xl focus:outline-none">
             {mobileMenuOpen ? '✕' : '☰'}
           </button>
         </div>
 
-        {/* Mobile Menu */}
         {mobileMenuOpen && (
           <div className="md:hidden border-t border-white/10 bg-black/95 py-8">
             <div className="flex flex-col gap-6 text-center text-lg font-medium">
@@ -93,7 +85,7 @@ export default function Dashboard() {
           </div>
         </div>
 
-        {/* Metrics Cards */}
+        {/* Metrics */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10">
           <div className="bg-slate-900/80 border border-white/10 rounded-3xl p-6">
             <div className="text-xs text-slate-400">TOTAL SAVED YTD</div>
@@ -127,39 +119,37 @@ export default function Dashboard() {
         </div>
 
         {/* Recent Claims */}
-        <div className="bg-slate-900/80 border border-white/10 rounded-3xl p-6 mb-12">
+        <div className="bg-slate-900/80 border border-white/10 rounded-3xl p-6 mb-12 overflow-x-auto">
           <div className="flex justify-between items-center mb-6">
             <h3 className="text-lg font-semibold">Recent Claims</h3>
             <button className="text-cyan-400 text-sm hover:underline">View All →</button>
           </div>
-          <div className="overflow-x-auto">
-            <table className="w-full text-sm">
-              <thead>
-                <tr className="border-b border-white/10">
-                  <th className="text-left py-4">Claim ID</th>
-                  <th className="text-left py-4">Date</th>
-                  <th className="text-left py-4">Provider</th>
-                  <th className="text-right py-4">Billed</th>
-                  <th className="text-right py-4">Savings</th>
+          <table className="w-full text-sm min-w-[550px]">
+            <thead>
+              <tr className="border-b border-white/10">
+                <th className="text-left py-4">Claim ID</th>
+                <th className="text-left py-4">Date</th>
+                <th className="text-left py-4">Provider</th>
+                <th className="text-right py-4">Billed</th>
+                <th className="text-right py-4">Savings</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-white/10">
+              {[
+                { id: "CL-7842", date: "May 6", provider: "St. Louis Ortho", billed: "$8,942", savings: "$2,310" },
+                { id: "CL-7841", date: "May 5", provider: "Midwest Imaging", billed: "$3,245", savings: "$1,089" },
+                { id: "CL-7840", date: "May 4", provider: "Heartland PT", billed: "$1,890", savings: "$672" },
+              ].map((claim, i) => (
+                <tr key={i}>
+                  <td className="py-5 font-mono">{claim.id}</td>
+                  <td className="py-5 text-slate-400">{claim.date}</td>
+                  <td className="py-5">{claim.provider}</td>
+                  <td className="py-5 text-right">{claim.billed}</td>
+                  <td className="py-5 text-right text-emerald-400 font-medium">{claim.savings}</td>
                 </tr>
-              </thead>
-              <tbody className="divide-y divide-white/10">
-                {[
-                  { id: "CL-7842", date: "May 6", provider: "St. Louis Ortho", billed: "$8,942", savings: "$2,310" },
-                  { id: "CL-7841", date: "May 5", provider: "Midwest Imaging", billed: "$3,245", savings: "$1,089" },
-                  { id: "CL-7840", date: "May 4", provider: "Heartland PT", billed: "$1,890", savings: "$672" },
-                ].map((claim, i) => (
-                  <tr key={i}>
-                    <td className="py-5 font-mono">{claim.id}</td>
-                    <td className="py-5 text-slate-400">{claim.date}</td>
-                    <td className="py-5">{claim.provider}</td>
-                    <td className="py-5 text-right">{claim.billed}</td>
-                    <td className="py-5 text-right text-emerald-400 font-medium">{claim.savings}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+              ))}
+            </tbody>
+          </table>
         </div>
 
         {/* Quick Actions */}
@@ -195,18 +185,11 @@ export default function Dashboard() {
         </div>
       </div>
 
-      {/* Add Employees Modal */}
       {showAddModal && (
         <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-[200] px-4">
           <div className="bg-slate-900 border border-white/20 rounded-3xl p-8 w-full max-w-md">
             <h3 className="text-2xl font-semibold mb-6">Add New Employees</h3>
-            <input
-              type="number"
-              value={newEmployeeCount}
-              onChange={(e) => setNewEmployeeCount(e.target.value)}
-              placeholder="Number of employees"
-              className="w-full bg-black/50 border border-white/20 rounded-2xl px-6 py-5 text-lg mb-8"
-            />
+            <input type="number" value={newEmployeeCount} onChange={(e) => setNewEmployeeCount(e.target.value)} placeholder="Number of employees" className="w-full bg-black/50 border border-white/20 rounded-2xl px-6 py-5 text-lg mb-8" />
             <div className="flex gap-4">
               <button onClick={() => setShowAddModal(false)} className="flex-1 py-5 border border-white/30 rounded-2xl">Cancel</button>
               <button onClick={handleAddEmployees} className="flex-1 bg-cyan-400 text-slate-950 py-5 rounded-2xl font-semibold">Add Employees</button>
