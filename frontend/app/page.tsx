@@ -120,6 +120,7 @@ export default function Home() {
             {!isLoggedIn && <Link href="/onboarding" className="hover:text-cyan-400">Get Started</Link>}
             {isLoggedIn && <Link href="/dashboard" className="hover:text-cyan-400">Dashboard</Link>}
             {isLoggedIn && <Link href="/myplan" className="hover:text-cyan-400">My Plan</Link>}
+            {isLoggedIn && <Link href="/settings" className="hover:text-cyan-400">Settings</Link>}
             {isLoggedIn && <button onClick={() => { localStorage.removeItem('selfflow_user'); window.location.reload(); }} className="text-red-400">Logout</button>}
           </div>
         </div>
@@ -238,7 +239,7 @@ export default function Home() {
             <div className="text-center">
               <div className="text-6xl mb-6">1️⃣</div>
               <div className="font-semibold text-xl mb-3">Enter Your ZIPs</div>
-              <p className="text-slate-400">Instantly see real-time Priority PPO network strength in every location.</p>
+              <p className="text-slate-400">Instantly see real-time Priority PPO network strength.</p>
             </div>
             <div className="text-center">
               <div className="text-6xl mb-6">2️⃣</div>
@@ -248,7 +249,7 @@ export default function Home() {
             <div className="text-center">
               <div className="text-6xl mb-6">3️⃣</div>
               <div className="font-semibold text-xl mb-3">Watch Savings Grow</div>
-              <p className="text-slate-400">Real-time dashboard + add-ons (AI steering, Hybrid Care, Outcomes).</p>
+              <p className="text-slate-400">Real-time dashboard + powerful add-ons.</p>
             </div>
           </div>
         </div>
@@ -288,7 +289,7 @@ export default function Home() {
         <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-[200] p-4">
           <div className="bg-slate-900 border border-white/10 rounded-3xl p-10 max-w-md w-full text-center">
             <h3 className="text-3xl font-semibold mb-4">Ready to See Quantum SelfFlow Live?</h3>
-            <p className="text-slate-400 mb-8">Schedule a quick 15-minute demo with our team to review your potential savings and get started.</p>
+            <p className="text-slate-400 mb-8">Schedule a quick 15-minute demo with our team.</p>
             
             <button 
               onClick={() => { alert("✅ Demo request sent! Our team will reach out shortly."); setShowDemoModal(false); }}
