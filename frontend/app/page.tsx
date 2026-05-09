@@ -128,7 +128,7 @@ export default function Home() {
             </div>
           </Link>
 
-          {/* Desktop Navigation */}
+          {/* Desktop Nav */}
           <div className="hidden md:flex items-center gap-6 text-sm font-medium">
             {!isLoggedIn && (
               <>
@@ -152,7 +152,7 @@ export default function Home() {
             {isLoggedIn && (
               <button 
                 onClick={handleLogout}
-                className="text-red-400 hover:text-red-500 transition"
+                className="text-red-400 hover:text-red-500 transition font-medium"
               >
                 Logout
               </button>
@@ -204,9 +204,113 @@ export default function Home() {
         </p>
       </div>
 
-      {/* ZIP Checker + Savings Calculator + All other sections remain unchanged... */}
+      {/* ZIP Checker */}
+      <div className="max-w-2xl mx-auto px-6 pb-20">
+        <div className="bg-slate-900/80 border border-white/10 rounded-3xl p-10 md:p-16">
+          <h2 className="text-3xl font-semibold mb-8 text-center">Check Your Network Coverage</h2>
+          
+          <div className="flex gap-4">
+            <input
+              type="text"
+              value={zipCodes}
+              onChange={(e) => setZipCodes(e.target.value)}
+              placeholder="Enter ZIP code"
+              className="flex-1 bg-black/50 border border-white/20 rounded-2xl px-6 py-4 text-lg focus:outline-none focus:border-cyan-400"
+              maxLength={5}
+            />
+            <button
+              onClick={checkNetwork}
+              disabled={loading}
+              className="bg-cyan-400 hover:bg-cyan-300 text-slate-950 font-semibold px-10 rounded-2xl disabled:opacity-70"
+            >
+              {loading ? 'Checking...' : 'Check Coverage'}
+            </button>
+          </div>
 
-      {/* Schedule Demo Button - Only show when NOT logged in */}
+          {error && <p className="text-red-400 mt-4 text-center">{error}</p>}
+
+          {result && (
+            <div className="mt-10 bg-black/50 rounded-2xl p-8 text-center">
+              <p className="text-emerald-400 text-sm font-medium">✅ {result.city}</p>
+              <p className="text-6xl font-bold mt-4">{result.doctors}</p>
+              <p className="text-xl">Priority PPO doctors found</p>
+              <p className="mt-2 text-lg">Coverage Strength: <span className="text-emerald-400 font-semibold">{result.coverageStrength}</span></p>
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* Savings Calculator */}
+      <div className="max-w-2xl mx-auto px-6 pb-24">
+        <div className="bg-slate-900/80 border border-white/10 rounded-3xl p-10 md:p-16">
+          <h2 className="text-3xl font-semibold mb-8 text-center">Estimate Your Annual Savings</h2>
+          
+          <div className="space-y-8">
+            <div>
+              <label className="block text-sm mb-3">Monthly Claims Volume ($)</label>
+              <input
+                type="number"
+                value={claimsVolume}
+                onChange={(e) => setClaimsVolume(e.target.value)}
+                className="w-full bg-black/50 border border-white/20 rounded-2xl px-6 py-4 text-lg"
+                placeholder="150000"
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm mb-3">Expected Savings Rate: {savingsRate}%</label>
+              <input
+                type="range"
+                min="5"
+                max="18"
+                step="0.5"
+                value={savingsRate}
+                onChange={(e) => setSavingsRate(parseFloat(e.target.value))}
+                className="w-full accent-cyan-400"
+              />
+            </div>
+
+            <button
+              onClick={calculateSavings}
+              disabled={calculating || !claimsVolume}
+              className="w-full bg-cyan-400 hover:bg-cyan-300 text-slate-950 font-semibold py-5 rounded-3xl text-xl disabled:opacity-70"
+            >
+              {calculating ? 'Calculating...' : 'Calculate Projected Savings'}
+            </button>
+
+            {projectedSavings !== null && (
+              <div className="text-center bg-emerald-900/30 border border-emerald-400/30 rounded-2xl p-8">
+                <p className="text-emerald-400 text-sm">ESTIMATED ANNUAL SAVINGS</p>
+                <p className="text-5xl font-bold mt-3">${projectedSavings.toLocaleString()}</p>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+
+      {/* How It Works */}
+      <div className="max-w-5xl mx-auto px-6 py-20 bg-black/40">
+        <h2 className="text-4xl font-bold text-center mb-16">How It Works</h2>
+        <div className="grid md:grid-cols-3 gap-8">
+          <div className="text-center">
+            <div className="text-5xl mb-6">1️⃣</div>
+            <h3 className="text-xl font-semibold mb-3">Check Coverage</h3>
+            <p className="text-slate-400">Enter your ZIP codes and instantly see Priority PPO network strength.</p>
+          </div>
+          <div className="text-center">
+            <div className="text-5xl mb-6">2️⃣</div>
+            <h3 className="text-xl font-semibold mb-3">Activate Instantly</h3>
+            <p className="text-slate-400">One-click onboarding. No contracts. No implementation fees.</p>
+          </div>
+          <div className="text-center">
+            <div className="text-5xl mb-6">3️⃣</div>
+            <h3 className="text-xl font-semibold mb-3">Start Saving</h3>
+            <p className="text-slate-400">Real-time steering + savings dashboard. Money-back guarantee.</p>
+          </div>
+        </div>
+      </div>
+
+      {/* Schedule Demo Button - Only when NOT logged in */}
       {!isLoggedIn && (
         <button
           onClick={() => setShowDemoModal(true)}
