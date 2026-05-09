@@ -7,7 +7,7 @@ export default function MyPlan() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [user, setUser] = useState<any>(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [activeAddons, setActiveAddons] = useState(['rbp']); // rbp = reference based pricing
+  const [activeAddons, setActiveAddons] = useState(['rbp']);
   const currentYear = new Date().getFullYear();
 
   useEffect(() => {
@@ -45,9 +45,11 @@ export default function MyPlan() {
             </div>
           </Link>
 
+          {/* Desktop Nav - Settings visible */}
           <div className="hidden md:flex items-center gap-6 text-sm font-medium">
             <Link href="/dashboard" className="hover:text-cyan-400">Dashboard</Link>
             <Link href="/myplan" className="text-cyan-400 font-medium">My Plan</Link>
+            <Link href="/settings" className="hover:text-cyan-400">Settings</Link>
             <Link href="/resources" className="hover:text-cyan-400">Resources</Link>
             <button onClick={handleLogout} className="text-red-400 hover:text-red-500 transition">Logout</button>
           </div>
@@ -65,6 +67,7 @@ export default function MyPlan() {
             <div className="flex flex-col gap-6 text-center text-lg font-medium">
               <Link href="/dashboard" className="py-2" onClick={() => setMobileMenuOpen(false)}>Dashboard</Link>
               <Link href="/myplan" className="py-2" onClick={() => setMobileMenuOpen(false)}>My Plan</Link>
+              <Link href="/settings" className="py-2" onClick={() => setMobileMenuOpen(false)}>Settings</Link>
               <Link href="/resources" className="py-2" onClick={() => setMobileMenuOpen(false)}>Resources</Link>
               <button onClick={handleLogout} className="text-red-400 py-2">Logout</button>
             </div>
@@ -144,7 +147,7 @@ export default function MyPlan() {
           </div>
         </div>
 
-        {/* Plan History / Utilization */}
+        {/* Plan Utilization */}
         <div className="mt-16 bg-slate-900/60 border border-white/10 rounded-3xl p-8 md:p-12">
           <h3 className="text-xl font-semibold mb-8">Plan Utilization</h3>
           <div className="space-y-6 text-sm">
