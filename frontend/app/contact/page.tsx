@@ -1,27 +1,48 @@
 'use client';
 
 import Link from 'next/link';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 export default function Contact() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [formSubmitted, setFormSubmitted] = useState(false);
+  
   const [formData, setFormData] = useState({
     name: '',
-    email: '',
     company: '',
-    message: ''
+    email: '',
+    phone: '',
+    message: '',
+    interest: 'demo'
   });
-  const [submitted, setSubmitted] = useState(false);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const currentYear = new Date().getFullYear();
 
+  useEffect(() => {
+    const saved = localStorage.getItem('selfflow_user');
+    if (saved) setIsLoggedIn(true);
+  }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem('selfflow_user');
+    window.location.reload();
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
+    });
+  };
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    setSubmitted(true);
+    setFormSubmitted(true);
     setTimeout(() => {
-      alert("✅ Thank you! Our team will get back to you within 1 business day.");
-      setFormData({ name: '', email: '', company: '', message: '' });
-      setSubmitted(false);
+      alert("✅ Thank you! We'll get back to you within 1 business day.");
+      setFormSubmitted(false);
+      setFormData({ name: '', company: '', email: '', phone: '', message: '', interest: 'demo' });
     }, 800);
   };
 
@@ -40,12 +61,22 @@ export default function Contact() {
           {/* Desktop Nav */}
           <div className="hidden md:flex items-center gap-6 text-sm font-medium">
             <Link href="/" className="hover:text-cyan-400">Home</Link>
-            <Link href="/onboarding" className="hover:text-cyan-400">Get Started</Link>
-            <Link href="/settings" className="hover:text-cyan-400">Settings</Link>
+            <Link href="/about" className="hover:text-cyan-400">About</Link>
+            <Link href="/success-stories" className="hover:text-cyan-400">Success Stories</Link>
+            <Link href="/pricing" className="hover:text-cyan-400">Pricing</Link>
+            <Link href="/resources" className="hover:text-cyan-400">Resources</Link>
             <Link href="/contact" className="text-cyan-400 font-medium">Contact</Link>
+            
+            {!isLoggedIn && <Link href="/onboarding" className="hover:text-cyan-400">Get Started</Link>}
+            {isLoggedIn && <Link href="/dashboard" className="hover:text-cyan-400">Dashboard</Link>}
+            
+            {isLoggedIn && (
+              <button onClick={handleLogout} className="text-red-400 hover:text-red-500 transition">
+                Logout
+              </button>
+            )}
           </div>
 
-          {/* Mobile Hamburger */}
           <button 
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             className="md:hidden text-3xl focus:outline-none"
@@ -54,94 +85,125 @@ export default function Contact() {
           </button>
         </div>
 
-        {/* Mobile Menu */}
         {mobileMenuOpen && (
           <div className="md:hidden border-t border-white/10 bg-black/95 py-8">
             <div className="flex flex-col gap-6 text-center text-lg font-medium">
-              <Link href="/" className="hover:text-cyan-400 py-2" onClick={() => setMobileMenuOpen(false)}>Home</Link>
-              <Link href="/onboarding" className="hover:text-cyan-400 py-2" onClick={() => setMobileMenuOpen(false)}>Get Started</Link>
-              <Link href="/settings" className="hover:text-cyan-400 py-2" onClick={() => setMobileMenuOpen(false)}>Settings</Link>
-              <Link href="/contact" className="hover:text-cyan-400 py-2" onClick={() => setMobileMenuOpen(false)}>Contact</Link>
+              <Link href="/" className="py-2" onClick={() => setMobileMenuOpen(false)}>Home</Link>
+              <Link href="/about" className="py-2" onClick={() => setMobileMenuOpen(false)}>About</Link>
+              <Link href="/success-stories" className="py-2" onClick={() => setMobileMenuOpen(false)}>Success Stories</Link>
+              <Link href="/pricing" className="py-2" onClick={() => setMobileMenuOpen(false)}>Pricing</Link>
+              <Link href="/resources" className="py-2" onClick={() => setMobileMenuOpen(false)}>Resources</Link>
+              <Link href="/contact" className="py-2" onClick={() => setMobileMenuOpen(false)}>Contact</Link>
+              <Link href={isLoggedIn ? "/dashboard" : "/onboarding"} className="py-2" onClick={() => setMobileMenuOpen(false)}>
+                {isLoggedIn ? "Dashboard" : "Get Started"}
+              </Link>
+              {isLoggedIn && <button onClick={handleLogout} className="text-red-400 py-2">Logout</button>}
             </div>
           </div>
         )}
       </nav>
 
-      <div className="max-w-2xl mx-auto px-6 py-20 flex-1">
+      <div className="max-w-3xl mx-auto px-6 py-20 flex-1">
         <div className="text-center mb-16">
-          <h1 className="text-5xl md:text-6xl font-bold tracking-tighter mb-6">Get in Touch</h1>
-          <p className="text-xl text-slate-400">Have questions about Quantum SelfFlow? Our team is here to help.</p>
+          <h1 className="text-6xl md:text-7xl font-bold tracking-tighter mb-6">Let's Talk Savings</h1>
+          <p className="text-2xl text-slate-400">Ready to reduce your medical trend? Tell us about your group.</p>
         </div>
 
-        <div className="bg-slate-900/80 border border-white/10 rounded-3xl p-10 md:p-16">
-          {submitted ? (
-            <div className="text-center py-20">
-              <div className="text-6xl mb-6">✅</div>
-              <h3 className="text-3xl font-semibold mb-4">Thank You!</h3>
-              <p className="text-slate-400">We'll get back to you within one business day.</p>
-            </div>
-          ) : (
-            <form onSubmit={handleSubmit} className="space-y-8">
+        {formSubmitted ? (
+          <div className="bg-emerald-900/30 border border-emerald-400/50 rounded-3xl p-16 text-center">
+            <div className="text-6xl mb-6">🎉</div>
+            <h3 className="text-3xl font-semibold mb-4">Thank You!</h3>
+            <p className="text-xl text-slate-300">We'll reach out within one business day to schedule a quick demo or answer your questions.</p>
+          </div>
+        ) : (
+          <form onSubmit={handleSubmit} className="bg-slate-900/80 border border-white/10 rounded-3xl p-10 md:p-16 space-y-8">
+            <div className="grid md:grid-cols-2 gap-6">
               <div>
-                <label className="block text-sm text-slate-400 mb-2">Your Name</label>
-                <input
-                  type="text"
-                  required
+                <label className="block text-sm mb-2">Full Name</label>
+                <input 
+                  type="text" 
+                  name="name" 
                   value={formData.name}
-                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                  className="w-full bg-slate-800 border border-white/20 rounded-2xl px-6 py-5 focus:outline-none focus:border-cyan-400"
-                  placeholder="John Smith"
+                  onChange={handleChange}
+                  required
+                  className="w-full bg-black/50 border border-white/20 rounded-2xl px-6 py-4 focus:outline-none focus:border-cyan-400"
                 />
               </div>
-
               <div>
-                <label className="block text-sm text-slate-400 mb-2">Work Email</label>
-                <input
-                  type="email"
-                  required
-                  value={formData.email}
-                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                  className="w-full bg-slate-800 border border-white/20 rounded-2xl px-6 py-5 focus:outline-none focus:border-cyan-400"
-                  placeholder="john@yourcompany.com"
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm text-slate-400 mb-2">Company Name</label>
-                <input
-                  type="text"
-                  required
+                <label className="block text-sm mb-2">Company Name</label>
+                <input 
+                  type="text" 
+                  name="company" 
                   value={formData.company}
-                  onChange={(e) => setFormData({ ...formData, company: e.target.value })}
-                  className="w-full bg-slate-800 border border-white/20 rounded-2xl px-6 py-5 focus:outline-none focus:border-cyan-400"
-                  placeholder="Your Company LLC"
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm text-slate-400 mb-2">Message</label>
-                <textarea
+                  onChange={handleChange}
                   required
-                  value={formData.message}
-                  onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                  rows={6}
-                  className="w-full bg-slate-800 border border-white/20 rounded-3xl px-6 py-5 focus:outline-none focus:border-cyan-400 resize-y"
-                  placeholder="Tell us how we can help..."
+                  className="w-full bg-black/50 border border-white/20 rounded-2xl px-6 py-4 focus:outline-none focus:border-cyan-400"
                 />
               </div>
+            </div>
 
-              <button
-                type="submit"
-                className="w-full bg-cyan-400 hover:bg-cyan-300 text-slate-950 font-semibold py-6 rounded-2xl text-xl transition"
+            <div className="grid md:grid-cols-2 gap-6">
+              <div>
+                <label className="block text-sm mb-2">Email Address</label>
+                <input 
+                  type="email" 
+                  name="email" 
+                  value={formData.email}
+                  onChange={handleChange}
+                  required
+                  className="w-full bg-black/50 border border-white/20 rounded-2xl px-6 py-4 focus:outline-none focus:border-cyan-400"
+                />
+              </div>
+              <div>
+                <label className="block text-sm mb-2">Phone Number</label>
+                <input 
+                  type="tel" 
+                  name="phone" 
+                  value={formData.phone}
+                  onChange={handleChange}
+                  className="w-full bg-black/50 border border-white/20 rounded-2xl px-6 py-4 focus:outline-none focus:border-cyan-400"
+                />
+              </div>
+            </div>
+
+            <div>
+              <label className="block text-sm mb-2">What are you most interested in?</label>
+              <select 
+                name="interest" 
+                value={formData.interest}
+                onChange={handleChange}
+                className="w-full bg-black/50 border border-white/20 rounded-2xl px-6 py-4 focus:outline-none focus:border-cyan-400"
               >
-                Send Message
-              </button>
-            </form>
-          )}
-        </div>
+                <option value="demo">Schedule a Demo</option>
+                <option value="pricing">Pricing Information</option>
+                <option value="tpa">TPA / White-Label Partnership</option>
+                <option value="other">General Question</option>
+              </select>
+            </div>
+
+            <div>
+              <label className="block text-sm mb-2">Message / Details</label>
+              <textarea 
+                name="message" 
+                value={formData.message}
+                onChange={handleChange}
+                rows={6}
+                className="w-full bg-black/50 border border-white/20 rounded-3xl px-6 py-4 focus:outline-none focus:border-cyan-400"
+                placeholder="Tell us about your group size, current challenges, etc."
+              />
+            </div>
+
+            <button 
+              type="submit"
+              className="w-full bg-cyan-400 hover:bg-cyan-300 text-slate-950 font-semibold py-6 rounded-3xl text-xl transition"
+            >
+              Send Message
+            </button>
+          </form>
+        )}
       </div>
 
-      {/* Auto Year Footer */}
+      {/* Footer */}
       <footer className="border-t border-white/10 bg-black/60 py-12 mt-auto">
         <div className="max-w-7xl mx-auto px-6 text-center text-slate-400 text-sm">
           © {currentYear} Quantum SelfFlow • Powered by Quantum One Networks<br />
