@@ -9,6 +9,7 @@ export default function Onboarding() {
   const [employeeCount, setEmployeeCount] = useState('');
   const [planType, setPlanType] = useState('');
   const [loading, setLoading] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const progress = ((step - 1) / 3) * 100;
 
@@ -46,8 +47,33 @@ export default function Onboarding() {
             <div className="w-9 h-9 bg-cyan-400 rounded-2xl flex items-center justify-center text-slate-950 font-bold text-2xl shadow-lg">Q</div>
             <div className="font-bold text-2xl tracking-tighter">Quantum SelfFlow</div>
           </Link>
-          <Link href="/" className="text-slate-400 hover:text-white">← Back to Home</Link>
+
+          {/* Desktop Nav */}
+          <div className="hidden md:flex items-center gap-6 text-sm font-medium">
+            <Link href="/" className="hover:text-cyan-400">Home</Link>
+            <Link href="/onboarding" className="text-cyan-400 font-medium">Get Started</Link>
+            <Link href="/settings" className="hover:text-cyan-400">Settings</Link>
+          </div>
+
+          {/* Mobile Hamburger */}
+          <button 
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            className="md:hidden text-3xl focus:outline-none"
+          >
+            {mobileMenuOpen ? '✕' : '☰'}
+          </button>
         </div>
+
+        {/* Mobile Menu */}
+        {mobileMenuOpen && (
+          <div className="md:hidden border-t border-white/10 bg-black/95 py-8">
+            <div className="flex flex-col gap-6 text-center text-lg font-medium">
+              <Link href="/" className="hover:text-cyan-400 py-2" onClick={() => setMobileMenuOpen(false)}>Home</Link>
+              <Link href="/onboarding" className="hover:text-cyan-400 py-2" onClick={() => setMobileMenuOpen(false)}>Get Started</Link>
+              <Link href="/settings" className="hover:text-cyan-400 py-2" onClick={() => setMobileMenuOpen(false)}>Settings</Link>
+            </div>
+          </div>
+        )}
       </nav>
 
       <div className="max-w-2xl mx-auto px-6 pt-16 pb-24 flex-1">
