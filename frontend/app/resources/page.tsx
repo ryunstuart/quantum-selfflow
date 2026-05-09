@@ -39,22 +39,26 @@ export default function Resources() {
             </div>
           </Link>
 
-          {/* Desktop Navigation - Consistent with other pages */}
+          {/* Desktop Nav - Clean for logged-in users */}
           <div className="hidden md:flex items-center gap-6 text-sm font-medium">
-            <Link href="/" className="hover:text-cyan-400">Home</Link>
-            <Link href="/about" className="hover:text-cyan-400">About</Link>
-            <Link href="/success-stories" className="hover:text-cyan-400">Success Stories</Link>
-            <Link href="/pricing" className="hover:text-cyan-400">Pricing</Link>
-            <Link href="/resources" className="text-cyan-400 font-medium">Resources</Link>
-            
-            {isLoggedIn && <Link href="/dashboard" className="hover:text-cyan-400">Dashboard</Link>}
-            {isLoggedIn && <Link href="/myplan" className="hover:text-cyan-400">My Plan</Link>}
-            {isLoggedIn && <Link href="/settings" className="hover:text-cyan-400">Settings</Link>}
-            
-            {isLoggedIn && (
-              <button onClick={handleLogout} className="text-red-400 hover:text-red-500 transition">Logout</button>
+            {isLoggedIn ? (
+              <>
+                <Link href="/dashboard" className="hover:text-cyan-400">Dashboard</Link>
+                <Link href="/myplan" className="hover:text-cyan-400">My Plan</Link>
+                <Link href="/settings" className="hover:text-cyan-400">Settings</Link>
+                <Link href="/resources" className="text-cyan-400 font-medium">Resources</Link>
+                <button onClick={handleLogout} className="text-red-400 hover:text-red-500 transition">Logout</button>
+              </>
+            ) : (
+              <>
+                <Link href="/" className="hover:text-cyan-400">Home</Link>
+                <Link href="/about" className="hover:text-cyan-400">About</Link>
+                <Link href="/success-stories" className="hover:text-cyan-400">Success Stories</Link>
+                <Link href="/pricing" className="hover:text-cyan-400">Pricing</Link>
+                <Link href="/resources" className="text-cyan-400 font-medium">Resources</Link>
+                <Link href="/onboarding" className="hover:text-cyan-400">Get Started</Link>
+              </>
             )}
-            {!isLoggedIn && <Link href="/onboarding" className="hover:text-cyan-400">Get Started</Link>}
           </div>
 
           <button 
@@ -69,18 +73,24 @@ export default function Resources() {
         {mobileMenuOpen && (
           <div className="md:hidden border-t border-white/10 bg-black/95 py-8">
             <div className="flex flex-col gap-6 text-center text-lg font-medium">
-              <Link href="/" className="py-2" onClick={() => setMobileMenuOpen(false)}>Home</Link>
-              <Link href="/about" className="py-2" onClick={() => setMobileMenuOpen(false)}>About</Link>
-              <Link href="/success-stories" className="py-2" onClick={() => setMobileMenuOpen(false)}>Success Stories</Link>
-              <Link href="/pricing" className="py-2" onClick={() => setMobileMenuOpen(false)}>Pricing</Link>
-              <Link href="/resources" className="py-2" onClick={() => setMobileMenuOpen(false)}>Resources</Link>
-              
-              {isLoggedIn && <Link href="/dashboard" className="py-2" onClick={() => setMobileMenuOpen(false)}>Dashboard</Link>}
-              {isLoggedIn && <Link href="/myplan" className="py-2" onClick={() => setMobileMenuOpen(false)}>My Plan</Link>}
-              {isLoggedIn && <Link href="/settings" className="py-2" onClick={() => setMobileMenuOpen(false)}>Settings</Link>}
-              
-              {isLoggedIn && <button onClick={handleLogout} className="text-red-400 py-2">Logout</button>}
-              {!isLoggedIn && <Link href="/onboarding" className="py-2" onClick={() => setMobileMenuOpen(false)}>Get Started</Link>}
+              {isLoggedIn ? (
+                <>
+                  <Link href="/dashboard" className="py-2" onClick={() => setMobileMenuOpen(false)}>Dashboard</Link>
+                  <Link href="/myplan" className="py-2" onClick={() => setMobileMenuOpen(false)}>My Plan</Link>
+                  <Link href="/settings" className="py-2" onClick={() => setMobileMenuOpen(false)}>Settings</Link>
+                  <Link href="/resources" className="py-2" onClick={() => setMobileMenuOpen(false)}>Resources</Link>
+                  <button onClick={handleLogout} className="text-red-400 py-2">Logout</button>
+                </>
+              ) : (
+                <>
+                  <Link href="/" className="py-2" onClick={() => setMobileMenuOpen(false)}>Home</Link>
+                  <Link href="/about" className="py-2" onClick={() => setMobileMenuOpen(false)}>About</Link>
+                  <Link href="/success-stories" className="py-2" onClick={() => setMobileMenuOpen(false)}>Success Stories</Link>
+                  <Link href="/pricing" className="py-2" onClick={() => setMobileMenuOpen(false)}>Pricing</Link>
+                  <Link href="/resources" className="py-2" onClick={() => setMobileMenuOpen(false)}>Resources</Link>
+                  <Link href="/onboarding" className="py-2" onClick={() => setMobileMenuOpen(false)}>Get Started</Link>
+                </>
+              )}
             </div>
           </div>
         )}
