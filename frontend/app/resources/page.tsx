@@ -32,14 +32,17 @@ export default function Resources() {
       <nav className="border-b border-white/10 bg-black/80 backdrop-blur-md sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 md:px-6 py-4 flex justify-between items-center">
           <Link href="/" className="flex items-center gap-3 hover:opacity-90 transition">
-            <div className="w-9 h-9 md:w-10 md:h-10 bg-cyan-400 rounded-2xl flex items-center justify-center text-slate-950 font-bold text-2xl md:text-3xl shadow-lg">Q</div>
+            {/* Larger logo for guests, smaller for logged-in */}
+            <div className={`rounded-2xl flex items-center justify-center text-slate-950 font-bold shadow-lg transition-all ${isLoggedIn ? 'w-9 h-9 md:w-10 md:h-10 text-2xl md:text-3xl' : 'w-10 h-10 md:w-12 md:h-12 text-3xl md:text-4xl'}`}>
+              Q
+            </div>
             <div>
-              <div className="font-bold text-2xl md:text-3xl tracking-tighter">Quantum SelfFlow</div>
+              <div className={`font-bold tracking-tighter transition-all ${isLoggedIn ? 'text-2xl md:text-3xl' : 'text-3xl md:text-4xl'}`}>Quantum SelfFlow</div>
               <div className="text-cyan-400 text-xs md:text-sm -mt-1">Self-serve savings. Zero complexity.</div>
             </div>
           </Link>
 
-          {/* Desktop Nav - Clean logged-in / guest */}
+          {/* Desktop Nav */}
           <div className="hidden md:flex items-center gap-6 text-sm font-medium">
             {isLoggedIn ? (
               <>
@@ -69,6 +72,7 @@ export default function Resources() {
           </button>
         </div>
 
+        {/* Mobile Menu */}
         {mobileMenuOpen && (
           <div className="md:hidden border-t border-white/10 bg-black/95 py-8">
             <div className="flex flex-col gap-6 text-center text-lg font-medium">
