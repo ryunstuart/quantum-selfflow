@@ -50,6 +50,7 @@ export default function Dashboard() {
             <Link href="/" className="hover:text-cyan-400">Home</Link>
             <Link href="/dashboard" className="text-cyan-400 font-medium">Dashboard</Link>
             <Link href="/myplan" className="hover:text-cyan-400">My Plan</Link>
+            <Link href="/settings" className="hover:text-cyan-400">Settings</Link>
             <button onClick={logout} className="text-red-400 hover:text-red-500">Logout</button>
           </div>
         </div>
@@ -69,22 +70,6 @@ export default function Dashboard() {
           <div className="text-right bg-slate-900/70 px-8 py-6 rounded-3xl border border-emerald-400/30">
             <div className="text-emerald-400 text-6xl font-bold">10.5%</div>
             <div className="text-sm text-slate-400">Avg Monthly Savings</div>
-          </div>
-        </div>
-
-        {/* Quick Stats Row */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-12">
-          <div className="bg-emerald-900/30 border border-emerald-400/30 rounded-3xl p-6 text-center">
-            <div className="text-4xl font-bold text-emerald-400">$248,700</div>
-            <div className="text-sm text-emerald-400 mt-1">Saved This Month</div>
-          </div>
-          <div className="bg-cyan-900/30 border border-cyan-400/30 rounded-3xl p-6 text-center">
-            <div className="text-4xl font-bold text-cyan-400">2,847</div>
-            <div className="text-sm text-cyan-400 mt-1">Claims Steered</div>
-          </div>
-          <div className="bg-purple-900/30 border border-purple-400/30 rounded-3xl p-6 text-center">
-            <div className="text-4xl font-bold text-purple-400">92%</div>
-            <div className="text-sm text-purple-400 mt-1">Network Utilization</div>
           </div>
         </div>
 
