@@ -108,7 +108,7 @@ export default function Home() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-blue-950 text-white relative flex flex-col">
+    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-blue-950 text-white relative flex flex-col overflow-x-hidden">
       {/* Toast */}
       {toast && (
         <div className={`fixed top-6 left-1/2 -translate-x-1/2 z-[100] px-8 py-4 rounded-2xl shadow-2xl flex items-center gap-3 text-white transition-all duration-300 ${
@@ -128,38 +128,26 @@ export default function Home() {
             </div>
           </Link>
 
-          {/* Desktop Nav */}
           <div className="hidden md:flex items-center gap-6 text-sm font-medium">
-            {!isLoggedIn && (
+            {isLoggedIn ? (
+              <>
+                <Link href="/dashboard" className="hover:text-cyan-400">Dashboard</Link>
+                <Link href="/myplan" className="hover:text-cyan-400">My Plan</Link>
+                <Link href="/settings" className="hover:text-cyan-400">Settings</Link>
+                <Link href="/resources" className="hover:text-cyan-400">Resources</Link>
+                <button onClick={handleLogout} className="text-red-400 hover:text-red-500 transition">Logout</button>
+              </>
+            ) : (
               <>
                 <Link href="/about" className="hover:text-cyan-400">About</Link>
                 <Link href="/success-stories" className="hover:text-cyan-400">Success Stories</Link>
                 <Link href="/pricing" className="hover:text-cyan-400">Pricing</Link>
                 <Link href="/resources" className="hover:text-cyan-400">Resources</Link>
+                <Link href="/onboarding" className="hover:text-cyan-400">Get Started</Link>
               </>
-            )}
-            
-            {isLoggedIn && (
-              <>
-                <Link href="/dashboard" className="hover:text-cyan-400">Dashboard</Link>
-                <Link href="/myplan" className="hover:text-cyan-400">My Plan</Link>
-                <Link href="/resources" className="hover:text-cyan-400">Resources</Link>
-              </>
-            )}
-
-            {!isLoggedIn && <Link href="/onboarding" className="hover:text-cyan-400">Get Started</Link>}
-            
-            {isLoggedIn && (
-              <button 
-                onClick={handleLogout}
-                className="text-red-400 hover:text-red-500 transition font-medium"
-              >
-                Logout
-              </button>
             )}
           </div>
 
-          {/* Mobile Hamburger */}
           <button 
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             className="md:hidden text-3xl focus:outline-none"
@@ -168,7 +156,6 @@ export default function Home() {
           </button>
         </div>
 
-        {/* Mobile Menu */}
         {mobileMenuOpen && (
           <div className="md:hidden border-t border-white/10 bg-black/95 py-8">
             <div className="flex flex-col gap-6 text-center text-lg font-medium">
@@ -176,6 +163,9 @@ export default function Home() {
                 <>
                   <Link href="/dashboard" className="py-2" onClick={() => setMobileMenuOpen(false)}>Dashboard</Link>
                   <Link href="/myplan" className="py-2" onClick={() => setMobileMenuOpen(false)}>My Plan</Link>
+                  <Link href="/settings" className="py-2" onClick={() => setMobileMenuOpen(false)}>Settings</Link>
+                  <Link href="/resources" className="py-2" onClick={() => setMobileMenuOpen(false)}>Resources</Link>
+                  <button onClick={handleLogout} className="text-red-400 py-2">Logout</button>
                 </>
               ) : (
                 <>
@@ -183,12 +173,9 @@ export default function Home() {
                   <Link href="/success-stories" className="py-2" onClick={() => setMobileMenuOpen(false)}>Success Stories</Link>
                   <Link href="/pricing" className="py-2" onClick={() => setMobileMenuOpen(false)}>Pricing</Link>
                   <Link href="/resources" className="py-2" onClick={() => setMobileMenuOpen(false)}>Resources</Link>
+                  <Link href="/onboarding" className="py-2" onClick={() => setMobileMenuOpen(false)}>Get Started</Link>
                 </>
               )}
-              <Link href={isLoggedIn ? "/dashboard" : "/onboarding"} className="py-2" onClick={() => setMobileMenuOpen(false)}>
-                {isLoggedIn ? "Dashboard" : "Get Started"}
-              </Link>
-              {isLoggedIn && <button onClick={handleLogout} className="text-red-400 py-2">Logout</button>}
             </div>
           </div>
         )}
@@ -204,24 +191,24 @@ export default function Home() {
         </p>
       </div>
 
-      {/* ZIP Checker */}
-      <div className="max-w-2xl mx-auto px-6 pb-20">
-        <div className="bg-slate-900/80 border border-white/10 rounded-3xl p-10 md:p-16">
+      {/* ZIP Checker - Improved Mobile Layout */}
+      <div className="max-w-2xl mx-auto px-4 md:px-6 pb-20 w-full">
+        <div className="bg-slate-900/80 border border-white/10 rounded-3xl p-8 md:p-16">
           <h2 className="text-3xl font-semibold mb-8 text-center">Check Your Network Coverage</h2>
           
-          <div className="flex gap-4">
+          <div className="flex flex-col sm:flex-row gap-4">
             <input
               type="text"
               value={zipCodes}
               onChange={(e) => setZipCodes(e.target.value)}
               placeholder="Enter ZIP code"
-              className="flex-1 bg-black/50 border border-white/20 rounded-2xl px-6 py-4 text-lg focus:outline-none focus:border-cyan-400"
+              className="flex-1 bg-black/50 border border-white/20 rounded-2xl px-6 py-5 text-lg focus:outline-none focus:border-cyan-400"
               maxLength={5}
             />
             <button
               onClick={checkNetwork}
               disabled={loading}
-              className="bg-cyan-400 hover:bg-cyan-300 text-slate-950 font-semibold px-10 rounded-2xl disabled:opacity-70"
+              className="bg-cyan-400 hover:bg-cyan-300 text-slate-950 font-semibold px-10 py-5 rounded-2xl disabled:opacity-70 whitespace-nowrap"
             >
               {loading ? 'Checking...' : 'Check Coverage'}
             </button>
@@ -241,8 +228,8 @@ export default function Home() {
       </div>
 
       {/* Savings Calculator */}
-      <div className="max-w-2xl mx-auto px-6 pb-24">
-        <div className="bg-slate-900/80 border border-white/10 rounded-3xl p-10 md:p-16">
+      <div className="max-w-2xl mx-auto px-4 md:px-6 pb-24 w-full">
+        <div className="bg-slate-900/80 border border-white/10 rounded-3xl p-8 md:p-16">
           <h2 className="text-3xl font-semibold mb-8 text-center">Estimate Your Annual Savings</h2>
           
           <div className="space-y-8">
@@ -252,7 +239,7 @@ export default function Home() {
                 type="number"
                 value={claimsVolume}
                 onChange={(e) => setClaimsVolume(e.target.value)}
-                className="w-full bg-black/50 border border-white/20 rounded-2xl px-6 py-4 text-lg"
+                className="w-full bg-black/50 border border-white/20 rounded-2xl px-6 py-5 text-lg"
                 placeholder="150000"
               />
             </div>
@@ -288,28 +275,6 @@ export default function Home() {
         </div>
       </div>
 
-      {/* How It Works */}
-      <div className="max-w-5xl mx-auto px-6 py-20 bg-black/40">
-        <h2 className="text-4xl font-bold text-center mb-16">How It Works</h2>
-        <div className="grid md:grid-cols-3 gap-8">
-          <div className="text-center">
-            <div className="text-5xl mb-6">1️⃣</div>
-            <h3 className="text-xl font-semibold mb-3">Check Coverage</h3>
-            <p className="text-slate-400">Enter your ZIP codes and instantly see Priority PPO network strength.</p>
-          </div>
-          <div className="text-center">
-            <div className="text-5xl mb-6">2️⃣</div>
-            <h3 className="text-xl font-semibold mb-3">Activate Instantly</h3>
-            <p className="text-slate-400">One-click onboarding. No contracts. No implementation fees.</p>
-          </div>
-          <div className="text-center">
-            <div className="text-5xl mb-6">3️⃣</div>
-            <h3 className="text-xl font-semibold mb-3">Start Saving</h3>
-            <p className="text-slate-400">Real-time steering + savings dashboard. Money-back guarantee.</p>
-          </div>
-        </div>
-      </div>
-
       {/* Schedule Demo Button - Only when NOT logged in */}
       {!isLoggedIn && (
         <button
@@ -320,7 +285,6 @@ export default function Home() {
         </button>
       )}
 
-      {/* Auto Year Footer */}
       <footer className="border-t border-white/10 bg-black/60 py-12 mt-auto">
         <div className="max-w-7xl mx-auto px-6 text-center text-slate-400 text-sm">
           © {currentYear} Quantum SelfFlow • Powered by Quantum One Networks<br />
