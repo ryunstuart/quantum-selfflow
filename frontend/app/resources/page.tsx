@@ -39,6 +39,7 @@ export default function Resources() {
             </div>
           </Link>
 
+          {/* Desktop Navigation - Consistent with other pages */}
           <div className="hidden md:flex items-center gap-6 text-sm font-medium">
             <Link href="/" className="hover:text-cyan-400">Home</Link>
             <Link href="/about" className="hover:text-cyan-400">About</Link>
@@ -47,11 +48,13 @@ export default function Resources() {
             <Link href="/resources" className="text-cyan-400 font-medium">Resources</Link>
             
             {isLoggedIn && <Link href="/dashboard" className="hover:text-cyan-400">Dashboard</Link>}
+            {isLoggedIn && <Link href="/myplan" className="hover:text-cyan-400">My Plan</Link>}
             {isLoggedIn && <Link href="/settings" className="hover:text-cyan-400">Settings</Link>}
             
             {isLoggedIn && (
               <button onClick={handleLogout} className="text-red-400 hover:text-red-500 transition">Logout</button>
             )}
+            {!isLoggedIn && <Link href="/onboarding" className="hover:text-cyan-400">Get Started</Link>}
           </div>
 
           <button 
@@ -62,6 +65,7 @@ export default function Resources() {
           </button>
         </div>
 
+        {/* Mobile Menu */}
         {mobileMenuOpen && (
           <div className="md:hidden border-t border-white/10 bg-black/95 py-8">
             <div className="flex flex-col gap-6 text-center text-lg font-medium">
@@ -70,9 +74,13 @@ export default function Resources() {
               <Link href="/success-stories" className="py-2" onClick={() => setMobileMenuOpen(false)}>Success Stories</Link>
               <Link href="/pricing" className="py-2" onClick={() => setMobileMenuOpen(false)}>Pricing</Link>
               <Link href="/resources" className="py-2" onClick={() => setMobileMenuOpen(false)}>Resources</Link>
+              
               {isLoggedIn && <Link href="/dashboard" className="py-2" onClick={() => setMobileMenuOpen(false)}>Dashboard</Link>}
+              {isLoggedIn && <Link href="/myplan" className="py-2" onClick={() => setMobileMenuOpen(false)}>My Plan</Link>}
               {isLoggedIn && <Link href="/settings" className="py-2" onClick={() => setMobileMenuOpen(false)}>Settings</Link>}
+              
               {isLoggedIn && <button onClick={handleLogout} className="text-red-400 py-2">Logout</button>}
+              {!isLoggedIn && <Link href="/onboarding" className="py-2" onClick={() => setMobileMenuOpen(false)}>Get Started</Link>}
             </div>
           </div>
         )}
