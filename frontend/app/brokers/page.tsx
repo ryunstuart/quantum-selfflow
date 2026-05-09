@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { useState } from 'react';
 
-export default function Resources() {
+export default function Brokers() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const currentYear = new Date().getFullYear();
 
@@ -21,8 +21,7 @@ export default function Resources() {
 
           <div className="hidden md:flex items-center gap-6 text-sm font-medium">
             <Link href="/" className="hover:text-cyan-400">Home</Link>
-            <Link href="/resources" className="text-cyan-400 font-medium">Resources</Link>
-            <Link href="/faq" className="hover:text-cyan-400">FAQ</Link>
+            <Link href="/brokers" className="text-cyan-400 font-medium">For Brokers</Link>
             <Link href="/pricing" className="hover:text-cyan-400">Pricing</Link>
             <Link href="/onboarding" className="hover:text-cyan-400">Get Started</Link>
           </div>
@@ -39,8 +38,7 @@ export default function Resources() {
           <div className="md:hidden border-t border-white/10 bg-black/95 py-8">
             <div className="flex flex-col gap-6 text-center text-lg font-medium">
               <Link href="/" className="hover:text-cyan-400 py-2" onClick={() => setMobileMenuOpen(false)}>Home</Link>
-              <Link href="/resources" className="hover:text-cyan-400 py-2" onClick={() => setMobileMenuOpen(false)}>Resources</Link>
-              <Link href="/faq" className="hover:text-cyan-400 py-2" onClick={() => setMobileMenuOpen(false)}>FAQ</Link>
+              <Link href="/brokers" className="hover:text-cyan-400 py-2" onClick={() => setMobileMenuOpen(false)}>For Brokers</Link>
               <Link href="/pricing" className="hover:text-cyan-400 py-2" onClick={() => setMobileMenuOpen(false)}>Pricing</Link>
               <Link href="/onboarding" className="hover:text-cyan-400 py-2" onClick={() => setMobileMenuOpen(false)}>Get Started</Link>
             </div>
@@ -50,46 +48,32 @@ export default function Resources() {
 
       <div className="max-w-5xl mx-auto px-6 py-20 flex-1">
         <div className="text-center mb-16">
-          <h1 className="text-5xl md:text-6xl font-bold tracking-tighter mb-6">Resources</h1>
-          <p className="text-xl text-slate-400">Guides, tools, and insights to help you save more on healthcare costs</p>
+          <h1 className="text-5xl md:text-6xl font-bold tracking-tighter mb-6">For Benefits Brokers</h1>
+          <p className="text-xl text-slate-400 max-w-2xl mx-auto">Offer your clients a powerful, easy-to-use cost containment solution and earn recurring revenue.</p>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-8">
-          <div className="bg-slate-900/80 border border-white/10 rounded-3xl p-10 hover:border-cyan-400/50 transition group">
-            <div className="text-4xl mb-6">📘</div>
-            <h3 className="text-2xl font-semibold mb-3 group-hover:text-cyan-400 transition">The Self-Insured Playbook 2026</h3>
-            <p className="text-slate-400 mb-6">Everything you need to know about managing medical costs in a high-trend environment.</p>
-            <Link href="#" className="text-cyan-400 font-medium">Download PDF →</Link>
+        <div className="grid md:grid-cols-2 gap-12 mb-20">
+          <div className="bg-slate-900/80 border border-white/10 rounded-3xl p-12">
+            <div className="text-6xl mb-8">💰</div>
+            <h3 className="text-3xl font-semibold mb-6">Earn Recurring Revenue</h3>
+            <p className="text-slate-400 text-lg">Get paid a share of the savings your clients generate through Quantum SelfFlow — every month.</p>
           </div>
 
-          <div className="bg-slate-900/80 border border-white/10 rounded-3xl p-10 hover:border-cyan-400/50 transition group">
-            <div className="text-4xl mb-6">🎯</div>
-            <h3 className="text-2xl font-semibold mb-3 group-hover:text-cyan-400 transition">How to Choose the Right Reference-Based Pricing Strategy</h3>
-            <p className="text-slate-400 mb-6">A practical guide for mid-market employers considering RBP.</p>
-            <Link href="#" className="text-cyan-400 font-medium">Read the Guide →</Link>
-          </div>
-
-          <div className="bg-slate-900/80 border border-white/10 rounded-3xl p-10 hover:border-cyan-400/50 transition group">
-            <div className="text-4xl mb-6">📍</div>
-            <h3 className="text-2xl font-semibold mb-3 group-hover:text-cyan-400 transition">ZIP Coverage Checklist</h3>
-            <p className="text-slate-400 mb-6">Download our free checklist to evaluate network strength in your key locations.</p>
-            <Link href="#" className="text-cyan-400 font-medium">Get Checklist →</Link>
-          </div>
-
-          <div className="bg-slate-900/80 border border-white/10 rounded-3xl p-10 hover:border-cyan-400/50 transition group">
-            <div className="text-4xl mb-6">📈</div>
-            <h3 className="text-2xl font-semibold mb-3 group-hover:text-cyan-400 transition">2026 Self-Funded Trend Report</h3>
-            <p className="text-slate-400 mb-6">Key benchmarks and predictions for self-insured plans this year.</p>
-            <Link href="#" className="text-cyan-400 font-medium">Request Report →</Link>
+          <div className="bg-slate-900/80 border border-white/10 rounded-3xl p-12">
+            <div className="text-6xl mb-8">⚡</div>
+            <h3 className="text-3xl font-semibold mb-6">Differentiate Your Practice</h3>
+            <p className="text-slate-400 text-lg">Stand out by offering a modern, tech-forward solution that delivers measurable ROI.</p>
           </div>
         </div>
 
-        <div className="mt-20 text-center">
+        <div className="bg-slate-900/80 border border-white/10 rounded-3xl p-12 text-center">
+          <h2 className="text-4xl font-semibold mb-8">Ready to Partner?</h2>
+          <p className="text-xl text-slate-400 mb-10 max-w-xl mx-auto">Join hundreds of brokers already using Quantum SelfFlow to deliver real value to their self-insured clients.</p>
           <Link 
             href="/contact"
             className="inline-block bg-cyan-400 hover:bg-cyan-300 text-slate-950 font-semibold px-12 py-6 rounded-3xl text-xl"
           >
-            Request Custom Resources →
+            Become a Partner →
           </Link>
         </div>
       </div>
