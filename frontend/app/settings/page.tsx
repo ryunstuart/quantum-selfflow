@@ -9,6 +9,7 @@ export default function Settings() {
   const [companyName, setCompanyName] = useState('');
   const [employeeCount, setEmployeeCount] = useState('');
   const [saving, setSaving] = useState(false);
+  const [showLogoutModal, setShowLogoutModal] = useState(false);
 
   useEffect(() => {
     const saved = localStorage.getItem('selfflow_user');
@@ -41,6 +42,11 @@ export default function Settings() {
     }, 800);
   };
 
+  const handleLogout = () => {
+    localStorage.removeItem('selfflow_user');
+    window.location.href = '/';
+  };
+
   const currentYear = new Date().getFullYear();
 
   return (
@@ -60,7 +66,7 @@ export default function Settings() {
             <Link href="/dashboard" className="hover:text-cyan-400">Dashboard</Link>
             <Link href="/myplan" className="hover:text-cyan-400">My Plan</Link>
             <Link href="/settings" className="text-cyan-400 font-medium">Settings</Link>
-            <button onClick={() => { localStorage.removeItem('selfflow_user'); window.location.href = '/'; }} className="text-red-400 hover:text-red-500">Logout</button>
+            <button onClick={() => setShowLogoutModal(true)} className="text-red-400 hover:text-red-500">Logout</button>
           </div>
         </div>
       </nav>
@@ -125,11 +131,32 @@ export default function Settings() {
             </button>
           )}
         </div>
-
-        <div className="mt-12 text-center text-slate-400 text-sm">
-          Need help? <span className="text-cyan-400">support@quantumselfflow.com</span>
-        </div>
       </div>
+
+      {/* Logout Confirmation Modal */}
+      {showLogoutModal && (
+        <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-[200] p-4">
+          <div className="bg-slate-900 border border-white/10 rounded-3xl p-10 max-w-sm w-full text-center">
+            <h3 className="text-2xl font-semibold mb-4">Log out of Quantum SelfFlow?</h3>
+            <p className="text-slate-400 mb-8">You will need to log back in to access your dashboard.</p>
+            
+            <div className="flex gap-4">
+              <button 
+                onClick={() => setShowLogoutModal(false)}
+                className="flex-1 py-4 border border-white/20 rounded-2xl font-medium"
+              >
+                Cancel
+              </button>
+              <button 
+                onClick={handleLogout}
+                className="flex-1 bg-red-500 hover:bg-red-600 text-white font-semibold py-4 rounded-2xl"
+              >
+                Yes, Log Out
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Auto Year Footer */}
       <footer className="border-t border-white/10 bg-black/60 py-12 mt-auto">
