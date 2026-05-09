@@ -4,8 +4,16 @@ import Link from 'next/link';
 import { useState } from 'react';
 
 export default function Resources() {
+  const [openFAQ, setOpenFAQ] = useState<number | null>(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const currentYear = new Date().getFullYear();
+
+  const faqs = [
+    { q: "What is Quantum SelfFlow?", a: "A self-serve platform giving mid-market self-insured employers instant access to Priority PPO network, real-time ZIP checking, and powerful cost containment tools." },
+    { q: "How much can we save?", a: "Most clients see 8-15% reduction in medical spend in the first year." },
+    { q: "Do I need to change my TPA?", a: "No. We work alongside your existing TPA and can also provide white-label integration." },
+    { q: "How fast can we go live?", a: "Most clients are fully activated within 1-3 business days." },
+  ];
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-blue-950 text-white flex flex-col">
@@ -22,15 +30,11 @@ export default function Resources() {
           <div className="hidden md:flex items-center gap-6 text-sm font-medium">
             <Link href="/" className="hover:text-cyan-400">Home</Link>
             <Link href="/resources" className="text-cyan-400 font-medium">Resources</Link>
-            <Link href="/faq" className="hover:text-cyan-400">FAQ</Link>
+            <Link href="/success-stories" className="hover:text-cyan-400">Success Stories</Link>
             <Link href="/pricing" className="hover:text-cyan-400">Pricing</Link>
-            <Link href="/onboarding" className="hover:text-cyan-400">Get Started</Link>
           </div>
 
-          <button 
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="md:hidden text-3xl focus:outline-none"
-          >
+          <button onClick={() => setMobileMenuOpen(!mobileMenuOpen)} className="md:hidden text-3xl">
             {mobileMenuOpen ? '✕' : '☰'}
           </button>
         </div>
@@ -38,59 +42,59 @@ export default function Resources() {
         {mobileMenuOpen && (
           <div className="md:hidden border-t border-white/10 bg-black/95 py-8">
             <div className="flex flex-col gap-6 text-center text-lg font-medium">
-              <Link href="/" className="hover:text-cyan-400 py-2" onClick={() => setMobileMenuOpen(false)}>Home</Link>
-              <Link href="/resources" className="hover:text-cyan-400 py-2" onClick={() => setMobileMenuOpen(false)}>Resources</Link>
-              <Link href="/faq" className="hover:text-cyan-400 py-2" onClick={() => setMobileMenuOpen(false)}>FAQ</Link>
-              <Link href="/pricing" className="hover:text-cyan-400 py-2" onClick={() => setMobileMenuOpen(false)}>Pricing</Link>
-              <Link href="/onboarding" className="hover:text-cyan-400 py-2" onClick={() => setMobileMenuOpen(false)}>Get Started</Link>
+              <Link href="/" className="py-2" onClick={() => setMobileMenuOpen(false)}>Home</Link>
+              <Link href="/resources" className="py-2" onClick={() => setMobileMenuOpen(false)}>Resources</Link>
+              <Link href="/success-stories" className="py-2" onClick={() => setMobileMenuOpen(false)}>Success Stories</Link>
+              <Link href="/pricing" className="py-2" onClick={() => setMobileMenuOpen(false)}>Pricing</Link>
             </div>
           </div>
         )}
       </nav>
 
-      <div className="max-w-5xl mx-auto px-6 py-20 flex-1">
+      <div className="max-w-4xl mx-auto px-6 py-20 flex-1">
         <div className="text-center mb-16">
-          <h1 className="text-5xl md:text-6xl font-bold tracking-tighter mb-6">Resources</h1>
-          <p className="text-xl text-slate-400">Guides, tools, and insights to help you save more on healthcare costs</p>
+          <h1 className="text-5xl md:text-6xl font-bold tracking-tighter mb-6">Resources & Knowledge</h1>
+          <p className="text-xl text-slate-400">Guides, FAQs, and insights to help you maximize savings.</p>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-8">
-          <div className="bg-slate-900/80 border border-white/10 rounded-3xl p-10 hover:border-cyan-400/50 transition group">
-            <div className="text-4xl mb-6">📘</div>
-            <h3 className="text-2xl font-semibold mb-3 group-hover:text-cyan-400 transition">The Self-Insured Playbook 2026</h3>
-            <p className="text-slate-400 mb-6">Everything you need to know about managing medical costs in a high-trend environment.</p>
-            <Link href="#" className="text-cyan-400 font-medium">Download PDF →</Link>
-          </div>
-
-          <div className="bg-slate-900/80 border border-white/10 rounded-3xl p-10 hover:border-cyan-400/50 transition group">
-            <div className="text-4xl mb-6">🎯</div>
-            <h3 className="text-2xl font-semibold mb-3 group-hover:text-cyan-400 transition">How to Choose the Right Reference-Based Pricing Strategy</h3>
-            <p className="text-slate-400 mb-6">A practical guide for mid-market employers considering RBP.</p>
-            <Link href="#" className="text-cyan-400 font-medium">Read the Guide →</Link>
-          </div>
-
-          <div className="bg-slate-900/80 border border-white/10 rounded-3xl p-10 hover:border-cyan-400/50 transition group">
-            <div className="text-4xl mb-6">📍</div>
-            <h3 className="text-2xl font-semibold mb-3 group-hover:text-cyan-400 transition">ZIP Coverage Checklist</h3>
-            <p className="text-slate-400 mb-6">Download our free checklist to evaluate network strength in your key locations.</p>
-            <Link href="#" className="text-cyan-400 font-medium">Get Checklist →</Link>
-          </div>
-
-          <div className="bg-slate-900/80 border border-white/10 rounded-3xl p-10 hover:border-cyan-400/50 transition group">
-            <div className="text-4xl mb-6">📈</div>
-            <h3 className="text-2xl font-semibold mb-3 group-hover:text-cyan-400 transition">2026 Self-Funded Trend Report</h3>
-            <p className="text-slate-400 mb-6">Key benchmarks and predictions for self-insured plans this year.</p>
-            <Link href="#" className="text-cyan-400 font-medium">Request Report →</Link>
+        {/* FAQ Section */}
+        <div className="mb-20">
+          <h2 className="text-3xl font-semibold mb-10 text-center">Frequently Asked Questions</h2>
+          <div className="space-y-4">
+            {faqs.map((faq, i) => (
+              <div key={i} className="bg-slate-900/80 border border-white/10 rounded-3xl overflow-hidden">
+                <button
+                  onClick={() => setOpenFAQ(openFAQ === i ? null : i)}
+                  className="w-full px-8 py-6 text-left flex justify-between items-center hover:bg-white/5"
+                >
+                  <span className="font-medium">{faq.q}</span>
+                  <span className="text-2xl">{openFAQ === i ? '−' : '+'}</span>
+                </button>
+                {openFAQ === i && (
+                  <div className="px-8 pb-8 text-slate-300 border-t border-white/10 pt-6">
+                    {faq.a}
+                  </div>
+                )}
+              </div>
+            ))}
           </div>
         </div>
 
-        <div className="mt-20 text-center">
-          <Link 
-            href="/contact"
-            className="inline-block bg-cyan-400 hover:bg-cyan-300 text-slate-950 font-semibold px-12 py-6 rounded-3xl text-xl"
-          >
-            Request Custom Resources →
-          </Link>
+        {/* Guides */}
+        <div>
+          <h2 className="text-3xl font-semibold mb-10 text-center">Helpful Guides</h2>
+          <div className="grid md:grid-cols-2 gap-6">
+            <div className="bg-slate-900/80 border border-white/10 rounded-3xl p-10">
+              <h3 className="font-semibold text-xl mb-3">The Self-Insured Playbook 2026</h3>
+              <p className="text-slate-400 mb-6">Key strategies for controlling medical costs in today's environment.</p>
+              <Link href="#" className="text-cyan-400">Download PDF →</Link>
+            </div>
+            <div className="bg-slate-900/80 border border-white/10 rounded-3xl p-10">
+              <h3 className="font-semibold text-xl mb-3">Reference-Based Pricing Guide</h3>
+              <p className="text-slate-400 mb-6">Everything employers need to know about RBP + network steering.</p>
+              <Link href="#" className="text-cyan-400">Read Guide →</Link>
+            </div>
+          </div>
         </div>
       </div>
 
