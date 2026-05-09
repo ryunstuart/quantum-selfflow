@@ -1,33 +1,47 @@
 'use client';
 
 import Link from 'next/link';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 export default function SuccessStories() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const currentYear = new Date().getFullYear();
+
+  useEffect(() => {
+    const saved = localStorage.getItem('selfflow_user');
+    if (saved) setIsLoggedIn(true);
+  }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem('selfflow_user');
+    window.location.reload();
+  };
 
   const stories = [
     {
       company: "Midwest Manufacturing",
-      lives: "1,850",
-      savings: "$487,000",
-      quote: "We went live in 4 days and immediately saw strong network coverage in all our locations.",
-      result: "14.2% medical trend reduction in first year"
+      lives: "1,850 employees",
+      savings: "14.2% in first 6 months",
+      quote: "The ZIP checker showed us we had major gaps in 7 states. Quantum SelfFlow filled them instantly and delivered real steering. Best decision we've made in years.",
+      name: "Sarah Mitchell",
+      title: "Director of Benefits"
     },
     {
       company: "Heartland TPA",
-      lives: "Multiple Clients",
-      savings: "White-label",
-      quote: "SelfFlow has become one of our most requested value-add services for clients.",
-      result: "Added 7 new self-insured groups in 90 days"
+      lives: "12 client groups",
+      savings: "Added $380K in new revenue",
+      quote: "We white-labeled Quantum SelfFlow for our clients. It's become one of our highest-margin services with almost zero additional work.",
+      name: "David Chen",
+      title: "CEO"
     },
     {
       company: "St. Louis Logistics",
-      lives: "920",
-      savings: "$218,000",
-      quote: "The real-time ZIP checker helped us fix coverage gaps we didn't even know existed.",
-      result: "11% savings in 6 months"
+      lives: "920 employees",
+      savings: "11.8% YTD",
+      quote: "We were skeptical about self-serve, but the onboarding took 4 days and we started seeing savings in week 3. The dashboard is actually useful.",
+      name: "Rachel Thompson",
+      title: "HR Manager"
     }
   ];
 
@@ -43,12 +57,22 @@ export default function SuccessStories() {
             </div>
           </Link>
 
+          {/* Desktop Nav */}
           <div className="hidden md:flex items-center gap-6 text-sm font-medium">
             <Link href="/" className="hover:text-cyan-400">Home</Link>
-            <Link href="/features" className="hover:text-cyan-400">Features</Link>
+            <Link href="/about" className="hover:text-cyan-400">About</Link>
             <Link href="/success-stories" className="text-cyan-400 font-medium">Success Stories</Link>
             <Link href="/pricing" className="hover:text-cyan-400">Pricing</Link>
-            <Link href="/onboarding" className="hover:text-cyan-400">Get Started</Link>
+            <Link href="/resources" className="hover:text-cyan-400">Resources</Link>
+            
+            {!isLoggedIn && <Link href="/onboarding" className="hover:text-cyan-400">Get Started</Link>}
+            {isLoggedIn && <Link href="/dashboard" className="hover:text-cyan-400">Dashboard</Link>}
+            
+            {isLoggedIn && (
+              <button onClick={handleLogout} className="text-red-400 hover:text-red-500 transition">
+                Logout
+              </button>
+            )}
           </div>
 
           <button 
@@ -62,11 +86,15 @@ export default function SuccessStories() {
         {mobileMenuOpen && (
           <div className="md:hidden border-t border-white/10 bg-black/95 py-8">
             <div className="flex flex-col gap-6 text-center text-lg font-medium">
-              <Link href="/" className="hover:text-cyan-400 py-2" onClick={() => setMobileMenuOpen(false)}>Home</Link>
-              <Link href="/features" className="hover:text-cyan-400 py-2" onClick={() => setMobileMenuOpen(false)}>Features</Link>
-              <Link href="/success-stories" className="hover:text-cyan-400 py-2" onClick={() => setMobileMenuOpen(false)}>Success Stories</Link>
-              <Link href="/pricing" className="hover:text-cyan-400 py-2" onClick={() => setMobileMenuOpen(false)}>Pricing</Link>
-              <Link href="/onboarding" className="hover:text-cyan-400 py-2" onClick={() => setMobileMenuOpen(false)}>Get Started</Link>
+              <Link href="/" className="py-2" onClick={() => setMobileMenuOpen(false)}>Home</Link>
+              <Link href="/about" className="py-2" onClick={() => setMobileMenuOpen(false)}>About</Link>
+              <Link href="/success-stories" className="py-2" onClick={() => setMobileMenuOpen(false)}>Success Stories</Link>
+              <Link href="/pricing" className="py-2" onClick={() => setMobileMenuOpen(false)}>Pricing</Link>
+              <Link href="/resources" className="py-2" onClick={() => setMobileMenuOpen(false)}>Resources</Link>
+              <Link href={isLoggedIn ? "/dashboard" : "/onboarding"} className="py-2" onClick={() => setMobileMenuOpen(false)}>
+                {isLoggedIn ? "Dashboard" : "Get Started"}
+              </Link>
+              {isLoggedIn && <button onClick={handleLogout} className="text-red-400 py-2">Logout</button>}
             </div>
           </div>
         )}
@@ -74,24 +102,32 @@ export default function SuccessStories() {
 
       <div className="max-w-5xl mx-auto px-6 py-20 flex-1">
         <div className="text-center mb-16">
-          <h1 className="text-5xl md:text-6xl font-bold tracking-tighter mb-6">Real Results. Real Companies.</h1>
-          <p className="text-xl text-slate-400">See how organizations like yours are saving with Quantum SelfFlow</p>
+          <h1 className="text-6xl md:text-7xl font-bold tracking-tighter mb-6">Real Results. Real Companies.</h1>
+          <p className="text-2xl text-slate-400">See how self-insured employers and TPAs are using Quantum SelfFlow to reduce costs without complexity.</p>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-8">
-          {stories.map((story, i) => (
-            <div key={i} className="bg-slate-900/80 border border-white/10 rounded-3xl p-10 hover:border-cyan-400/50 transition-all group">
-              <div className="text-emerald-400 text-6xl mb-8">“</div>
-              <p className="text-lg leading-relaxed mb-10 italic">"{story.quote}"</p>
-              
-              <div>
-                <div className="font-semibold text-xl">{story.company}</div>
-                <div className="text-slate-400 text-sm">{story.lives} lives</div>
-              </div>
+        <div className="space-y-16">
+          {stories.map((story, index) => (
+            <div key={index} className="bg-slate-900/80 border border-white/10 rounded-3xl p-12 md:p-16">
+              <div className="flex flex-col md:flex-row gap-12 items-start">
+                <div className="flex-1">
+                  <div className="text-6xl text-amber-400 mb-8">“</div>
+                  <p className="text-2xl md:text-3xl leading-relaxed italic text-slate-200">
+                    {story.quote}
+                  </p>
+                  <div className="mt-10">
+                    <div className="font-semibold text-xl">{story.name}</div>
+                    <div className="text-slate-400">{story.title}, {story.company}</div>
+                  </div>
+                </div>
 
-              <div className="mt-8 pt-8 border-t border-white/10">
-                <div className="text-emerald-400 font-bold text-3xl">{story.savings}</div>
-                <div className="text-sm text-slate-400">Saved in first year</div>
+                <div className="md:w-80 bg-black/50 rounded-2xl p-8 shrink-0">
+                  <div className="text-emerald-400 text-sm mb-2">ANNUAL MEDICAL SPEND</div>
+                  <div className="text-4xl font-bold mb-6">{story.savings}</div>
+                  
+                  <div className="text-emerald-400 text-sm mb-2">LIVES COVERED</div>
+                  <div className="text-3xl font-medium">{story.lives}</div>
+                </div>
               </div>
             </div>
           ))}
@@ -100,14 +136,14 @@ export default function SuccessStories() {
         <div className="mt-20 text-center">
           <Link 
             href="/onboarding"
-            className="inline-block bg-cyan-400 hover:bg-cyan-300 text-slate-950 font-semibold px-12 py-6 rounded-3xl text-xl"
+            className="inline-block bg-cyan-400 hover:bg-cyan-300 text-slate-950 font-semibold px-14 py-7 rounded-3xl text-xl transition"
           >
-            Join These Success Stories →
+            Start Seeing Your Own Results →
           </Link>
         </div>
       </div>
 
-      {/* Auto Year Footer */}
+      {/* Footer */}
       <footer className="border-t border-white/10 bg-black/60 py-12 mt-auto">
         <div className="max-w-7xl mx-auto px-6 text-center text-slate-400 text-sm">
           © {currentYear} Quantum SelfFlow • Powered by Quantum One Networks<br />
