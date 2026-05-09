@@ -10,6 +10,7 @@ export default function Settings() {
   const [employeeCount, setEmployeeCount] = useState('');
   const [saving, setSaving] = useState(false);
   const [showLogoutModal, setShowLogoutModal] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     const saved = localStorage.getItem('selfflow_user');
@@ -61,14 +62,36 @@ export default function Settings() {
             </div>
           </Link>
 
-          <div className="flex items-center gap-4 md:gap-8 text-sm font-medium">
+          {/* Desktop Nav */}
+          <div className="hidden md:flex items-center gap-6 text-sm font-medium">
             <Link href="/" className="hover:text-cyan-400">Home</Link>
             <Link href="/dashboard" className="hover:text-cyan-400">Dashboard</Link>
             <Link href="/myplan" className="hover:text-cyan-400">My Plan</Link>
             <Link href="/settings" className="text-cyan-400 font-medium">Settings</Link>
             <button onClick={() => setShowLogoutModal(true)} className="text-red-400 hover:text-red-500">Logout</button>
           </div>
+
+          {/* Mobile Hamburger */}
+          <button 
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            className="md:hidden text-3xl focus:outline-none"
+          >
+            {mobileMenuOpen ? '✕' : '☰'}
+          </button>
         </div>
+
+        {/* Mobile Menu */}
+        {mobileMenuOpen && (
+          <div className="md:hidden border-t border-white/10 bg-black/95 py-8">
+            <div className="flex flex-col gap-6 text-center text-lg font-medium">
+              <Link href="/" className="hover:text-cyan-400 py-2" onClick={() => setMobileMenuOpen(false)}>Home</Link>
+              <Link href="/dashboard" className="hover:text-cyan-400 py-2" onClick={() => setMobileMenuOpen(false)}>Dashboard</Link>
+              <Link href="/myplan" className="hover:text-cyan-400 py-2" onClick={() => setMobileMenuOpen(false)}>My Plan</Link>
+              <Link href="/settings" className="hover:text-cyan-400 py-2" onClick={() => setMobileMenuOpen(false)}>Settings</Link>
+              <button onClick={() => { setShowLogoutModal(true); setMobileMenuOpen(false); }} className="text-red-400 py-2">Logout</button>
+            </div>
+          </div>
+        )}
       </nav>
 
       <div className="max-w-3xl mx-auto px-4 md:px-6 py-12 flex-1">
