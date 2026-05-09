@@ -21,7 +21,7 @@ export default function Pricing() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-blue-950 text-white flex flex-col overflow-x-hidden">
       <nav className="border-b border-white/10 bg-black/80 backdrop-blur-md sticky top-0 z-50">
-        <div className="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+        <div className="max-w-7xl mx-auto px-4 md:px-6 py-4 flex justify-between items-center">
           <Link href="/" className="flex items-center gap-3 hover:opacity-90 transition">
             <div className="w-9 h-9 md:w-10 md:h-10 bg-cyan-400 rounded-2xl flex items-center justify-center text-slate-950 font-bold text-2xl md:text-3xl shadow-lg">Q</div>
             <div>
@@ -85,7 +85,6 @@ export default function Pricing() {
         )}
       </nav>
 
-      {/* Rest of Pricing Content (unchanged) */}
       <div className="max-w-6xl mx-auto px-6 py-20 flex-1">
         <div className="text-center mb-16">
           <h1 className="text-6xl md:text-7xl font-bold tracking-tighter mb-6">Simple. Transparent. Volume-Based.</h1>
