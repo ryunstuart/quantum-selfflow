@@ -31,6 +31,7 @@ export default function MyPlan() {
             <Link href="/" className="hover:text-cyan-400">Home</Link>
             <Link href="/dashboard" className="hover:text-cyan-400">Dashboard</Link>
             <Link href="/myplan" className="text-cyan-400 font-medium">My Plan</Link>
+            <Link href="/settings" className="hover:text-cyan-400">Settings</Link>
             <button 
               onClick={() => { localStorage.removeItem('selfflow_user'); window.location.href = '/'; }} 
               className="text-red-400 hover:text-red-500"
