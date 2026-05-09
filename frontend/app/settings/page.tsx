@@ -8,6 +8,7 @@ export default function Settings() {
   const [editing, setEditing] = useState(false);
   const [companyName, setCompanyName] = useState('');
   const [employeeCount, setEmployeeCount] = useState('');
+  const [saving, setSaving] = useState(false);
 
   useEffect(() => {
     const saved = localStorage.getItem('selfflow_user');
@@ -20,11 +21,24 @@ export default function Settings() {
   }, []);
 
   const saveChanges = () => {
-    const updated = { ...user, companyName, employeeCount };
-    localStorage.setItem('selfflow_user', JSON.stringify(updated));
-    setUser(updated);
-    setEditing(false);
-    alert("✅ Profile updated successfully!");
+    if (!companyName.trim() || !employeeCount.trim()) {
+      alert("Please fill in all fields");
+      return;
+    }
+
+    setSaving(true);
+    setTimeout(() => {
+      const updated = { 
+        ...user, 
+        companyName: companyName.trim(), 
+        employeeCount: employeeCount.trim() 
+      };
+      localStorage.setItem('selfflow_user', JSON.stringify(updated));
+      setUser(updated);
+      setEditing(false);
+      setSaving(false);
+      alert("✅ Settings updated successfully!");
+    }, 800);
   };
 
   const currentYear = new Date().getFullYear();
@@ -52,46 +66,50 @@ export default function Settings() {
       </nav>
 
       <div className="max-w-3xl mx-auto px-4 md:px-6 py-12 flex-1">
-        <h1 className="text-5xl font-bold tracking-tighter mb-2">Account Settings</h1>
-        <p className="text-slate-400">Manage your Quantum SelfFlow profile</p>
+        <div className="mb-12">
+          <h1 className="text-5xl font-bold tracking-tighter">Account Settings</h1>
+          <p className="text-slate-400 mt-2">Manage your Quantum SelfFlow profile and preferences</p>
+        </div>
 
-        <div className="mt-12 bg-slate-900/80 border border-white/10 rounded-3xl p-10">
-          <div className="flex justify-between items-center mb-8">
+        <div className="bg-slate-900/80 border border-white/10 rounded-3xl p-10">
+          <div className="flex justify-between items-center mb-10">
             <h2 className="text-2xl font-semibold">Company Information</h2>
             <button 
               onClick={() => setEditing(!editing)}
-              className="text-cyan-400 hover:text-cyan-300 font-medium"
+              className="px-6 py-2 border border-white/20 rounded-2xl hover:bg-white/5 transition"
             >
-              {editing ? "Cancel" : "Edit"}
+              {editing ? "Cancel" : "Edit Profile"}
             </button>
           </div>
 
           <div className="space-y-8">
             <div>
-              <label className="block text-sm text-slate-400 mb-2">Company Name</label>
+              <label className="block text-sm text-slate-400 mb-3">Company Name</label>
               <input
                 type="text"
                 value={companyName}
                 onChange={(e) => setCompanyName(e.target.value)}
                 disabled={!editing}
-                className="w-full bg-slate-800 border border-white/20 rounded-2xl px-6 py-4 disabled:opacity-75"
+                className="w-full bg-slate-800 border border-white/20 rounded-2xl px-6 py-5 text-lg disabled:opacity-75"
+                placeholder="Company Name"
               />
             </div>
 
             <div>
-              <label className="block text-sm text-slate-400 mb-2">Number of Lives</label>
+              <label className="block text-sm text-slate-400 mb-3">Number of Lives Covered</label>
               <input
                 type="number"
                 value={employeeCount}
                 onChange={(e) => setEmployeeCount(e.target.value)}
                 disabled={!editing}
-                className="w-full bg-slate-800 border border-white/20 rounded-2xl px-6 py-4 disabled:opacity-75"
+                className="w-full bg-slate-800 border border-white/20 rounded-2xl px-6 py-5 text-lg disabled:opacity-75"
+                placeholder="250"
               />
             </div>
 
             <div>
-              <label className="block text-sm text-slate-400 mb-2">Plan Type</label>
-              <div className="bg-slate-800 border border-white/20 rounded-2xl px-6 py-4 text-slate-400">
+              <label className="block text-sm text-slate-400 mb-3">Current Plan Type</label>
+              <div className="bg-slate-800 border border-white/20 rounded-2xl px-6 py-5 text-lg text-slate-300">
                 {user?.planType || "Not Selected"}
               </div>
             </div>
@@ -100,11 +118,16 @@ export default function Settings() {
           {editing && (
             <button 
               onClick={saveChanges}
-              className="mt-10 w-full bg-cyan-400 hover:bg-cyan-300 text-slate-950 font-semibold py-5 rounded-2xl"
+              disabled={saving}
+              className="mt-12 w-full bg-cyan-400 hover:bg-cyan-300 disabled:bg-slate-700 text-slate-950 font-semibold py-6 rounded-2xl text-xl transition"
             >
-              Save Changes
+              {saving ? "Saving Changes..." : "Save Changes"}
             </button>
           )}
+        </div>
+
+        <div className="mt-12 text-center text-slate-400 text-sm">
+          Need help? <span className="text-cyan-400">support@quantumselfflow.com</span>
         </div>
       </div>
 
