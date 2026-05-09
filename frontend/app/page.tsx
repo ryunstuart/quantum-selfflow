@@ -191,7 +191,7 @@ export default function Home() {
         </p>
       </div>
 
-      {/* ZIP Checker - Improved Mobile Layout */}
+      {/* ZIP Checker - Mobile Fixed */}
       <div className="max-w-2xl mx-auto px-4 md:px-6 pb-20 w-full">
         <div className="bg-slate-900/80 border border-white/10 rounded-3xl p-8 md:p-16">
           <h2 className="text-3xl font-semibold mb-8 text-center">Check Your Network Coverage</h2>
@@ -271,6 +271,28 @@ export default function Home() {
                 <p className="text-5xl font-bold mt-3">${projectedSavings.toLocaleString()}</p>
               </div>
             )}
+          </div>
+        </div>
+      </div>
+
+      {/* How It Works - Restored */}
+      <div className="max-w-5xl mx-auto px-6 py-20 bg-black/40">
+        <h2 className="text-4xl font-bold text-center mb-16">How It Works</h2>
+        <div className="grid md:grid-cols-3 gap-8">
+          <div className="text-center">
+            <div className="text-5xl mb-6">1️⃣</div>
+            <h3 className="text-xl font-semibold mb-3">Check Coverage</h3>
+            <p className="text-slate-400">Enter your ZIP codes and instantly see Priority PPO network strength.</p>
+          </div>
+          <div className="text-center">
+            <div className="text-5xl mb-6">2️⃣</div>
+            <h3 className="text-xl font-semibold mb-3">Activate Instantly</h3>
+            <p className="text-slate-400">One-click onboarding. No contracts. No implementation fees.</p>
+          </div>
+          <div className="text-center">
+            <div className="text-5xl mb-6">3️⃣</div>
+            <h3 className="text-xl font-semibold mb-3">Start Saving</h3>
+            <p className="text-slate-400">Real-time steering + savings dashboard. Money-back guarantee.</p>
           </div>
         </div>
       </div>
