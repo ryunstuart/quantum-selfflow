@@ -3,17 +3,16 @@
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
 
-export default function MyPlan() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+export default function Dashboard() {
   const [user, setUser] = useState<any>(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [activeAddons, setActiveAddons] = useState(['rbp']);
+  const [showAddModal, setShowAddModal] = useState(false);
+  const [newEmployeeCount, setNewEmployeeCount] = useState('');
   const currentYear = new Date().getFullYear();
 
   useEffect(() => {
     const saved = localStorage.getItem('selfflow_user');
     if (saved) {
-      setIsLoggedIn(true);
       setUser(JSON.parse(saved));
     } else {
       window.location.href = '/';
@@ -25,13 +24,16 @@ export default function MyPlan() {
     window.location.href = '/';
   };
 
-  const toggleAddon = (addon: string) => {
-    if (activeAddons.includes(addon)) {
-      setActiveAddons(activeAddons.filter(a => a !== addon));
-    } else {
-      setActiveAddons([...activeAddons, addon]);
+  const handleAddEmployees = () => {
+    if (newEmployeeCount) {
+      alert(`✅ ${newEmployeeCount} employees added successfully!`);
+      setShowAddModal(false);
+      setNewEmployeeCount('');
     }
   };
+
+  const savingsData = [42, 71, 88, 76, 105, 138];
+  const months = ['M1', 'M2', 'M3', 'M4', 'M5', 'M6'];
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-blue-950 text-white flex flex-col overflow-x-hidden">
@@ -45,19 +47,15 @@ export default function MyPlan() {
             </div>
           </Link>
 
-          {/* Desktop Nav - Settings visible */}
           <div className="hidden md:flex items-center gap-6 text-sm font-medium">
-            <Link href="/dashboard" className="hover:text-cyan-400">Dashboard</Link>
-            <Link href="/myplan" className="text-cyan-400 font-medium">My Plan</Link>
+            <Link href="/dashboard" className="text-cyan-400 font-medium">Dashboard</Link>
+            <Link href="/myplan" className="hover:text-cyan-400">My Plan</Link>
             <Link href="/settings" className="hover:text-cyan-400">Settings</Link>
             <Link href="/resources" className="hover:text-cyan-400">Resources</Link>
             <button onClick={handleLogout} className="text-red-400 hover:text-red-500 transition">Logout</button>
           </div>
 
-          <button 
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="md:hidden text-3xl focus:outline-none"
-          >
+          <button onClick={() => setMobileMenuOpen(!mobileMenuOpen)} className="md:hidden text-3xl focus:outline-none">
             {mobileMenuOpen ? '✕' : '☰'}
           </button>
         </div>
@@ -75,103 +73,137 @@ export default function MyPlan() {
         )}
       </nav>
 
-      <div className="max-w-5xl mx-auto px-4 py-10 flex-1">
-        <h1 className="text-4xl md:text-5xl font-bold tracking-tighter mb-2">My Plan</h1>
-        <p className="text-emerald-400">Self-Serve Priority PPO • Active since April 2026</p>
-
-        {/* Plan Overview */}
-        <div className="mt-10 bg-slate-900/80 border border-white/10 rounded-3xl p-8 md:p-12">
-          <div className="flex flex-col md:flex-row justify-between gap-8">
-            <div>
-              <div className="text-sm text-slate-400">CURRENT PLAN</div>
-              <div className="text-4xl font-semibold mt-2">Priority PPO + RBP</div>
-              <div className="text-emerald-400 mt-1">2% of actual savings</div>
-            </div>
-
-            <div className="text-center md:text-right">
-              <div className="text-sm text-slate-400">NETWORK STRENGTH</div>
-              <div className="text-6xl font-bold text-emerald-400 mt-1">92%</div>
-              <div className="text-sm">Excellent Coverage</div>
-            </div>
+      <div className="max-w-7xl mx-auto px-4 py-8 flex-1 overflow-x-hidden">
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-10">
+          <div>
+            <h1 className="text-4xl md:text-5xl font-bold tracking-tighter">
+              Welcome back, {user?.companyName || 'Quantum Client'}
+            </h1>
+            <p className="text-emerald-400 text-xl md:text-2xl font-medium mt-1">
+              10.5% savings • {user?.employeeCount || '1,240'} lives
+            </p>
+          </div>
+          <div className="mt-5 md:mt-0 bg-emerald-900/30 text-emerald-400 px-6 py-3 rounded-2xl text-sm font-medium">
+            YTD Savings: <span className="text-2xl font-bold">$1,248,700</span>
           </div>
         </div>
 
-        {/* Savings Breakdown */}
-        <div className="mt-10 grid md:grid-cols-2 gap-6">
-          <div className="bg-slate-900/80 border border-white/10 rounded-3xl p-8">
-            <h3 className="font-semibold mb-6">Savings This Year</h3>
-            <div className="text-5xl font-bold text-emerald-400">$1,248,700</div>
-            <div className="text-sm text-slate-400 mt-2">10.5% average reduction</div>
+        {/* Metrics */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10">
+          <div className="bg-slate-900/80 border border-white/10 rounded-3xl p-6">
+            <div className="text-xs text-slate-400">TOTAL SAVED YTD</div>
+            <div className="text-3xl font-bold mt-2">$1,248,700</div>
           </div>
-          <div className="bg-slate-900/80 border border-white/10 rounded-3xl p-8">
-            <h3 className="font-semibold mb-6">Claims Steered</h3>
-            <div className="text-5xl font-bold">687</div>
-            <div className="text-sm text-slate-400 mt-2">68% to Priority PPO network</div>
+          <div className="bg-slate-900/80 border border-white/10 rounded-3xl p-6">
+            <div className="text-xs text-slate-400">AVG / CLAIM</div>
+            <div className="text-3xl font-bold mt-2">$487</div>
+          </div>
+          <div className="bg-slate-900/80 border border-white/10 rounded-3xl p-6">
+            <div className="text-xs text-slate-400">NETWORK USE</div>
+            <div className="text-3xl font-bold mt-2">68%</div>
+          </div>
+          <div className="bg-slate-900/80 border border-white/10 rounded-3xl p-6">
+            <div className="text-xs text-slate-400">TREND ↓</div>
+            <div className="text-3xl font-bold mt-2 text-emerald-400">-9.4%</div>
           </div>
         </div>
 
-        {/* Active Add-ons */}
-        <div className="mt-12">
-          <h3 className="text-2xl font-semibold mb-8">Active Add-ons</h3>
-          <div className="space-y-6">
-            <div className={`border rounded-3xl p-8 transition-all ${activeAddons.includes('rbp') ? 'border-emerald-400 bg-emerald-900/20' : 'border-white/10'}`}>
-              <div className="flex justify-between items-start">
-                <div>
-                  <h4 className="font-semibold text-xl">Reference-Based Pricing</h4>
-                  <p className="text-slate-400">Caps reimbursement at Medicare + multiplier</p>
-                </div>
-                <button 
-                  onClick={() => toggleAddon('rbp')}
-                  className={`px-6 py-2 rounded-full text-sm font-medium ${activeAddons.includes('rbp') ? 'bg-emerald-400 text-slate-950' : 'bg-slate-800'}`}
-                >
-                  {activeAddons.includes('rbp') ? 'Active' : 'Activate'}
-                </button>
+        {/* Savings Trend */}
+        <div className="bg-slate-900/80 border border-white/10 rounded-3xl p-6 mb-10">
+          <h3 className="text-lg font-semibold mb-6">Monthly Savings Trend</h3>
+          <div className="flex items-end gap-3 h-52">
+            {savingsData.map((height, i) => (
+              <div key={i} className="flex-1 flex flex-col justify-end items-center">
+                <div className="bg-cyan-400 w-full rounded-t-xl" style={{ height: `${height}px` }} />
+                <div className="text-xs text-slate-500 mt-3">{months[i]}</div>
               </div>
-              <div className="text-emerald-400 text-xs mt-6">+3.1% additional savings this month</div>
-            </div>
-
-            <div className={`border rounded-3xl p-8 transition-all ${activeAddons.includes('ai') ? 'border-emerald-400 bg-emerald-900/20' : 'border-white/10 opacity-75'}`}>
-              <div className="flex justify-between items-start">
-                <div>
-                  <h4 className="font-semibold text-xl">Sentinel AI</h4>
-                  <p className="text-slate-400">Automated claim review & anomaly detection</p>
-                </div>
-                <button 
-                  onClick={() => toggleAddon('ai')}
-                  className={`px-6 py-2 rounded-full text-sm font-medium ${activeAddons.includes('ai') ? 'bg-emerald-400 text-slate-950' : 'bg-slate-800'}`}
-                >
-                  {activeAddons.includes('ai') ? 'Active' : 'Activate (+2.8%)'}
-                </button>
-              </div>
-            </div>
+            ))}
           </div>
         </div>
 
-        {/* Plan Utilization */}
-        <div className="mt-16 bg-slate-900/60 border border-white/10 rounded-3xl p-8 md:p-12">
-          <h3 className="text-xl font-semibold mb-8">Plan Utilization</h3>
-          <div className="space-y-6 text-sm">
-            <div className="flex justify-between py-4 border-b border-white/10">
-              <span>Priority PPO Network Access</span>
-              <span className="text-emerald-400">Enabled ✓</span>
+        {/* Recent Claims */}
+        <div className="bg-slate-900/80 border border-white/10 rounded-3xl p-6 mb-12">
+          <div className="flex justify-between items-center mb-6">
+            <h3 className="text-lg font-semibold">Recent Claims</h3>
+            <button className="text-cyan-400 text-sm hover:underline">View All →</button>
+          </div>
+          <div className="overflow-x-auto">
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="border-b border-white/10">
+                  <th className="text-left py-4">Claim ID</th>
+                  <th className="text-left py-4">Date</th>
+                  <th className="text-left py-4">Provider</th>
+                  <th className="text-right py-4">Billed</th>
+                  <th className="text-right py-4">Savings</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-white/10">
+                {[
+                  { id: "CL-7842", date: "May 6", provider: "St. Louis Ortho", billed: "$8,942", savings: "$2,310" },
+                  { id: "CL-7841", date: "May 5", provider: "Midwest Imaging", billed: "$3,245", savings: "$1,089" },
+                  { id: "CL-7840", date: "May 4", provider: "Heartland PT", billed: "$1,890", savings: "$672" },
+                ].map((claim, i) => (
+                  <tr key={i}>
+                    <td className="py-5 font-mono">{claim.id}</td>
+                    <td className="py-5 text-slate-400">{claim.date}</td>
+                    <td className="py-5">{claim.provider}</td>
+                    <td className="py-5 text-right">{claim.billed}</td>
+                    <td className="py-5 text-right text-emerald-400 font-medium">{claim.savings}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        {/* Quick Actions */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-12">
+          <button onClick={() => setShowAddModal(true)} className="bg-cyan-400 hover:bg-cyan-300 text-slate-950 font-semibold py-8 rounded-3xl text-lg flex flex-col items-center gap-3">👥 Add New Employees</button>
+          <button onClick={() => alert("✅ Full claims report downloaded")} className="bg-slate-900/80 hover:bg-slate-800 border border-white/20 font-semibold py-8 rounded-3xl text-lg flex flex-col items-center gap-3">📊 Download Claims Report</button>
+          <button onClick={() => alert("🔗 TPA Integration instructions sent")} className="bg-slate-900/80 hover:bg-slate-800 border border-white/20 font-semibold py-8 rounded-3xl text-lg flex flex-col items-center gap-3">🔗 Connect Your TPA</button>
+        </div>
+
+        {/* Add-ons */}
+        <div className="bg-slate-900/80 border border-white/10 rounded-3xl p-8">
+          <h3 className="text-xl font-semibold mb-8">Available Add-ons</h3>
+          <div className="grid md:grid-cols-3 gap-6">
+            <div className="bg-black/40 border border-white/10 rounded-2xl p-6">
+              <div className="text-3xl mb-4">🛡️</div>
+              <h4 className="font-semibold">Sentinel AI</h4>
+              <p className="text-sm text-slate-400 mt-1">AI-powered claim review</p>
+              <div className="text-emerald-400 text-xs mt-6">+2.8% savings</div>
             </div>
-            <div className="flex justify-between py-4 border-b border-white/10">
-              <span>Real-time ZIP Checker</span>
-              <span className="text-emerald-400">Enabled ✓</span>
+            <div className="bg-black/40 border border-white/10 rounded-2xl p-6">
+              <div className="text-3xl mb-4">🏥</div>
+              <h4 className="font-semibold">Hybrid Care</h4>
+              <p className="text-sm text-slate-400 mt-1">Telehealth navigation</p>
+              <div className="text-emerald-400 text-xs mt-6">+1.9% savings</div>
             </div>
-            <div className="flex justify-between py-4 border-b border-white/10">
-              <span>Steering Rules Engine</span>
-              <span className="text-emerald-400">Enabled ✓</span>
-            </div>
-            <div className="flex justify-between py-4">
-              <span>90-Day Money-Back Guarantee</span>
-              <span className="text-emerald-400">Active</span>
+            <div className="bg-black/40 border border-white/10 rounded-2xl p-6">
+              <div className="text-3xl mb-4">📈</div>
+              <h4 className="font-semibold">Outcomes Tier</h4>
+              <p className="text-sm text-slate-400 mt-1">Performance incentives</p>
+              <div className="text-emerald-400 text-xs mt-6">+3.4% savings</div>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Footer */}
+      {/* Modal */}
+      {showAddModal && (
+        <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-[200] px-4">
+          <div className="bg-slate-900 border border-white/20 rounded-3xl p-8 w-full max-w-md">
+            <h3 className="text-2xl font-semibold mb-6">Add New Employees</h3>
+            <input type="number" value={newEmployeeCount} onChange={(e) => setNewEmployeeCount(e.target.value)} placeholder="Number of employees" className="w-full bg-black/50 border border-white/20 rounded-2xl px-6 py-5 text-lg mb-8" />
+            <div className="flex gap-4">
+              <button onClick={() => setShowAddModal(false)} className="flex-1 py-5 border border-white/30 rounded-2xl">Cancel</button>
+              <button onClick={handleAddEmployees} className="flex-1 bg-cyan-400 text-slate-950 py-5 rounded-2xl font-semibold">Add Employees</button>
+            </div>
+          </div>
+        </div>
+      )}
+
       <footer className="border-t border-white/10 bg-black/60 py-12 mt-auto">
         <div className="max-w-7xl mx-auto px-6 text-center text-slate-400 text-sm">
           © {currentYear} Quantum SelfFlow • Powered by Quantum One Networks<br />
