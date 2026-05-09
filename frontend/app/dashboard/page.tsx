@@ -33,6 +33,7 @@ export default function Dashboard() {
   };
 
   const savingsData = [42, 71, 88, 76, 105, 138];
+  const months = ['M1', 'M2', 'M3', 'M4', 'M5', 'M6'];
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-blue-950 text-white flex flex-col">
@@ -108,7 +109,7 @@ export default function Dashboard() {
           </div>
         </div>
 
-        {/* Savings Trend */}
+        {/* Savings Trend - Fixed with labels */}
         <div className="bg-slate-900/80 border border-white/10 rounded-3xl p-6 md:p-10 mb-10">
           <h3 className="text-lg md:text-xl font-semibold mb-6">Monthly Savings Trend</h3>
           <div className="flex items-end gap-2 md:gap-4 h-52 md:h-64">
@@ -118,14 +119,14 @@ export default function Dashboard() {
                   className="bg-cyan-400 w-full rounded-t-xl transition-all" 
                   style={{ height: `${height}px` }}
                 />
-                <div className="text-[10px] md:text-xs text-slate-500 mt-3">M{i+1}</div>
+                <div className="text-[10px] md:text-xs text-slate-500 mt-3 font-medium">{months[i]}</div>
               </div>
             ))}
           </div>
         </div>
 
-        {/* Recent Claims - Scrollable on mobile */}
-        <div className="bg-slate-900/80 border border-white/10 rounded-3xl p-6 md:p-10">
+        {/* Recent Claims */}
+        <div className="bg-slate-900/80 border border-white/10 rounded-3xl p-6 md:p-10 mb-12">
           <div className="flex justify-between items-center mb-6">
             <h3 className="text-lg md:text-xl font-semibold">Recent Claims</h3>
             <button className="text-cyan-400 text-sm hover:underline">View All →</button>
@@ -162,7 +163,7 @@ export default function Dashboard() {
         </div>
 
         {/* Quick Actions */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 mt-12">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 mb-12">
           <button 
             onClick={() => setShowAddModal(true)}
             className="bg-cyan-400 hover:bg-cyan-300 text-slate-950 font-semibold py-8 md:py-10 rounded-3xl text-lg md:text-xl flex flex-col items-center gap-3 transition"
@@ -182,6 +183,32 @@ export default function Dashboard() {
             🔗 Connect Your TPA
           </button>
         </div>
+
+        {/* Add-ons Section - Restored */}
+        <div className="bg-slate-900/80 border border-white/10 rounded-3xl p-8 md:p-12">
+          <h3 className="text-xl font-semibold mb-8">Available Add-ons</h3>
+          <div className="grid md:grid-cols-3 gap-6">
+            <div className="bg-black/40 border border-white/10 rounded-2xl p-6 hover:border-cyan-400/50 transition">
+              <div className="text-3xl mb-4">🛡️</div>
+              <h4 className="font-semibold">Sentinel AI</h4>
+              <p className="text-sm text-slate-400 mt-1">AI-powered claim review & fraud detection</p>
+              <div className="text-emerald-400 text-xs mt-6">+2.8% additional savings</div>
+            </div>
+            <div className="bg-black/40 border border-white/10 rounded-2xl p-6 hover:border-cyan-400/50 transition">
+              <div className="text-3xl mb-4">🏥</div>
+              <h4 className="font-semibold">Hybrid Care</h4>
+              <p className="text-sm text-slate-400 mt-1">Telehealth + concierge navigation</p>
+              <div className="text-emerald-400 text-xs mt-6">+1.9% additional savings</div>
+            </div>
+            <div className="bg-black/40 border border-white/10 rounded-2xl p-6 hover:border-cyan-400/50 transition">
+              <div className="text-3xl mb-4">📈</div>
+              <h4 className="font-semibold">Outcomes Tier</h4>
+              <p className="text-sm text-slate-400 mt-1">Performance-based provider incentives</p>
+              <div className="text-emerald-400 text-xs mt-6">+3.4% additional savings</div>
+            </div>
+          </div>
+          <div className="text-center text-xs text-slate-500 mt-8">Powered by Quantum One Networks</div>
+        </div>
       </div>
 
       {/* Add Employees Modal */}
@@ -197,18 +224,8 @@ export default function Dashboard() {
               className="w-full bg-black/50 border border-white/20 rounded-2xl px-6 py-5 text-lg mb-8"
             />
             <div className="flex gap-4">
-              <button 
-                onClick={() => setShowAddModal(false)}
-                className="flex-1 py-5 border border-white/30 rounded-2xl font-medium"
-              >
-                Cancel
-              </button>
-              <button 
-                onClick={handleAddEmployees}
-                className="flex-1 bg-cyan-400 text-slate-950 py-5 rounded-2xl font-semibold"
-              >
-                Add Employees
-              </button>
+              <button onClick={() => setShowAddModal(false)} className="flex-1 py-5 border border-white/30 rounded-2xl font-medium">Cancel</button>
+              <button onClick={handleAddEmployees} className="flex-1 bg-cyan-400 text-slate-950 py-5 rounded-2xl font-semibold">Add Employees</button>
             </div>
           </div>
         </div>
