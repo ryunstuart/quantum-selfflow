@@ -7,6 +7,7 @@ export default function MyPlan() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [user, setUser] = useState<any>(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [activeAddons, setActiveAddons] = useState(['rbp']); // rbp = reference based pricing
   const currentYear = new Date().getFullYear();
 
   useEffect(() => {
@@ -22,6 +23,14 @@ export default function MyPlan() {
   const handleLogout = () => {
     localStorage.removeItem('selfflow_user');
     window.location.href = '/';
+  };
+
+  const toggleAddon = (addon: string) => {
+    if (activeAddons.includes(addon)) {
+      setActiveAddons(activeAddons.filter(a => a !== addon));
+    } else {
+      setActiveAddons([...activeAddons, addon]);
+    }
   };
 
   return (
@@ -65,89 +74,95 @@ export default function MyPlan() {
 
       <div className="max-w-5xl mx-auto px-4 py-10 flex-1">
         <h1 className="text-4xl md:text-5xl font-bold tracking-tighter mb-2">My Plan</h1>
-        <p className="text-emerald-400 text-xl">Active • {user?.employeeCount || '1,240'} lives</p>
+        <p className="text-emerald-400">Self-Serve Priority PPO • Active since April 2026</p>
 
-        {/* Current Plan Summary */}
+        {/* Plan Overview */}
         <div className="mt-10 bg-slate-900/80 border border-white/10 rounded-3xl p-8 md:p-12">
-          <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-8">
+          <div className="flex flex-col md:flex-row justify-between gap-8">
             <div>
-              <div className="text-sm text-slate-400 mb-1">CURRENT PLAN</div>
-              <div className="text-4xl font-semibold">Self-Serve Priority PPO</div>
-              <div className="text-emerald-400 mt-2">2% of actual savings</div>
+              <div className="text-sm text-slate-400">CURRENT PLAN</div>
+              <div className="text-4xl font-semibold mt-2">Priority PPO + RBP</div>
+              <div className="text-emerald-400 mt-1">2% of actual savings</div>
             </div>
-            
-            <div className="bg-emerald-900/30 text-emerald-400 px-8 py-4 rounded-2xl text-center">
-              <div className="text-sm">NETWORK STRENGTH</div>
-              <div className="text-5xl font-bold">Strong</div>
+
+            <div className="text-center md:text-right">
+              <div className="text-sm text-slate-400">NETWORK STRENGTH</div>
+              <div className="text-6xl font-bold text-emerald-400 mt-1">92%</div>
+              <div className="text-sm">Excellent Coverage</div>
             </div>
           </div>
+        </div>
 
-          <div className="grid md:grid-cols-3 gap-6 mt-12">
-            <div className="text-center">
-              <div className="text-4xl mb-3">📍</div>
-              <div className="font-medium">ZIP Coverage</div>
-              <div className="text-emerald-400">94% of employees</div>
-            </div>
-            <div className="text-center">
-              <div className="text-4xl mb-3">📊</div>
-              <div className="font-medium">Avg Savings</div>
-              <div className="text-emerald-400">$487 per claim</div>
-            </div>
-            <div className="text-center">
-              <div className="text-4xl mb-3">🔄</div>
-              <div className="font-medium">Steering Rate</div>
-              <div className="text-emerald-400">68% PPO</div>
-            </div>
+        {/* Savings Breakdown */}
+        <div className="mt-10 grid md:grid-cols-2 gap-6">
+          <div className="bg-slate-900/80 border border-white/10 rounded-3xl p-8">
+            <h3 className="font-semibold mb-6">Savings This Year</h3>
+            <div className="text-5xl font-bold text-emerald-400">$1,248,700</div>
+            <div className="text-sm text-slate-400 mt-2">10.5% average reduction</div>
+          </div>
+          <div className="bg-slate-900/80 border border-white/10 rounded-3xl p-8">
+            <h3 className="font-semibold mb-6">Claims Steered</h3>
+            <div className="text-5xl font-bold">687</div>
+            <div className="text-sm text-slate-400 mt-2">68% to Priority PPO network</div>
           </div>
         </div>
 
         {/* Active Add-ons */}
         <div className="mt-12">
           <h3 className="text-2xl font-semibold mb-8">Active Add-ons</h3>
-          <div className="grid md:grid-cols-2 gap-6">
-            <div className="bg-slate-900/80 border border-cyan-400/50 rounded-3xl p-8">
-              <div className="flex justify-between">
+          <div className="space-y-6">
+            <div className={`border rounded-3xl p-8 transition-all ${activeAddons.includes('rbp') ? 'border-emerald-400 bg-emerald-900/20' : 'border-white/10'}`}>
+              <div className="flex justify-between items-start">
                 <div>
-                  <div className="font-semibold text-xl">Reference-Based Pricing</div>
-                  <div className="text-emerald-400 text-sm">Active since April 2026</div>
+                  <h4 className="font-semibold text-xl">Reference-Based Pricing</h4>
+                  <p className="text-slate-400">Caps reimbursement at Medicare + multiplier</p>
                 </div>
-                <div className="text-3xl">📉</div>
+                <button 
+                  onClick={() => toggleAddon('rbp')}
+                  className={`px-6 py-2 rounded-full text-sm font-medium ${activeAddons.includes('rbp') ? 'bg-emerald-400 text-slate-950' : 'bg-slate-800'}`}
+                >
+                  {activeAddons.includes('rbp') ? 'Active' : 'Activate'}
+                </button>
               </div>
-              <div className="mt-8 text-emerald-400 font-medium">+3.1% additional savings this month</div>
+              <div className="text-emerald-400 text-xs mt-6">+3.1% additional savings this month</div>
             </div>
 
-            <div className="bg-slate-900/80 border border-white/10 rounded-3xl p-8 opacity-75">
-              <div className="flex justify-between">
+            <div className={`border rounded-3xl p-8 transition-all ${activeAddons.includes('ai') ? 'border-emerald-400 bg-emerald-900/20' : 'border-white/10 opacity-75'}`}>
+              <div className="flex justify-between items-start">
                 <div>
-                  <div className="font-semibold text-xl">Sentinel AI</div>
-                  <div className="text-slate-400 text-sm">Not Active</div>
+                  <h4 className="font-semibold text-xl">Sentinel AI</h4>
+                  <p className="text-slate-400">Automated claim review & anomaly detection</p>
                 </div>
-                <div className="text-3xl">🛡️</div>
+                <button 
+                  onClick={() => toggleAddon('ai')}
+                  className={`px-6 py-2 rounded-full text-sm font-medium ${activeAddons.includes('ai') ? 'bg-emerald-400 text-slate-950' : 'bg-slate-800'}`}
+                >
+                  {activeAddons.includes('ai') ? 'Active' : 'Activate (+2.8%)'}
+                </button>
               </div>
-              <button className="mt-8 w-full py-4 border border-white/30 rounded-2xl text-sm">Activate Sentinel AI (+2.8% savings)</button>
             </div>
           </div>
         </div>
 
-        {/* Plan Details */}
+        {/* Plan History / Utilization */}
         <div className="mt-16 bg-slate-900/60 border border-white/10 rounded-3xl p-8 md:p-12">
-          <h3 className="text-xl font-semibold mb-8">Plan Details</h3>
-          <div className="space-y-8">
-            <div className="flex justify-between border-b border-white/10 pb-6">
-              <div>Monthly Service Fee</div>
-              <div className="text-emerald-400">None (2% of savings only)</div>
+          <h3 className="text-xl font-semibold mb-8">Plan Utilization</h3>
+          <div className="space-y-6 text-sm">
+            <div className="flex justify-between py-4 border-b border-white/10">
+              <span>Priority PPO Network Access</span>
+              <span className="text-emerald-400">Enabled ✓</span>
             </div>
-            <div className="flex justify-between border-b border-white/10 pb-6">
-              <div>Priority PPO Network</div>
-              <div className="text-emerald-400">Included</div>
+            <div className="flex justify-between py-4 border-b border-white/10">
+              <span>Real-time ZIP Checker</span>
+              <span className="text-emerald-400">Enabled ✓</span>
             </div>
-            <div className="flex justify-between border-b border-white/10 pb-6">
-              <div>Real-time ZIP Checker</div>
-              <div className="text-emerald-400">Included</div>
+            <div className="flex justify-between py-4 border-b border-white/10">
+              <span>Steering Rules Engine</span>
+              <span className="text-emerald-400">Enabled ✓</span>
             </div>
-            <div className="flex justify-between">
-              <div>Money-Back Guarantee</div>
-              <div className="text-emerald-400">90 days</div>
+            <div className="flex justify-between py-4">
+              <span>90-Day Money-Back Guarantee</span>
+              <span className="text-emerald-400">Active</span>
             </div>
           </div>
         </div>
