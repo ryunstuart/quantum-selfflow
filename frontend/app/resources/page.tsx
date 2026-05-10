@@ -1,5 +1,8 @@
 'use client';
 
+// FORCED UPDATE - Resources header now EXACTLY matches Pricing page
+// Remove this comment after successful deploy if desired
+
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
 
@@ -94,6 +97,7 @@ export default function Resources() {
         )}
       </nav>
 
+      {/* Rest of page content */}
       <div className="max-w-4xl mx-auto px-4 md:px-6 py-20 flex-1">
         <div className="text-center mb-16">
           <h1 className="text-5xl md:text-6xl font-bold tracking-tighter mb-6">Resources & Knowledge</h1>
