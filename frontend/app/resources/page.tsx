@@ -1,5 +1,7 @@
 'use client';
 
+// HEADER MATCHED TO PRICING PAGE - FORCED UPDATE
+
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
 
