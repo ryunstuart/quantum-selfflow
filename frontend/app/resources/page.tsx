@@ -1,7 +1,6 @@
 'use client';
 
-// FORCED UPDATE - Resources header now EXACTLY matches Pricing page
-// Remove this comment after successful deploy if desired
+// STRIPPED VERSION - Only dynamic nav kept. Header is now 100% static.
 
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
@@ -34,14 +33,16 @@ export default function Resources() {
     <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-blue-950 text-white flex flex-col overflow-x-hidden">
       <nav className="border-b border-white/10 bg-black/80 backdrop-blur-md sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 md:px-6 py-4 flex justify-between items-center">
+          {/* EXACT HEADER FROM PRICING PAGE - STATIC */}
           <Link href="/" className="flex items-center gap-3 hover:opacity-90 transition">
-            <div className="w-10 h-10 md:w-12 md:h-12 bg-cyan-400 rounded-2xl flex items-center justify-center text-slate-950 font-bold text-3xl md:text-4xl shadow-lg">Q</div>
+            <div className="w-9 h-9 md:w-10 md:h-10 bg-cyan-400 rounded-2xl flex items-center justify-center text-slate-950 font-bold text-2xl md:text-3xl shadow-lg">Q</div>
             <div>
-              <div className="font-bold text-3xl md:text-4xl tracking-tighter">Quantum SelfFlow</div>
+              <div className="font-bold text-3xl md:text-3xl tracking-tighter">Quantum SelfFlow</div>
               <div className="text-cyan-400 text-xs md:text-sm -mt-1">Self-serve savings. Zero complexity.</div>
             </div>
           </Link>
 
+          {/* ONLY DYNAMIC PART - NAV */}
           <div className="hidden md:flex items-center gap-6 text-sm font-medium">
             {isLoggedIn ? (
               <>
@@ -97,7 +98,6 @@ export default function Resources() {
         )}
       </nav>
 
-      {/* Rest of page content */}
       <div className="max-w-4xl mx-auto px-4 md:px-6 py-20 flex-1">
         <div className="text-center mb-16">
           <h1 className="text-5xl md:text-6xl font-bold tracking-tighter mb-6">Resources & Knowledge</h1>
