@@ -23,7 +23,7 @@ export default function MyPlan() {
             </div>
           </Link>
 
-          <div className="hidden md:flex items-center gap-8 text-sm font-medium">
+          <div className="hidden md:flex items-center gap-6 text-sm font-medium">
             <Link href="/dashboard" className="hover:text-cyan-400">Dashboard</Link>
             <Link href="/myplan" className="text-cyan-400 font-medium">My Plan</Link>
             <Link href="/settings" className="hover:text-cyan-400">Settings</Link>
@@ -31,10 +31,25 @@ export default function MyPlan() {
             <button onClick={handleLogout} className="text-red-400 hover:text-red-500 transition">Logout</button>
           </div>
 
-          <button onClick={() => setMobileMenuOpen(!mobileMenuOpen)} className="md:hidden text-3xl focus:outline-none">
+          <button 
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            className="md:hidden text-3xl focus:outline-none"
+          >
             {mobileMenuOpen ? '✕' : '☰'}
           </button>
         </div>
+
+        {mobileMenuOpen && (
+          <div className="md:hidden border-t border-white/10 bg-black/95 py-8">
+            <div className="flex flex-col gap-6 text-center text-lg font-medium">
+              <Link href="/dashboard" className="py-2" onClick={() => setMobileMenuOpen(false)}>Dashboard</Link>
+              <Link href="/myplan" className="py-2" onClick={() => setMobileMenuOpen(false)}>My Plan</Link>
+              <Link href="/settings" className="py-2" onClick={() => setMobileMenuOpen(false)}>Settings</Link>
+              <Link href="/resources" className="py-2" onClick={() => setMobileMenuOpen(false)}>Resources</Link>
+              <button onClick={handleLogout} className="text-red-400 py-2">Logout</button>
+            </div>
+          </div>
+        )}
       </nav>
 
       <div className="max-w-7xl mx-auto px-4 md:px-6 py-10">
