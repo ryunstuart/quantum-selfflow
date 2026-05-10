@@ -100,7 +100,6 @@ export default function Resources() {
           <p className="text-xl text-slate-400">Guides, FAQs, and insights to help you maximize savings.</p>
         </div>
 
-        {/* FAQ Section */}
         <div className="mb-20">
           <h2 className="text-3xl font-semibold mb-10 text-center">Frequently Asked Questions</h2>
           <div className="space-y-4">
@@ -123,7 +122,6 @@ export default function Resources() {
           </div>
         </div>
 
-        {/* Guides */}
         <div>
           <h2 className="text-3xl font-semibold mb-10 text-center">Helpful Guides</h2>
           <div className="grid md:grid-cols-2 gap-6">
