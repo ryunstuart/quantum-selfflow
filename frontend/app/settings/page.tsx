@@ -4,61 +4,38 @@ import Link from 'next/link';
 import { useState, useEffect } from 'react';
 
 export default function Settings() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [user, setUser] = useState<any>(null);
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [editMode, setEditMode] = useState(false);
-  const [formData, setFormData] = useState({
-    companyName: '',
-    employeeCount: '',
-    email: '',
-    phone: ''
-  });
+  const [companyName, setCompanyName] = useState("Quantum Inc.");
+  const [employeeCount, setEmployeeCount] = useState("1284");
+  const [email, setEmail] = useState("benefits@quantuminc.com");
   const currentYear = new Date().getFullYear();
-
-  useEffect(() => {
-    const saved = localStorage.getItem('selfflow_user');
-    if (saved) {
-      const data = JSON.parse(saved);
-      setIsLoggedIn(true);
-      setUser(data);
-      setFormData({
-        companyName: data.companyName || '',
-        employeeCount: data.employeeCount || '',
-        email: data.email || '',
-        phone: data.phone || ''
-      });
-    } else {
-      window.location.href = '/';
-    }
-  }, []);
 
   const handleLogout = () => {
     localStorage.removeItem('selfflow_user');
     window.location.href = '/';
   };
 
-  const handleSave = () => {
-    const updatedUser = { ...user, ...formData };
-    localStorage.setItem('selfflow_user', JSON.stringify(updatedUser));
-    setUser(updatedUser);
+  const saveSettings = () => {
+    // Simulate save
+    alert("✅ Settings saved successfully!");
     setEditMode(false);
-    alert("✅ Profile updated successfully!");
   };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-blue-950 text-white flex flex-col overflow-x-hidden">
       <nav className="border-b border-white/10 bg-black/80 backdrop-blur-md sticky top-0 z-50">
-        <div className="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+        <div className="max-w-7xl mx-auto px-4 md:px-6 py-4 flex justify-between items-center">
+          {/* Standardized Logo/Header - Same as Resources, Dashboard & My Plan */}
           <Link href="/" className="flex items-center gap-3 hover:opacity-90 transition">
-            <div className="w-9 h-9 bg-cyan-400 rounded-2xl flex items-center justify-center text-slate-950 font-bold text-2xl shadow-lg">Q</div>
+            <div className="w-9 h-9 md:w-10 md:h-10 bg-cyan-400 rounded-2xl flex items-center justify-center text-slate-950 font-bold text-2xl md:text-3xl shadow-lg">Q</div>
             <div>
-              <div className="font-bold text-2xl tracking-tighter">Quantum SelfFlow</div>
-              <div className="text-cyan-400 text-xs -mt-1">Self-serve savings. Zero complexity.</div>
+              <div className="font-bold text-3xl md:text-3xl tracking-tighter">Quantum SelfFlow</div>
+              <div className="text-cyan-400 text-xs md:text-sm -mt-1">Self-serve savings. Zero complexity.</div>
             </div>
           </Link>
 
-          {/* Desktop Nav - Settings visible */}
           <div className="hidden md:flex items-center gap-6 text-sm font-medium">
             <Link href="/dashboard" className="hover:text-cyan-400">Dashboard</Link>
             <Link href="/myplan" className="hover:text-cyan-400">My Plan</Link>
@@ -88,107 +65,100 @@ export default function Settings() {
         )}
       </nav>
 
-      <div className="max-w-4xl mx-auto px-4 py-10 flex-1">
+      <div className="max-w-3xl mx-auto px-4 md:px-6 py-12 flex-1">
         <h1 className="text-4xl md:text-5xl font-bold tracking-tighter mb-2">Account Settings</h1>
-        <p className="text-slate-400">Manage your Quantum SelfFlow profile and preferences</p>
+        <p className="text-slate-400 mb-10">Manage your Quantum SelfFlow organization</p>
 
-        {/* Profile Section */}
-        <div className="mt-10 bg-slate-900/80 border border-white/10 rounded-3xl p-8 md:p-12">
-          <div className="flex justify-between items-center mb-8">
-            <h3 className="text-2xl font-semibold">Company Profile</h3>
-            <button 
-              onClick={() => setEditMode(!editMode)}
-              className="text-cyan-400 hover:underline text-sm font-medium"
-            >
-              {editMode ? 'Cancel' : 'Edit Profile'}
-            </button>
-          </div>
-
-          <div className="space-y-8">
-            <div>
-              <label className="block text-sm text-slate-400 mb-2">Company Name</label>
-              <input 
-                type="text" 
-                value={formData.companyName}
-                onChange={(e) => setFormData({...formData, companyName: e.target.value})}
-                disabled={!editMode}
-                className="w-full bg-black/50 border border-white/20 rounded-2xl px-6 py-4 disabled:opacity-75"
-              />
-            </div>
-
-            <div className="grid md:grid-cols-2 gap-6">
-              <div>
-                <label className="block text-sm text-slate-400 mb-2">Number of Lives</label>
-                <input 
-                  type="number" 
-                  value={formData.employeeCount}
-                  onChange={(e) => setFormData({...formData, employeeCount: e.target.value})}
-                  disabled={!editMode}
-                  className="w-full bg-black/50 border border-white/20 rounded-2xl px-6 py-4 disabled:opacity-75"
-                />
-              </div>
-              <div>
-                <label className="block text-sm text-slate-400 mb-2">Email Address</label>
-                <input 
-                  type="email" 
-                  value={formData.email}
-                  onChange={(e) => setFormData({...formData, email: e.target.value})}
-                  disabled={!editMode}
-                  className="w-full bg-black/50 border border-white/20 rounded-2xl px-6 py-4 disabled:opacity-75"
-                />
-              </div>
-            </div>
-
-            {editMode && (
+        <div className="bg-slate-900/80 border border-white/10 rounded-3xl p-10 space-y-10">
+          {/* Company Information */}
+          <div>
+            <div className="flex justify-between items-center mb-6">
+              <h2 className="text-2xl font-semibold">Company Information</h2>
               <button 
-                onClick={handleSave}
-                className="w-full bg-cyan-400 hover:bg-cyan-300 text-slate-950 font-semibold py-5 rounded-3xl text-lg"
+                onClick={() => setEditMode(!editMode)}
+                className="text-cyan-400 hover:underline text-sm"
               >
-                Save Changes
+                {editMode ? 'Cancel' : 'Edit'}
               </button>
-            )}
+            </div>
+
+            <div className="space-y-6">
+              <div>
+                <label className="text-sm text-slate-400 block mb-2">Company Name</label>
+                <input 
+                  type="text" 
+                  value={companyName}
+                  onChange={(e) => setCompanyName(e.target.value)}
+                  disabled={!editMode}
+                  className="w-full bg-black/50 border border-white/20 rounded-2xl px-6 py-4 focus:outline-none focus:border-cyan-400 disabled:opacity-75"
+                />
+              </div>
+
+              <div className="grid grid-cols-2 gap-6">
+                <div>
+                  <label className="text-sm text-slate-400 block mb-2">Number of Employees</label>
+                  <input 
+                    type="text" 
+                    value={employeeCount}
+                    onChange={(e) => setEmployeeCount(e.target.value)}
+                    disabled={!editMode}
+                    className="w-full bg-black/50 border border-white/20 rounded-2xl px-6 py-4 focus:outline-none focus:border-cyan-400 disabled:opacity-75"
+                  />
+                </div>
+                <div>
+                  <label className="text-sm text-slate-400 block mb-2">Primary Email</label>
+                  <input 
+                    type="email" 
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    disabled={!editMode}
+                    className="w-full bg-black/50 border border-white/20 rounded-2xl px-6 py-4 focus:outline-none focus:border-cyan-400 disabled:opacity-75"
+                  />
+                </div>
+              </div>
+            </div>
           </div>
-        </div>
 
-        {/* Preferences */}
-        <div className="mt-10 bg-slate-900/80 border border-white/10 rounded-3xl p-8 md:p-12">
-          <h3 className="text-2xl font-semibold mb-8">Preferences</h3>
-          <div className="space-y-6">
-            <div className="flex justify-between items-center py-4 border-b border-white/10">
-              <div>
-                <div className="font-medium">Email Notifications</div>
-                <div className="text-sm text-slate-400">Monthly savings reports and alerts</div>
+          {/* Preferences */}
+          <div>
+            <h2 className="text-2xl font-semibold mb-6">Preferences</h2>
+            <div className="space-y-4">
+              <div className="flex items-center justify-between bg-slate-800/50 p-6 rounded-2xl">
+                <div>
+                  <div className="font-medium">Email Notifications</div>
+                  <div className="text-sm text-slate-400">Monthly savings reports and alerts</div>
+                </div>
+                <div className="w-12 h-6 bg-emerald-500 rounded-full relative cursor-pointer">
+                  <div className="absolute right-1 top-1 w-4 h-4 bg-white rounded-full"></div>
+                </div>
               </div>
-              <div className="w-12 h-6 bg-emerald-500 rounded-full relative cursor-pointer">
-                <div className="absolute right-0.5 top-0.5 w-5 h-5 bg-white rounded-full"></div>
-              </div>
-            </div>
 
-            <div className="flex justify-between items-center py-4 border-b border-white/10">
-              <div>
-                <div className="font-medium">Weekly Claims Digest</div>
-                <div className="text-sm text-slate-400">Summary of steered claims</div>
+              <div className="flex items-center justify-between bg-slate-800/50 p-6 rounded-2xl">
+                <div>
+                  <div className="font-medium">Weekly Claims Summary</div>
+                  <div className="text-sm text-slate-400">Sent every Monday</div>
+                </div>
+                <div className="w-12 h-6 bg-emerald-500 rounded-full relative cursor-pointer">
+                  <div className="absolute right-1 top-1 w-4 h-4 bg-white rounded-full"></div>
+                </div>
               </div>
-              <div className="w-12 h-6 bg-emerald-500 rounded-full relative cursor-pointer">
-                <div className="absolute right-0.5 top-0.5 w-5 h-5 bg-white rounded-full"></div>
-              </div>
-            </div>
-
-            <div className="flex justify-between items-center py-4">
-              <div>
-                <div className="font-medium">Dark Mode</div>
-                <div className="text-sm text-slate-400">Interface theme</div>
-              </div>
-              <div className="text-emerald-400 font-medium">Enabled</div>
             </div>
           </div>
+
+          {editMode && (
+            <button 
+              onClick={saveSettings}
+              className="w-full bg-cyan-400 hover:bg-cyan-300 text-black font-semibold py-5 rounded-2xl transition mt-6"
+            >
+              Save Changes
+            </button>
+          )}
         </div>
       </div>
 
       <footer className="border-t border-white/10 bg-black/60 py-12 mt-auto">
         <div className="max-w-7xl mx-auto px-6 text-center text-slate-400 text-sm">
-          © {currentYear} Quantum SelfFlow • Powered by Quantum One Networks<br />
-          Self-serve cost containment platform for self-insured employers and regional TPAs
+          © {currentYear} Quantum SelfFlow • Powered by Quantum One Networks
         </div>
       </footer>
     </div>
