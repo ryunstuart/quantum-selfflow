@@ -12,8 +12,8 @@ export default function MyPlan() {
   };
 
   return (
-    <div className="min-h-screen bg-[#0a0a0a] text-white flex flex-col overflow-x-hidden">
-      <nav className="border-b border-white/10 bg-black/90 backdrop-blur-md sticky top-0 z-50">
+    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-blue-950 text-white flex flex-col overflow-x-hidden">
+      <nav className="border-b border-white/10 bg-black/80 backdrop-blur-md sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 md:px-6 py-4 flex justify-between items-center">
           <Link href="/" className="flex items-center gap-3 hover:opacity-90 transition">
             <div className="w-9 h-9 md:w-10 md:h-10 bg-cyan-400 rounded-2xl flex items-center justify-center text-slate-950 font-bold text-2xl md:text-3xl shadow-lg">Q</div>
@@ -41,42 +41,37 @@ export default function MyPlan() {
         <h1 className="text-5xl font-bold tracking-tighter mb-1">My Plan</h1>
         <p className="text-emerald-400 text-lg">Self-Serve Priority PPO • Active since April 2026</p>
 
-        {/* Current Plan + Network Strength */}
         <div className="grid md:grid-cols-2 gap-6 mt-10">
-          <div className="bg-[#1a1a1a] border border-white/10 rounded-3xl p-8">
+          <div className="bg-slate-900/80 border border-white/10 rounded-3xl p-8">
             <p className="text-sm text-slate-400 mb-2">CURRENT PLAN</p>
             <p className="text-3xl font-bold">Priority PPO + RBP</p>
             <p className="text-emerald-400 mt-1">2% of actual savings</p>
           </div>
 
-          <div className="bg-[#1a1a1a] border border-white/10 rounded-3xl p-8 flex flex-col justify-center">
+          <div className="bg-slate-900/80 border border-white/10 rounded-3xl p-8 flex flex-col justify-center">
             <p className="text-sm text-slate-400 mb-2">NETWORK STRENGTH</p>
             <p className="text-5xl font-bold text-emerald-400">92%</p>
             <p className="text-emerald-400">Excellent Coverage</p>
           </div>
         </div>
 
-        {/* Savings & Claims Cards */}
         <div className="grid md:grid-cols-2 gap-6 mt-6">
-          <div className="bg-[#1a1a1a] border border-white/10 rounded-3xl p-8">
+          <div className="bg-slate-900/80 border border-white/10 rounded-3xl p-8">
             <p className="text-sm text-slate-400">Savings This Year</p>
             <p className="text-4xl font-bold text-emerald-400 mt-3">$1,248,700</p>
             <p className="text-sm text-slate-400 mt-1">10.5% average reduction</p>
           </div>
-          <div className="bg-[#1a1a1a] border border-white/10 rounded-3xl p-8">
+          <div className="bg-slate-900/80 border border-white/10 rounded-3xl p-8">
             <p className="text-sm text-slate-400">Claims Steered</p>
             <p className="text-4xl font-bold mt-3">687</p>
             <p className="text-sm text-slate-400 mt-1">68% to Priority PPO network</p>
           </div>
         </div>
 
-        {/* Active Add-ons */}
         <div className="mt-12">
           <h2 className="text-2xl font-semibold mb-6">Active Add-ons</h2>
-          
           <div className="space-y-4">
-            {/* RBP */}
-            <div className="bg-[#1a1a1a] border border-emerald-500/30 rounded-3xl p-8 flex justify-between items-center">
+            <div className="bg-slate-900/80 border border-emerald-500/30 rounded-3xl p-8 flex justify-between items-center">
               <div>
                 <p className="font-semibold text-lg">Reference-Based Pricing</p>
                 <p className="text-slate-400">Caps reimbursement at Medicare + multiplier</p>
@@ -85,8 +80,7 @@ export default function MyPlan() {
               <div className="bg-emerald-500 text-black px-6 py-2 rounded-full text-sm font-medium">Active</div>
             </div>
 
-            {/* Sentinel AI */}
-            <div className="bg-[#1a1a1a] border border-white/10 rounded-3xl p-8 flex justify-between items-center">
+            <div className="bg-slate-900/80 border border-white/10 rounded-3xl p-8 flex justify-between items-center">
               <div>
                 <p className="font-semibold text-lg">Sentinel AI</p>
                 <p className="text-slate-400">Automated claim review & anomaly detection</p>
@@ -98,8 +92,7 @@ export default function MyPlan() {
           </div>
         </div>
 
-        {/* Plan Utilization */}
-        <div className="mt-12 bg-[#1a1a1a] border border-white/10 rounded-3xl p-8">
+        <div className="mt-12 bg-slate-900/80 border border-white/10 rounded-3xl p-8">
           <h2 className="text-2xl font-semibold mb-8">Plan Utilization</h2>
           <div className="space-y-6">
             <div className="flex justify-between items-center">
@@ -123,8 +116,7 @@ export default function MyPlan() {
       </div>
 
       <footer className="mt-auto border-t border-white/10 bg-black/60 py-8 text-center text-xs text-slate-500">
-        © 2026 Quantum SelfFlow • Powered by Quantum One Networks<br />
-        Self-serve cost containment platform for self-insured employers and regional TPAs
+        © 2026 Quantum SelfFlow • Powered by Quantum One Networks
       </footer>
     </div>
   );
