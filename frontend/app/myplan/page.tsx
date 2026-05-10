@@ -1,32 +1,20 @@
 'use client';
 
 import Link from 'next/link';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 
 export default function MyPlan() {
-  const [isLoggedIn, setIsLoggedIn] = useState(true);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [activeAddons, setActiveAddons] = useState(['rbp']); // Default: Reference-Based Pricing active
-  const currentYear = new Date().getFullYear();
 
   const handleLogout = () => {
     localStorage.removeItem('selfflow_user');
     window.location.href = '/';
   };
 
-  const toggleAddon = (addon: string) => {
-    if (activeAddons.includes(addon)) {
-      setActiveAddons(activeAddons.filter(a => a !== addon));
-    } else {
-      setActiveAddons([...activeAddons, addon]);
-    }
-  };
-
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-blue-950 text-white flex flex-col overflow-x-hidden">
-      <nav className="border-b border-white/10 bg-black/80 backdrop-blur-md sticky top-0 z-50">
+    <div className="min-h-screen bg-[#0a0a0a] text-white flex flex-col overflow-x-hidden">
+      <nav className="border-b border-white/10 bg-black/90 backdrop-blur-md sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 md:px-6 py-4 flex justify-between items-center">
-          {/* Standardized Logo/Header - Same as Resources & Dashboard */}
           <Link href="/" className="flex items-center gap-3 hover:opacity-90 transition">
             <div className="w-9 h-9 md:w-10 md:h-10 bg-cyan-400 rounded-2xl flex items-center justify-center text-slate-950 font-bold text-2xl md:text-3xl shadow-lg">Q</div>
             <div>
@@ -35,7 +23,7 @@ export default function MyPlan() {
             </div>
           </Link>
 
-          <div className="hidden md:flex items-center gap-6 text-sm font-medium">
+          <div className="hidden md:flex items-center gap-8 text-sm font-medium">
             <Link href="/dashboard" className="hover:text-cyan-400">Dashboard</Link>
             <Link href="/myplan" className="text-cyan-400 font-medium">My Plan</Link>
             <Link href="/settings" className="hover:text-cyan-400">Settings</Link>
@@ -43,97 +31,100 @@ export default function MyPlan() {
             <button onClick={handleLogout} className="text-red-400 hover:text-red-500 transition">Logout</button>
           </div>
 
-          <button 
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="md:hidden text-3xl focus:outline-none"
-          >
+          <button onClick={() => setMobileMenuOpen(!mobileMenuOpen)} className="md:hidden text-3xl focus:outline-none">
             {mobileMenuOpen ? '✕' : '☰'}
           </button>
         </div>
-
-        {mobileMenuOpen && (
-          <div className="md:hidden border-t border-white/10 bg-black/95 py-8">
-            <div className="flex flex-col gap-6 text-center text-lg font-medium">
-              <Link href="/dashboard" className="py-2" onClick={() => setMobileMenuOpen(false)}>Dashboard</Link>
-              <Link href="/myplan" className="py-2" onClick={() => setMobileMenuOpen(false)}>My Plan</Link>
-              <Link href="/settings" className="py-2" onClick={() => setMobileMenuOpen(false)}>Settings</Link>
-              <Link href="/resources" className="py-2" onClick={() => setMobileMenuOpen(false)}>Resources</Link>
-              <button onClick={handleLogout} className="text-red-400 py-2">Logout</button>
-            </div>
-          </div>
-        )}
       </nav>
 
-      <div className="max-w-7xl mx-auto px-4 md:px-6 py-10 flex-1">
-        <h1 className="text-4xl md:text-5xl font-bold tracking-tighter mb-2">My Plan</h1>
-        <p className="text-slate-400 mb-10">Quantum Inc. • 1,284 Lives • Level-Funded Plan</p>
+      <div className="max-w-7xl mx-auto px-4 md:px-6 py-10">
+        <h1 className="text-5xl font-bold tracking-tighter mb-1">My Plan</h1>
+        <p className="text-emerald-400 text-lg">Self-Serve Priority PPO • Active since April 2026</p>
 
-        {/* Current Plan Summary */}
-        <div className="grid md:grid-cols-3 gap-6 mb-12">
-          <div className="bg-slate-900/80 border border-white/10 rounded-3xl p-8">
-            <p className="text-slate-400">Core Network</p>
-            <p className="text-4xl font-bold mt-3">Priority PPO</p>
-            <p className="text-emerald-400 mt-1">Active • 87% Utilization</p>
+        {/* Current Plan + Network Strength */}
+        <div className="grid md:grid-cols-2 gap-6 mt-10">
+          <div className="bg-[#1a1a1a] border border-white/10 rounded-3xl p-8">
+            <p className="text-sm text-slate-400 mb-2">CURRENT PLAN</p>
+            <p className="text-3xl font-bold">Priority PPO + RBP</p>
+            <p className="text-emerald-400 mt-1">2% of actual savings</p>
           </div>
-          <div className="bg-slate-900/80 border border-white/10 rounded-3xl p-8">
-            <p className="text-slate-400">Current Savings</p>
-            <p className="text-4xl font-bold mt-3">12.4%</p>
-            <p className="text-emerald-400 mt-1">+$428K YTD</p>
-          </div>
-          <div className="bg-slate-900/80 border border-white/10 rounded-3xl p-8">
-            <p className="text-slate-400">Reference-Based Pricing</p>
-            <p className="text-4xl font-bold mt-3">Enabled</p>
-            <p className="text-emerald-400 mt-1">+4.8% additional savings</p>
+
+          <div className="bg-[#1a1a1a] border border-white/10 rounded-3xl p-8 flex flex-col justify-center">
+            <p className="text-sm text-slate-400 mb-2">NETWORK STRENGTH</p>
+            <p className="text-5xl font-bold text-emerald-400">92%</p>
+            <p className="text-emerald-400">Excellent Coverage</p>
           </div>
         </div>
 
-        {/* Available Add-ons */}
-        <div className="mb-12">
-          <h2 className="text-2xl font-semibold mb-6">Available Add-ons</h2>
-          <div className="grid md:grid-cols-3 gap-6">
-            {[
-              { id: 'rbp', name: 'Reference-Based Pricing', desc: 'Steer claims to lower cost facilities', savings: '+4.8%' },
-              { id: 'ai', name: 'Sentinel AI Bill Review', desc: 'Real-time AI claim auditing', savings: '+3.7%' },
-              { id: 'hybrid', name: 'Hybrid Care Navigation', desc: 'Virtual + in-network guidance', savings: '+2.9%' },
-            ].map((addon) => (
-              <div 
-                key={addon.id}
-                onClick={() => toggleAddon(addon.id)}
-                className={`border rounded-3xl p-8 cursor-pointer transition-all hover:border-cyan-400 ${activeAddons.includes(addon.id) ? 'border-emerald-400 bg-emerald-950/30' : 'border-white/10 bg-slate-900/80'}`}
-              >
-                <div className="flex justify-between items-start">
-                  <div>
-                    <h3 className="font-semibold text-xl">{addon.name}</h3>
-                    <p className="text-slate-400 mt-2">{addon.desc}</p>
-                  </div>
-                  <div className={`text-sm font-medium px-4 py-1 rounded-full ${activeAddons.includes(addon.id) ? 'bg-emerald-400 text-black' : 'bg-white/10'}`}>
-                    {addon.savings}
-                  </div>
-                </div>
+        {/* Savings & Claims Cards */}
+        <div className="grid md:grid-cols-2 gap-6 mt-6">
+          <div className="bg-[#1a1a1a] border border-white/10 rounded-3xl p-8">
+            <p className="text-sm text-slate-400">Savings This Year</p>
+            <p className="text-4xl font-bold text-emerald-400 mt-3">$1,248,700</p>
+            <p className="text-sm text-slate-400 mt-1">10.5% average reduction</p>
+          </div>
+          <div className="bg-[#1a1a1a] border border-white/10 rounded-3xl p-8">
+            <p className="text-sm text-slate-400">Claims Steered</p>
+            <p className="text-4xl font-bold mt-3">687</p>
+            <p className="text-sm text-slate-400 mt-1">68% to Priority PPO network</p>
+          </div>
+        </div>
+
+        {/* Active Add-ons */}
+        <div className="mt-12">
+          <h2 className="text-2xl font-semibold mb-6">Active Add-ons</h2>
+          
+          <div className="space-y-4">
+            {/* RBP */}
+            <div className="bg-[#1a1a1a] border border-emerald-500/30 rounded-3xl p-8 flex justify-between items-center">
+              <div>
+                <p className="font-semibold text-lg">Reference-Based Pricing</p>
+                <p className="text-slate-400">Caps reimbursement at Medicare + multiplier</p>
+                <p className="text-emerald-400 text-sm mt-2">+3.1% additional savings this month</p>
               </div>
-            ))}
+              <div className="bg-emerald-500 text-black px-6 py-2 rounded-full text-sm font-medium">Active</div>
+            </div>
+
+            {/* Sentinel AI */}
+            <div className="bg-[#1a1a1a] border border-white/10 rounded-3xl p-8 flex justify-between items-center">
+              <div>
+                <p className="font-semibold text-lg">Sentinel AI</p>
+                <p className="text-slate-400">Automated claim review & anomaly detection</p>
+              </div>
+              <button className="bg-white/10 hover:bg-white/20 px-6 py-2 rounded-full text-sm font-medium transition">
+                Activate (+2.8%)
+              </button>
+            </div>
           </div>
         </div>
 
-        {/* Network Utilization */}
-        <div className="bg-slate-900/80 border border-white/10 rounded-3xl p-8">
-          <h2 className="text-2xl font-semibold mb-6">Network Utilization</h2>
-          <div className="h-3 bg-white/10 rounded-full overflow-hidden mb-8">
-            <div className="h-3 bg-gradient-to-r from-cyan-400 to-emerald-400 w-[87%] rounded-full"></div>
-          </div>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
-            <div><div className="text-3xl font-bold">87%</div><div className="text-sm text-slate-400">Priority PPO</div></div>
-            <div><div className="text-3xl font-bold">64%</div><div className="text-sm text-slate-400">RBP Facilities</div></div>
-            <div><div className="text-3xl font-bold">41%</div><div className="text-sm text-slate-400">Hybrid Care</div></div>
-            <div><div className="text-3xl font-bold">12%</div><div className="text-sm text-slate-400">Out-of-Network</div></div>
+        {/* Plan Utilization */}
+        <div className="mt-12 bg-[#1a1a1a] border border-white/10 rounded-3xl p-8">
+          <h2 className="text-2xl font-semibold mb-8">Plan Utilization</h2>
+          <div className="space-y-6">
+            <div className="flex justify-between items-center">
+              <span>Priority PPO Network Access</span>
+              <span className="text-emerald-400">Enabled ✓</span>
+            </div>
+            <div className="flex justify-between items-center">
+              <span>Real-time ZIP Checker</span>
+              <span className="text-emerald-400">Enabled ✓</span>
+            </div>
+            <div className="flex justify-between items-center">
+              <span>Steering Rules Engine</span>
+              <span className="text-emerald-400">Enabled ✓</span>
+            </div>
+            <div className="flex justify-between items-center">
+              <span>90-Day Money-Back Guarantee</span>
+              <span className="text-emerald-400">Active</span>
+            </div>
           </div>
         </div>
       </div>
 
-      <footer className="border-t border-white/10 bg-black/60 py-12 mt-auto">
-        <div className="max-w-7xl mx-auto px-6 text-center text-slate-400 text-sm">
-          © {currentYear} Quantum SelfFlow • Powered by Quantum One Networks
-        </div>
+      <footer className="mt-auto border-t border-white/10 bg-black/60 py-8 text-center text-xs text-slate-500">
+        © 2026 Quantum SelfFlow • Powered by Quantum One Networks<br />
+        Self-serve cost containment platform for self-insured employers and regional TPAs
       </footer>
     </div>
   );
