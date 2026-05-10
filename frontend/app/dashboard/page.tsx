@@ -23,7 +23,7 @@ export default function Dashboard() {
             </div>
           </Link>
 
-          <div className="hidden md:flex items-center gap-8 text-sm font-medium">
+          <div className="hidden md:flex items-center gap-6 text-sm font-medium">
             <Link href="/dashboard" className="text-cyan-400 font-medium">Dashboard</Link>
             <Link href="/myplan" className="hover:text-cyan-400">My Plan</Link>
             <Link href="/settings" className="hover:text-cyan-400">Settings</Link>
@@ -31,10 +31,25 @@ export default function Dashboard() {
             <button onClick={handleLogout} className="text-red-400 hover:text-red-500 transition">Logout</button>
           </div>
 
-          <button onClick={() => setMobileMenuOpen(!mobileMenuOpen)} className="md:hidden text-3xl focus:outline-none">
+          <button 
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            className="md:hidden text-3xl focus:outline-none"
+          >
             {mobileMenuOpen ? '✕' : '☰'}
           </button>
         </div>
+
+        {mobileMenuOpen && (
+          <div className="md:hidden border-t border-white/10 bg-black/95 py-8">
+            <div className="flex flex-col gap-6 text-center text-lg font-medium">
+              <Link href="/dashboard" className="py-2" onClick={() => setMobileMenuOpen(false)}>Dashboard</Link>
+              <Link href="/myplan" className="py-2" onClick={() => setMobileMenuOpen(false)}>My Plan</Link>
+              <Link href="/settings" className="py-2" onClick={() => setMobileMenuOpen(false)}>Settings</Link>
+              <Link href="/resources" className="py-2" onClick={() => setMobileMenuOpen(false)}>Resources</Link>
+              <button onClick={handleLogout} className="text-red-400 py-2">Logout</button>
+            </div>
+          </div>
+        )}
       </nav>
 
       <div className="max-w-7xl mx-auto px-4 md:px-6 py-10">
@@ -122,31 +137,10 @@ export default function Dashboard() {
           </div>
         </div>
 
-        <div className="flex flex-wrap gap-4 mb-12">
+        <div className="flex flex-wrap gap-4">
           <button className="flex-1 md:flex-none bg-cyan-400 text-black font-semibold px-8 py-4 rounded-2xl">👥 Add New Employees</button>
           <button className="flex-1 md:flex-none border border-white/30 px-8 py-4 rounded-2xl">📊 Download Claims Report</button>
           <button className="flex-1 md:flex-none border border-white/30 px-8 py-4 rounded-2xl">🔗 Connect Your TPA</button>
-        </div>
-
-        <div className="bg-slate-900/80 border border-white/10 rounded-3xl p-8">
-          <h2 className="text-xl font-semibold mb-6">Available Add-ons</h2>
-          <div className="grid md:grid-cols-3 gap-6">
-            <div className="bg-black/40 border border-white/10 rounded-3xl p-6">
-              <p className="font-semibold">Sentinel AI</p>
-              <p className="text-sm text-slate-400 mt-1">AI-powered claim review</p>
-              <p className="text-emerald-400 mt-4">+2.8% savings</p>
-            </div>
-            <div className="bg-black/40 border border-white/10 rounded-3xl p-6">
-              <p className="font-semibold">Hybrid Care</p>
-              <p className="text-sm text-slate-400 mt-1">Telehealth navigation</p>
-              <p className="text-emerald-400 mt-4">+1.9% savings</p>
-            </div>
-            <div className="bg-black/40 border border-white/10 rounded-3xl p-6">
-              <p className="font-semibold">Outcomes Tier</p>
-              <p className="text-sm text-slate-400 mt-1">Performance incentives</p>
-              <p className="text-emerald-400 mt-4">+3.4% savings</p>
-            </div>
-          </div>
         </div>
       </div>
 
