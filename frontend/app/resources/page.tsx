@@ -1,6 +1,6 @@
 'use client';
 
-// STRIPPED VERSION - Only dynamic nav kept. Header is now 100% static.
+// Polished Resources Page - Header matches Pricing exactly
 
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
@@ -33,7 +33,7 @@ export default function Resources() {
     <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-blue-950 text-white flex flex-col overflow-x-hidden">
       <nav className="border-b border-white/10 bg-black/80 backdrop-blur-md sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 md:px-6 py-4 flex justify-between items-center">
-          {/* EXACT HEADER FROM PRICING PAGE - STATIC */}
+          {/* Exact header match to Pricing */}
           <Link href="/" className="flex items-center gap-3 hover:opacity-90 transition">
             <div className="w-9 h-9 md:w-10 md:h-10 bg-cyan-400 rounded-2xl flex items-center justify-center text-slate-950 font-bold text-2xl md:text-3xl shadow-lg">Q</div>
             <div>
@@ -42,7 +42,7 @@ export default function Resources() {
             </div>
           </Link>
 
-          {/* ONLY DYNAMIC PART - NAV */}
+          {/* Dynamic Nav */}
           <div className="hidden md:flex items-center gap-6 text-sm font-medium">
             {isLoggedIn ? (
               <>
@@ -72,6 +72,7 @@ export default function Resources() {
           </button>
         </div>
 
+        {/* Mobile Menu */}
         {mobileMenuOpen && (
           <div className="md:hidden border-t border-white/10 bg-black/95 py-8">
             <div className="flex flex-col gap-6 text-center text-lg font-medium">
@@ -101,7 +102,7 @@ export default function Resources() {
       <div className="max-w-4xl mx-auto px-4 md:px-6 py-20 flex-1">
         <div className="text-center mb-16">
           <h1 className="text-5xl md:text-6xl font-bold tracking-tighter mb-6">Resources & Knowledge</h1>
-          <p className="text-xl text-slate-400">Guides, FAQs, and insights to help you maximize savings.</p>
+          <p className="text-xl text-slate-400 max-w-2xl mx-auto">Guides, FAQs, and insights to help you maximize savings with Quantum SelfFlow.</p>
         </div>
 
         <div className="mb-20">
@@ -111,13 +112,15 @@ export default function Resources() {
               <div key={i} className="bg-slate-900/80 border border-white/10 rounded-3xl overflow-hidden">
                 <button
                   onClick={() => setOpenFAQ(openFAQ === i ? null : i)}
-                  className="w-full px-8 py-6 text-left flex justify-between items-center hover:bg-white/5 transition"
+                  className="w-full px-8 py-6 text-left flex justify-between items-center hover:bg-white/5 transition-all duration-200"
                 >
                   <span className="font-medium pr-8">{faq.q}</span>
-                  <span className="text-2xl text-cyan-400">{openFAQ === i ? '−' : '+'}</span>
+                  <span className="text-2xl text-cyan-400 transition-transform duration-200">
+                    {openFAQ === i ? '−' : '+'}
+                  </span>
                 </button>
                 {openFAQ === i && (
-                  <div className="px-8 pb-8 text-slate-300 border-t border-white/10 pt-6">
+                  <div className="px-8 pb-8 text-slate-300 border-t border-white/10 pt-6 leading-relaxed">
                     {faq.a}
                   </div>
                 )}
@@ -129,15 +132,19 @@ export default function Resources() {
         <div>
           <h2 className="text-3xl font-semibold mb-10 text-center">Helpful Guides</h2>
           <div className="grid md:grid-cols-2 gap-6">
-            <div className="bg-slate-900/80 border border-white/10 rounded-3xl p-10 hover:border-cyan-400/50 transition">
-              <h3 className="font-semibold text-xl mb-3">The Self-Insured Playbook 2026</h3>
+            <div className="bg-slate-900/80 border border-white/10 rounded-3xl p-10 hover:border-cyan-400/50 transition-all duration-300 group">
+              <h3 className="font-semibold text-xl mb-3 group-hover:text-cyan-400 transition">The Self-Insured Playbook 2026</h3>
               <p className="text-slate-400 mb-6">Key strategies for controlling medical costs in today's environment.</p>
-              <Link href="#" className="text-cyan-400 hover:underline">Download PDF →</Link>
+              <Link href="#" className="text-cyan-400 hover:underline inline-flex items-center gap-2">
+                Download PDF →
+              </Link>
             </div>
-            <div className="bg-slate-900/80 border border-white/10 rounded-3xl p-10 hover:border-cyan-400/50 transition">
-              <h3 className="font-semibold text-xl mb-3">Reference-Based Pricing Guide</h3>
+            <div className="bg-slate-900/80 border border-white/10 rounded-3xl p-10 hover:border-cyan-400/50 transition-all duration-300 group">
+              <h3 className="font-semibold text-xl mb-3 group-hover:text-cyan-400 transition">Reference-Based Pricing Guide</h3>
               <p className="text-slate-400 mb-6">Everything employers need to know about RBP + network steering.</p>
-              <Link href="#" className="text-cyan-400 hover:underline">Read Guide →</Link>
+              <Link href="#" className="text-cyan-400 hover:underline inline-flex items-center gap-2">
+                Read Guide →
+              </Link>
             </div>
           </div>
         </div>
