@@ -22,8 +22,8 @@ export default function Settings() {
   };
 
   return (
-    <div className="min-h-screen bg-[#0a0a0a] text-white flex flex-col overflow-x-hidden">
-      <nav className="border-b border-white/10 bg-black/90 backdrop-blur-md sticky top-0 z-50">
+    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-blue-950 text-white flex flex-col overflow-x-hidden">
+      <nav className="border-b border-white/10 bg-black/80 backdrop-blur-md sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 md:px-6 py-4 flex justify-between items-center">
           <Link href="/" className="flex items-center gap-3 hover:opacity-90 transition">
             <div className="w-9 h-9 md:w-10 md:h-10 bg-cyan-400 rounded-2xl flex items-center justify-center text-slate-950 font-bold text-2xl md:text-3xl shadow-lg">Q</div>
@@ -33,7 +33,7 @@ export default function Settings() {
             </div>
           </Link>
 
-          <div className="hidden md:flex items-center gap-8 text-sm font-medium">
+          <div className="hidden md:flex items-center gap-6 text-sm font-medium">
             <Link href="/dashboard" className="hover:text-cyan-400">Dashboard</Link>
             <Link href="/myplan" className="hover:text-cyan-400">My Plan</Link>
             <Link href="/settings" className="text-cyan-400 font-medium">Settings</Link>
@@ -41,18 +41,32 @@ export default function Settings() {
             <button onClick={handleLogout} className="text-red-400 hover:text-red-500 transition">Logout</button>
           </div>
 
-          <button onClick={() => setMobileMenuOpen(!mobileMenuOpen)} className="md:hidden text-3xl focus:outline-none">
+          <button 
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            className="md:hidden text-3xl focus:outline-none"
+          >
             {mobileMenuOpen ? '✕' : '☰'}
           </button>
         </div>
+
+        {mobileMenuOpen && (
+          <div className="md:hidden border-t border-white/10 bg-black/95 py-8">
+            <div className="flex flex-col gap-6 text-center text-lg font-medium">
+              <Link href="/dashboard" className="py-2" onClick={() => setMobileMenuOpen(false)}>Dashboard</Link>
+              <Link href="/myplan" className="py-2" onClick={() => setMobileMenuOpen(false)}>My Plan</Link>
+              <Link href="/settings" className="py-2" onClick={() => setMobileMenuOpen(false)}>Settings</Link>
+              <Link href="/resources" className="py-2" onClick={() => setMobileMenuOpen(false)}>Resources</Link>
+              <button onClick={handleLogout} className="text-red-400 py-2">Logout</button>
+            </div>
+          </div>
+        )}
       </nav>
 
       <div className="max-w-4xl mx-auto px-4 md:px-6 py-12">
         <h1 className="text-5xl font-bold tracking-tighter mb-1">Account Settings</h1>
         <p className="text-slate-400 text-lg">Manage your Quantum SelfFlow profile and preferences</p>
 
-        {/* Company Profile */}
-        <div className="mt-10 bg-[#1a1a1a] border border-white/10 rounded-3xl p-10">
+        <div className="mt-10 bg-slate-900/80 border border-white/10 rounded-3xl p-10">
           <div className="flex justify-between items-center mb-8">
             <h2 className="text-2xl font-semibold">Company Profile</h2>
             <button 
@@ -109,8 +123,7 @@ export default function Settings() {
           )}
         </div>
 
-        {/* Preferences */}
-        <div className="mt-8 bg-[#1a1a1a] border border-white/10 rounded-3xl p-10">
+        <div className="mt-8 bg-slate-900/80 border border-white/10 rounded-3xl p-10">
           <h2 className="text-2xl font-semibold mb-8">Preferences</h2>
           
           <div className="space-y-8">
@@ -146,8 +159,7 @@ export default function Settings() {
       </div>
 
       <footer className="mt-auto border-t border-white/10 bg-black/60 py-8 text-center text-xs text-slate-500">
-        © 2026 Quantum SelfFlow • Powered by Quantum One Networks<br />
-        Self-serve cost containment platform for self-insured employers and regional TPAs
+        © 2026 Quantum SelfFlow • Powered by Quantum One Networks
       </footer>
     </div>
   );
